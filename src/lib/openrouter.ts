@@ -15,7 +15,7 @@ export const OPENROUTER_MODELS = [
   "openai/gpt-4o-mini",
   "meta-llama/llama-3.3-70b-instruct",
   "deepseek/deepseek-chat",
-  "google/gemini-2.0-flash-exp:free",
+  "google/gemini-2.5-flash",
   "qwen/qwen-2.5-72b-instruct",
 ];
 

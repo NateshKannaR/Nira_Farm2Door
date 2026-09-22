@@ -71,16 +71,24 @@ export default function VoiceListingButton({ onExtracted }: VoiceListingButtonPr
         recognition.onerror = (event: any) => {
           console.warn('Speech recognition error:', event.error);
           setIsListening(false);
-          // On Linux Chrome/Wayland, webkitSpeechRecognition triggers 'not-allowed' or 'network'
-          // because third-party Linux builds lack Google proprietary Cloud Speech API keys.
-          // We gracefully fall back to automatic vernacular speech streaming!
-          if (
-            event.error === 'not-allowed' ||
-            event.error === 'network' ||
-            event.error === 'service-not-allowed' ||
-            event.error === 'audio-capture'
-          ) {
-            simulateVoiceInput();
+          if (event.error === 'not-allowed') {
+            setErrorMsg(
+              language === 'hi'
+                ? 'माइक्रोफ़ोन अनुमति नहीं मिली। आप नीचे अपने शब्द टाइप कर सकते हैं या उदाहरण चुन सकते हैं।'
+                : 'Microphone permission was not allowed. You can type your crop details below or tap a sample.'
+            );
+          } else if (event.error === 'no-speech') {
+            setErrorMsg(
+              language === 'hi'
+                ? 'कोई आवाज़ सुनाई नहीं दी। कृपया माइक दबाकर दोबारा बोलें।'
+                : 'No speech detected. Tap the mic and speak clearly.'
+            );
+          } else if (event.error === 'network') {
+            setErrorMsg(
+              language === 'hi'
+                ? 'ब्राउज़र स्पीच नेटवर्क अनुपलब्ध है। आप नीचे टाइप कर सकते हैं या उदाहरण चुन सकते हैं।'
+                : 'Browser cloud speech service network error. You can type or tap a sample below.'
+            );
           } else {
             setErrorMsg(`Mic notice: ${event.error}. You can also type or use presets below.`);
           }
@@ -95,45 +103,10 @@ export default function VoiceListingButton({ onExtracted }: VoiceListingButtonPr
     }
   }, [language]);
 
-  const simulateVoiceInput = () => {
-    setIsListening(true);
-    setErrorMsg(null);
-    setStatusMessage(
-      language === 'hi'
-        ? '🎙️ वॉयस ऑडियो प्राप्त हो रहा है (AI लाइव स्पीच ट्रांसक्राइब)...'
-        : '🎙️ Live vernacular voice streaming & AI transcription...'
-    );
-    setTranscript('');
-
-    const sampleText =
-      language === 'hi'
-        ? 'मेरे पास 800 किलो नासिक लाल प्याज है 22 रुपये प्रति किलो ग्रेड A'
-        : 'I have 500 kg Grade A organic tomatoes at 30 rupees per kg';
-
-    let current = '';
-    let idx = 0;
-    const interval = setInterval(() => {
-      if (idx < sampleText.length) {
-        current += sampleText[idx];
-        setTranscript(current);
-        idx++;
-      } else {
-        clearInterval(interval);
-        setIsListening(false);
-        processSpeech(sampleText);
-      }
-    }, 40);
-  };
-
-  const startListening = async () => {
+  const startListening = () => {
     setErrorMsg(null);
     setStatusMessage(null);
-
-    // If on Linux or unsupported browser, directly provide smooth voice input
-    if (typeof window !== 'undefined' && !recognitionRef.current) {
-      simulateVoiceInput();
-      return;
-    }
+    setTranscript('');
 
     if (recognitionRef.current) {
       try {
@@ -141,11 +114,19 @@ export default function VoiceListingButton({ onExtracted }: VoiceListingButtonPr
         recognitionRef.current.start();
         setIsListening(true);
       } catch (err: any) {
-        console.warn('Speech recognition start failed, using simulator:', err);
-        simulateVoiceInput();
+        console.warn('Speech recognition start failed:', err);
+        setErrorMsg(
+          language === 'hi'
+            ? 'माइक शुरू नहीं हो सका। कृपया अनुमति जांचें या नीचे टाइप करें।'
+            : 'Could not access microphone. Please check mic permissions or type/use presets below.'
+        );
       }
     } else {
-      simulateVoiceInput();
+      setErrorMsg(
+        language === 'hi'
+          ? 'यह ब्राउज़र सीधे माइक्रोफ़ोन को सपोर्ट नहीं करता, कृपया नीचे टाइप करें या उदाहरण चुनें।'
+          : 'Speech recognition not supported in this browser. Please type or select a sample below.'
+      );
     }
   };
 
