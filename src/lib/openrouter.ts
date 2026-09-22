@@ -3,10 +3,13 @@
  * Powers Agricultural AI Translation, Inspection, Pricing, Routing, and Forecasting.
  */
 
-export const OPENROUTER_API_KEY =
+export const OPENROUTER_API_KEY = (
   process.env.OPENROUTER_API_KEY ||
   process.env.NEXT_PUBLIC_OPENROUTER_API_KEY ||
-  "";
+  ""
+)
+  .replace(/^["']|["']$/g, "")
+  .trim();
 
 export const OPENROUTER_MODELS = [
   "openai/gpt-4o-mini",

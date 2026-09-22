@@ -334,6 +334,7 @@ export default function FarmerDashboardPage() {
 
   const handleVoiceExtracted = (data: any) => {
     setEditingCropId(null);
+    setFarmerActiveSection('products');
     if (data.category) setCategory(data.category);
     if (data.cropName) setCropName(data.cropName);
     if (data.cropNameHi) setCropNameHi(data.cropNameHi);

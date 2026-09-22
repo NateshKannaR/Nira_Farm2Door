@@ -89,10 +89,28 @@ export default function VoiceListingButton({ onExtracted }: VoiceListingButtonPr
     }
   }, [language]);
 
-  const startListening = () => {
+  const startListening = async () => {
     setErrorMsg(null);
     setStatusMessage(null);
     setTranscript('');
+
+    if (typeof window !== 'undefined' && navigator?.mediaDevices?.getUserMedia) {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        stream.getTracks().forEach((t) => t.stop());
+      } catch (err: any) {
+        console.warn('Microphone permission check:', err);
+        if (err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError') {
+          setErrorMsg(
+            language === 'hi'
+              ? 'माइक्रोफ़ोन अनुमति ब्लॉक है। कृपया ब्राउज़र URL बार में 🔒 या सेटिंग्स आइकन पर क्लिक करके Microphone को "Allow" करें।'
+              : 'Microphone permission blocked in Chrome. Click the site settings icon (left of localhost:3000 in your URL bar) and switch Microphone to "Allow".'
+          );
+          return;
+        }
+      }
+    }
+
     if (recognitionRef.current) {
       try {
         recognitionRef.current.lang = language === 'hi' ? 'hi-IN' : 'en-IN';
