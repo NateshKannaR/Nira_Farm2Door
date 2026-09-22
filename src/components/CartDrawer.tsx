@@ -28,7 +28,10 @@ import {
   Truck,
   CreditCard,
   Check,
+  QrCode,
+  Sparkles,
 } from 'lucide-react';
+import QRCode from 'qrcode';
 
 const INDIAN_STATES = [
   'Maharashtra',
@@ -73,6 +76,33 @@ export default function CartDrawer() {
   const [isCheckoutModalOpen, setIsCheckoutModalOpen] = useState(false);
   const [checkoutStep, setCheckoutStep] = useState<'ADDRESS' | 'CONFIRM' | 'SUCCESS'>('ADDRESS');
   const [userConfirmedIdentity, setUserConfirmedIdentity] = useState(true);
+  const [upiQrUrl, setUpiQrUrl] = useState<string>('');
+  const [isUpiSimulatedPaid, setIsUpiSimulatedPaid] = useState(false);
+
+  const subtotalPaise = cart.reduce((acc, item: any) => {
+    const pricePaise =
+      Number(item.pricePaisePerKg) ||
+      (Number(item.price) ? Number(item.price) * 100 : 0) ||
+      (Number(item.priceRupees) ? Number(item.priceRupees) * 100 : 0) ||
+      0;
+    const qty = Number(item.quantityKg) || Number(item.quantity) || 0;
+    return acc + Math.round(pricePaise * qty);
+  }, 0) || 0;
+  const logisticsFeePaise = Math.round(subtotalPaise * 0.04) || 0;
+  const totalPaise = subtotalPaise + logisticsFeePaise;
+
+  useEffect(() => {
+    if (isCheckoutModalOpen && paymentMethod === 'UPI') {
+      const upiUrl = `upi://pay?pa=nira.escrow@icici&pn=Nira+Agri+Escrow&am=${(totalPaise / 100).toFixed(2)}&cu=INR&tn=Produce+Order+Escrow`;
+      QRCode.toDataURL(upiUrl, {
+        width: 160,
+        margin: 1,
+        color: { dark: '#064e3b', light: '#ffffff' },
+      })
+        .then(setUpiQrUrl)
+        .catch((e) => console.error('Failed to generate UPI QR:', e));
+    }
+  }, [isCheckoutModalOpen, paymentMethod, totalPaise]);
 
   // Flipkart/Amazon-style comprehensive mandatory shipping details - all empty by default
   const [shippingForm, setShippingForm] = useState(() => {
@@ -109,20 +139,6 @@ export default function CartDrawer() {
       deliveryInstructions: '',
     };
   });
-
-  if (!isCartOpen && !isCheckoutModalOpen) return null;
-
-  const subtotalPaise = cart.reduce((acc, item: any) => {
-    const pricePaise =
-      Number(item.pricePaisePerKg) ||
-      (Number(item.price) ? Number(item.price) * 100 : 0) ||
-      (Number(item.priceRupees) ? Number(item.priceRupees) * 100 : 0) ||
-      0;
-    const qty = Number(item.quantityKg) || Number(item.quantity) || 0;
-    return acc + Math.round(pricePaise * qty);
-  }, 0) || 0;
-  const logisticsFeePaise = Math.round(subtotalPaise * 0.04) || 0;
-  const totalPaise = subtotalPaise + logisticsFeePaise;
 
   const validateShippingForm = () => {
     if (!shippingForm.fullName.trim()) {
@@ -291,6 +307,8 @@ export default function CartDrawer() {
       window.location.href = '/buyer#active-orders';
     }
   };
+
+  if (!isCartOpen && !isCheckoutModalOpen) return null;
 
   return (
     <>
@@ -873,6 +891,82 @@ export default function CartDrawer() {
                           : 'Cash on Delivery (COD)'}
                       </strong>
                     </p>
+
+                    {/* Dynamic UPI QR Code Box */}
+                    {paymentMethod === 'UPI' && (
+                      <div className="p-4 bg-white dark:bg-[#07170f] rounded-2xl border-2 border-emerald-600/30 dark:border-emerald-500/30 space-y-3 shadow-md">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <QrCode className="w-4 h-4 text-emerald-700 dark:text-emerald-400" />
+                            <span className="font-extrabold text-xs text-emerald-950 dark:text-emerald-100">
+                              Instant Escrow UPI QR Code
+                            </span>
+                          </div>
+                          <span className="text-[10px] font-mono text-emerald-800 dark:text-emerald-300 bg-emerald-100 dark:bg-emerald-950 px-2 py-0.5 rounded-full font-bold">
+                            GPay • PhonePe • Paytm
+                          </span>
+                        </div>
+
+                        <div className="flex flex-col sm:flex-row items-center gap-4 bg-emerald-50/50 dark:bg-emerald-950/20 p-3 rounded-xl border border-emerald-900/10">
+                          {upiQrUrl ? (
+                            <div className="p-2 bg-white rounded-xl shadow-sm border border-emerald-900/10 shrink-0">
+                              <img src={upiQrUrl} alt="UPI QR" className="w-28 h-28 object-contain" />
+                            </div>
+                          ) : (
+                            <div className="w-28 h-28 bg-gray-100 animate-pulse rounded-xl" />
+                          )}
+
+                          <div className="space-y-1.5 text-xs text-left">
+                            <p className="font-mono text-[11px] text-gray-600 dark:text-gray-400">
+                              VPA: <strong className="text-emerald-900 dark:text-emerald-300">nira.escrow@icici</strong>
+                            </p>
+                            <p className="font-bold text-gray-900 dark:text-gray-100 text-sm">
+                              Amount: ₹{(totalPaise / 100).toFixed(2)}
+                            </p>
+                            <p className="text-[11px] text-gray-500 dark:text-gray-400">
+                              Payment is held in sovereign escrow and released in 2 milestones to protect both parties.
+                            </p>
+
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setIsUpiSimulatedPaid(true);
+                                setUserConfirmedIdentity(true);
+                              }}
+                              className={`mt-1 text-[11px] px-3 py-1.5 rounded-lg font-bold transition flex items-center gap-1.5 ${
+                                isUpiSimulatedPaid
+                                  ? 'bg-emerald-700 text-white shadow'
+                                  : 'bg-amber-500 hover:bg-amber-600 text-emerald-950 shadow-sm'
+                              }`}
+                            >
+                              <CheckCircle2 className="w-3.5 h-3.5" />
+                              <span>{isUpiSimulatedPaid ? 'UPI Payment Verified (Locked)' : '⚡ Simulate UPI Scan & Pay'}</span>
+                            </button>
+                          </div>
+                        </div>
+
+                        {/* 3-Stage Escrow Milestone Flow */}
+                        <div className="pt-2 border-t border-emerald-900/10 dark:border-white/10 space-y-1.5">
+                          <span className="text-[10px] font-extrabold uppercase tracking-wider text-emerald-900 dark:text-emerald-300 block">
+                            Nira Escrow Payout Milestones
+                          </span>
+                          <div className="grid grid-cols-3 gap-2 text-center text-[10px]">
+                            <div className="p-2 bg-emerald-100 dark:bg-emerald-900/40 rounded-lg border border-emerald-400 dark:border-emerald-600 font-bold text-emerald-950 dark:text-emerald-200">
+                              <span>1. 100% Locked</span>
+                              <p className="text-[9px] text-emerald-800 dark:text-emerald-300 font-normal">Buyer Checkout</p>
+                            </div>
+                            <div className="p-2 bg-amber-50 dark:bg-amber-950/30 rounded-lg border border-amber-300 dark:border-amber-700 font-bold text-amber-950 dark:text-amber-200">
+                              <span>2. 70% Advance</span>
+                              <p className="text-[9px] text-amber-800 dark:text-amber-300 font-normal">Farmgate Pickup OTP</p>
+                            </div>
+                            <div className="p-2 bg-gray-50 dark:bg-white/5 rounded-lg border border-gray-200 dark:border-white/10 font-bold text-gray-700 dark:text-gray-300">
+                              <span>3. 30% Balance</span>
+                              <p className="text-[9px] text-gray-500 font-normal">Buyer Delivery OTP</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
                   </div>
 
                   {/* Confirmation Checkbox */}
@@ -950,6 +1044,29 @@ export default function CartDrawer() {
                         Transmitted to live procurement board
                       </span>
                     </p>
+                  </div>
+
+                  {/* Escrow Progress Bar */}
+                  <div className="p-3.5 bg-white dark:bg-[#132c1e] rounded-xl border border-emerald-900/10 dark:border-emerald-500/20 text-left space-y-2">
+                    <span className="text-[10px] font-extrabold uppercase tracking-wider text-emerald-900 dark:text-emerald-300 block">
+                      Escrow Milestone Progress
+                    </span>
+                    <div className="grid grid-cols-3 gap-2 text-center text-[10px]">
+                      <div className="p-2 bg-emerald-700 text-white rounded-lg shadow-sm font-bold">
+                        <span className="flex items-center justify-center gap-1">
+                          <Check className="w-3 h-3" /> 100% Locked
+                        </span>
+                        <p className="text-[8px] text-emerald-200">Buyer Payment</p>
+                      </div>
+                      <div className="p-2 bg-amber-100 dark:bg-amber-950/40 text-amber-950 dark:text-amber-200 border border-amber-400 rounded-lg font-bold animate-pulse">
+                        <span>70% Advance</span>
+                        <p className="text-[8px] text-amber-800 dark:text-amber-300">On Farm Pickup</p>
+                      </div>
+                      <div className="p-2 bg-gray-100 dark:bg-white/5 text-gray-500 rounded-lg font-bold">
+                        <span>30% Settlement</span>
+                        <p className="text-[8px]">On Handover</p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               )}

@@ -9,6 +9,9 @@ import { useAuth } from '@/context/AuthContext';
 import PortalGuard from '@/components/PortalGuard';
 import BulmaProductCard from '@/components/BulmaProductCard';
 import { CropCategory, ALL_AGRICULTURAL_CATEGORIES } from '@/lib/cropCategories';
+import VoiceListingButton from '@/components/VoiceListingButton';
+import TransitGatePassModal from '@/components/TransitGatePassModal';
+import MandiArbitrageStudio from '@/components/MandiArbitrageStudio';
 
 import {
   matchCropImagesByName,
@@ -46,7 +49,8 @@ import {
   Phone,
   MapPin,
   Truck,
-  Key
+  Key,
+  FileText
 } from 'lucide-react';
 
 export default function FarmerDashboardPage() {
@@ -78,9 +82,11 @@ export default function FarmerDashboardPage() {
   const [isVerifyingDelete, setIsVerifyingDelete] = useState(false);
   const [deleteError, setDeleteError] = useState<string | null>(null);
 
-  // 2 Main Sections: 'products' (My Products / मेरे उत्पाद) & 'orders' (Received Orders / आया हुआ Orders)
-  const [farmerActiveSection, setFarmerActiveSection] = useState<'products' | 'orders'>('products');
+  // 3 Main Sections: 'products' (My Products), 'orders' (Received Orders) & 'arbitrage' (Mandi Comparison)
+  const [farmerActiveSection, setFarmerActiveSection] = useState<'products' | 'orders' | 'arbitrage'>('products');
   const [showInlineAddForm, setShowInlineAddForm] = useState(false);
+  const [showGatePassModal, setShowGatePassModal] = useState(false);
+  const [gatePassConsignment, setGatePassConsignment] = useState<any>(null);
 
   // Form states for adding/updating produce
   const [editingCropId, setEditingCropId] = useState<string | null>(null);
@@ -323,6 +329,24 @@ export default function FarmerDashboardPage() {
     setBasePriceRupees('40');
     setGrade('A+');
     setShowInlineAddForm(true);
+    setTimeout(() => formContainerRef.current?.scrollIntoView({ behavior: 'smooth' }), 100);
+  };
+
+  const handleVoiceExtracted = (data: any) => {
+    setEditingCropId(null);
+    if (data.category) setCategory(data.category);
+    if (data.cropName) setCropName(data.cropName);
+    if (data.cropNameHi) setCropNameHi(data.cropNameHi);
+    if (data.quantityKg) setQuantityKg(String(data.quantityKg));
+    if (data.basePriceRupees) setBasePriceRupees(String(data.basePriceRupees));
+    if (data.variety) setVariety(data.variety);
+    if (data.grade) setGrade(data.grade);
+    setShowInlineAddForm(true);
+    triggerSuccessSignal(
+      language === 'hi'
+        ? `🎙️ वॉयस विवरण दर्ज: ${data.extractedSummary}`
+        : `🎙️ Voice details auto-filled: ${data.extractedSummary}`
+    );
     setTimeout(() => formContainerRef.current?.scrollIntoView({ behavior: 'smooth' }), 100);
   };
 
@@ -676,6 +700,27 @@ export default function FarmerDashboardPage() {
           </div>
 
           <div className="flex items-center gap-2.5 shrink-0 flex-wrap">
+            <VoiceListingButton onExtracted={handleVoiceExtracted} />
+
+            <button
+              onClick={() => {
+                setGatePassConsignment({
+                  cropName: myListings[0]?.crop || 'Fresh Farm Produce',
+                  quantityKg: myListings[0]?.qty || 500,
+                  farmerName: userName || 'Ramesh Patil',
+                  farmerVillage: 'Pimpalgaon Baswant, Nashik, MH',
+                  buyerName: 'Verified Direct Buyer Hub',
+                  vehicleNumber: 'MH-15-EG-8821',
+                  driverName: 'Vikram Shinde',
+                });
+                setShowGatePassModal(true);
+              }}
+              className="px-4 py-3 bg-white/10 hover:bg-white/20 text-amber-200 border border-amber-400/30 rounded-xl font-bold text-xs shadow transition flex items-center gap-1.5"
+            >
+              <FileText className="w-4 h-4 text-amber-400" />
+              <span>{language === 'hi' ? '🏛️ राजकीय गेट पास' : '🏛️ Transit Gate Pass'}</span>
+            </button>
+
             <button
               onClick={() => {
                 handleCancelEdit();
@@ -692,22 +737,22 @@ export default function FarmerDashboardPage() {
 
 
         {/* ===================================================
-            2 MAIN SECTIONS SWITCHER: "MY PRODUCTS" vs "आया हुआ ORDERS"
+            3 MAIN SECTIONS SWITCHER: "MY PRODUCTS", "ORDERS" & "MANDI ARBITRAGE"
             =================================================== */}
-        <div className="flex items-center justify-center p-2 bg-[#072417]/90 dark:bg-[#03140c]/95 backdrop-blur-xl rounded-3xl max-w-xl mx-auto border-2 border-amber-500/40 shadow-2xl">
+        <div className="flex items-center justify-center p-2 bg-[#072417]/90 dark:bg-[#03140c]/95 backdrop-blur-xl rounded-3xl max-w-2xl mx-auto border-2 border-amber-500/40 shadow-2xl">
           <button
             type="button"
             id="tab-my-products"
             onClick={() => setFarmerActiveSection('products')}
-            className={`flex-1 py-3.5 px-4 sm:px-6 rounded-2xl font-black text-sm sm:text-base flex items-center justify-center gap-2 sm:gap-3 transition-all cursor-pointer ${
+            className={`flex-1 py-3 px-3 sm:px-5 rounded-2xl font-black text-xs sm:text-sm flex items-center justify-center gap-1.5 sm:gap-2 transition-all cursor-pointer ${
               farmerActiveSection === 'products'
                 ? 'bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 text-emerald-950 shadow-xl scale-[1.02] ring-2 ring-white/50'
                 : 'text-amber-100/90 hover:text-white hover:bg-white/10'
             }`}
           >
-            <Sprout className="w-5 h-5 text-emerald-950/80 shrink-0" />
-            <span>{language === 'hi' ? 'मेरे उत्पाद (My Products)' : 'My Products'}</span>
-            <span className={`px-2.5 py-0.5 text-xs rounded-full font-mono font-extrabold shadow-xs ${
+            <Sprout className="w-4 h-4 text-emerald-950/80 shrink-0" />
+            <span>{language === 'hi' ? 'मेरे उत्पाद' : 'My Products'}</span>
+            <span className={`px-2 py-0.5 text-[10px] rounded-full font-mono font-extrabold shadow-xs ${
               farmerActiveSection === 'products' ? 'bg-emerald-950 text-amber-300' : 'bg-amber-500/25 text-amber-300'
             }`}>
               {myListings.length}
@@ -718,19 +763,33 @@ export default function FarmerDashboardPage() {
             type="button"
             id="tab-received-orders"
             onClick={() => setFarmerActiveSection('orders')}
-            className={`flex-1 py-3.5 px-4 sm:px-6 rounded-2xl font-black text-sm sm:text-base flex items-center justify-center gap-2 sm:gap-3 transition-all cursor-pointer ${
+            className={`flex-1 py-3 px-3 sm:px-5 rounded-2xl font-black text-xs sm:text-sm flex items-center justify-center gap-1.5 sm:gap-2 transition-all cursor-pointer ${
               farmerActiveSection === 'orders'
                 ? 'bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 text-emerald-950 shadow-xl scale-[1.02] ring-2 ring-white/50'
                 : 'text-amber-100/90 hover:text-white hover:bg-white/10'
             }`}
           >
-            <ShoppingBag className="w-5 h-5 text-emerald-950/80 shrink-0" />
-            <span>{language === 'hi' ? 'आया हुआ Orders' : 'Received Orders'}</span>
-            <span className={`px-2.5 py-0.5 text-xs rounded-full font-mono font-extrabold shadow-xs ${
+            <ShoppingBag className="w-4 h-4 text-emerald-950/80 shrink-0" />
+            <span>{language === 'hi' ? 'आया Orders' : 'Orders'}</span>
+            <span className={`px-2 py-0.5 text-[10px] rounded-full font-mono font-extrabold shadow-xs ${
               farmerActiveSection === 'orders' ? 'bg-emerald-950 text-amber-300' : 'bg-amber-500/25 text-amber-300'
             }`}>
               {farmerOrders.length}
             </span>
+          </button>
+
+          <button
+            type="button"
+            id="tab-mandi-arbitrage"
+            onClick={() => setFarmerActiveSection('arbitrage')}
+            className={`flex-1 py-3 px-3 sm:px-5 rounded-2xl font-black text-xs sm:text-sm flex items-center justify-center gap-1.5 sm:gap-2 transition-all cursor-pointer ${
+              farmerActiveSection === 'arbitrage'
+                ? 'bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 text-emerald-950 shadow-xl scale-[1.02] ring-2 ring-white/50'
+                : 'text-amber-100/90 hover:text-white hover:bg-white/10'
+            }`}
+          >
+            <TrendingUp className="w-4 h-4 text-emerald-950/80 shrink-0" />
+            <span>{language === 'hi' ? 'मंडी लाभ तुलना' : 'Mandi Arbitrage'}</span>
           </button>
         </div>
 
@@ -897,13 +956,39 @@ export default function FarmerDashboardPage() {
                       </div>
                     )}
 
-                    <div className="pt-2 border-t border-emerald-900/10 flex items-center justify-between text-xs">
-                      <span className="font-extrabold text-amber-800">
+                    <div className="pt-2 border-t border-emerald-900/10 flex items-center justify-between text-xs flex-wrap gap-2">
+                      <span className="font-extrabold text-amber-800 dark:text-amber-300">
                         {language === 'hi' ? 'कुल राशि:' : 'Total Amount:'} ₹{(ord.total_amount_paise / 100).toFixed(2)}
                       </span>
-                      <span className="text-[11px] text-emerald-800 font-bold">
-                        {ord.payment_method === 'COD' ? (language === 'hi' ? 'कैश ऑन डिलीवरी (COD)' : 'Cash on Delivery (COD)') : (language === 'hi' ? 'एस्क्रो सुरक्षित' : 'Escrow Protected')}
-                      </span>
+                      <div className="flex items-center gap-2">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setGatePassConsignment({
+                              orderId: ord.id,
+                              cropName: ord.items?.[0]?.crop_name || 'Fresh Produce',
+                              quantityKg: ord.items?.[0]?.quantity || 500,
+                              farmerName: userName || 'Ramesh Patil',
+                              farmerVillage: 'Pimpalgaon Baswant, Nashik, MH',
+                              buyerName: ord.buyer_name || 'Verified Direct Buyer Hub',
+                              destinationAddress: ord.delivery_address || 'Direct Buyer Mandi Collection Hub',
+                              vehicleNumber: ord.driver_vehicle || 'MH-15-EG-8821',
+                              driverName: ord.driver_name || 'Vikram Shinde',
+                              driverPhone: ord.driver_phone || '+91 99000 11122',
+                              pickupOtpVerified: isPickedUp,
+                            });
+                            setShowGatePassModal(true);
+                          }}
+                          className="px-2.5 py-1 bg-emerald-100 hover:bg-emerald-200 dark:bg-emerald-900/40 dark:hover:bg-emerald-800 text-emerald-900 dark:text-emerald-200 rounded-lg font-bold text-[11px] transition flex items-center gap-1"
+                        >
+                          <FileText className="w-3 h-3" />
+                          <span>{language === 'hi' ? 'गेट पास' : 'Gate Pass'}</span>
+                        </button>
+
+                        <span className="text-[11px] text-emerald-800 dark:text-emerald-300 font-bold">
+                          {ord.payment_method === 'COD' ? (language === 'hi' ? 'COD' : 'COD') : (language === 'hi' ? 'एस्क्रो सुरक्षित' : 'Escrow')}
+                        </span>
+                      </div>
                     </div>
                   </div>
                 );
@@ -911,6 +996,15 @@ export default function FarmerDashboardPage() {
             </div>
           )}
         </div>
+        )}
+
+        {/* ===================================================
+            SECTION 3: MANDI ARBITRAGE & PRICE COMPARISON
+            =================================================== */}
+        {farmerActiveSection === 'arbitrage' && (
+          <div className="animate-fadeIn">
+            <MandiArbitrageStudio />
+          </div>
         )}
 
         {/* ===================================================
@@ -1745,6 +1839,13 @@ export default function FarmerDashboardPage() {
             </div>
           </div>
         )}
+
+        {/* Official Agri Transit Gate Pass Modal */}
+        <TransitGatePassModal
+          isOpen={showGatePassModal}
+          onClose={() => setShowGatePassModal(false)}
+          consignment={gatePassConsignment}
+        />
       </div>
     </PortalGuard>
   );

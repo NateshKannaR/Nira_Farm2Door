@@ -26,8 +26,14 @@ import {
   Sparkles,
   Leaf,
   Play,
-  Layers
+  Layers,
+  FileText,
+  Thermometer,
+  Droplets,
+  AlertTriangle,
+  Activity
 } from 'lucide-react';
+import TransitGatePassModal from '@/components/TransitGatePassModal';
 
 interface OrderItem {
   id: number;
@@ -76,7 +82,34 @@ export default function TransporterDashboardPage() {
 
   const [orders, setOrders] = useState<OrderRecord[]>([]);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<'active' | 'available' | 'delivered' | 'route'>('active');
+  const [activeTab, setActiveTab] = useState<'active' | 'available' | 'delivered' | 'route' | 'telemetry'>('active');
+
+  // Cold-Chain IoT Telemetry States
+  const [reeferTemp, setReeferTemp] = useState(4.2);
+  const [reeferHumidity, setReeferHumidity] = useState(88);
+  const [doorStatus, setDoorStatus] = useState<'SEALED' | 'AJAR'>('SEALED');
+  const [vibrationG, setVibrationG] = useState(0.4);
+  const [simulatedSpike, setSimulatedSpike] = useState(false);
+
+  // Transit Gate Pass Modal States
+  const [showGatePassModal, setShowGatePassModal] = useState(false);
+  const [gatePassConsignment, setGatePassConsignment] = useState<any>(null);
+
+  const handleToggleSpike = () => {
+    if (!simulatedSpike) {
+      setSimulatedSpike(true);
+      setReeferTemp(12.6);
+      setDoorStatus('AJAR');
+      setVibrationG(1.8);
+      setReeferHumidity(72);
+    } else {
+      setSimulatedSpike(false);
+      setReeferTemp(4.2);
+      setDoorStatus('SEALED');
+      setVibrationG(0.4);
+      setReeferHumidity(88);
+    }
+  };
 
   // Per-order inputs & states
   const [pickupInputs, setPickupInputs] = useState<Record<string, string>>({});
@@ -395,11 +428,79 @@ export default function TransporterDashboardPage() {
             <Navigation className="w-4 h-4" />
             <span>AI Route Optimizer</span>
           </button>
+
+          <button
+            onClick={() => setActiveTab('telemetry')}
+            className={`px-5 py-2.5 rounded-2xl text-xs font-extrabold transition flex items-center gap-2 ${
+              activeTab === 'telemetry'
+                ? 'bg-[#0F3826] dark:bg-emerald-700 text-amber-400 dark:text-amber-200 shadow-md'
+                : 'bg-emerald-950/10 dark:bg-emerald-900/30 text-emerald-950 dark:text-emerald-200 hover:bg-emerald-900/10 dark:hover:bg-emerald-800/40'
+            }`}
+          >
+            <Thermometer className="w-4 h-4 text-cyan-500" />
+            <span>❄️ Cold-Chain IoT</span>
+            {simulatedSpike && (
+              <span className="px-1.5 py-0.5 bg-red-500 text-white rounded-full text-[9px] font-black animate-ping">
+                !
+              </span>
+            )}
+          </button>
         </div>
 
         {/* TAB 1: ACTIVE TRIPS & 2-STAGE OTP VERIFICATION */}
         {activeTab === 'active' && (
           <div className="space-y-6">
+            {/* Quick Fleet IoT & Anti-Harassment Gate Pass Bar */}
+            <div className="bg-gradient-to-r from-emerald-900 via-emerald-800 to-teal-900 text-white p-4 sm:p-5 rounded-3xl shadow-lg border border-emerald-500/30 flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <div className={`p-2.5 rounded-2xl ${simulatedSpike ? 'bg-red-500/30 text-red-300 animate-pulse' : 'bg-cyan-500/20 text-cyan-300'}`}>
+                  <Thermometer className="w-5 h-5" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="font-extrabold text-sm">Vehicle Cold-Chain (MH-15-EG-8821)</span>
+                    <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${simulatedSpike ? 'bg-red-500 text-white animate-bounce' : 'bg-emerald-500/30 text-emerald-200'}`}>
+                      {simulatedSpike ? '⚠️ Spoilage Warning' : 'Optimal 4.2°C'}
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-emerald-200/80">
+                    Cabin: {reeferTemp}°C • Humidity: {reeferHumidity}% • Door: {doorStatus} • G-Force: {vibrationG}G
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2 shrink-0">
+                <button
+                  type="button"
+                  onClick={() => setActiveTab('telemetry')}
+                  className="px-3.5 py-2 bg-white/10 hover:bg-white/20 text-cyan-200 rounded-xl text-xs font-bold border border-cyan-400/30 transition flex items-center gap-1.5"
+                >
+                  <Activity className="w-3.5 h-3.5 text-cyan-300" />
+                  <span>IoT Dashboard</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setGatePassConsignment({
+                      orderId: activeOrders[0]?.id || 'ORD-TRN-8821',
+                      cropName: activeOrders[0]?.items?.[0]?.crop_name || 'Nashik Hybrid Produce',
+                      quantityKg: activeOrders[0]?.items?.[0]?.quantity || 500,
+                      farmerName: activeOrders[0]?.farmer_name || 'Ramesh Patil',
+                      buyerName: activeOrders[0]?.buyer_name || 'Annapurna Food Services',
+                      destinationAddress: activeOrders[0]?.delivery_address || 'Sector 19, Vashi Mandi Road, Navi Mumbai',
+                      vehicleNumber: 'MH-15-EG-8821',
+                      driverName: userName || 'Vikram Shinde',
+                    });
+                    setShowGatePassModal(true);
+                  }}
+                  className="px-3.5 py-2 bg-amber-500 hover:bg-amber-600 text-emerald-950 rounded-xl text-xs font-extrabold shadow transition flex items-center gap-1.5"
+                >
+                  <FileText className="w-3.5 h-3.5" />
+                  <span>🏛️ Official Gate Pass</span>
+                </button>
+              </div>
+            </div>
             {activeOrders.length === 0 ? (
               <div className="bg-white dark:bg-[#0c1f15] p-12 rounded-3xl border border-emerald-900/10 dark:border-emerald-500/20 text-center space-y-4 shadow-sm">
                 <div className="w-16 h-16 bg-emerald-50 dark:bg-emerald-900/40 text-emerald-800 dark:text-emerald-200 rounded-full flex items-center justify-center mx-auto">
@@ -1124,6 +1225,233 @@ export default function TransporterDashboardPage() {
           </div>
         )}
 
+        {/* TAB 5: COLD-CHAIN IOT TELEMETRY & SPOILAGE AI */}
+        {activeTab === 'telemetry' && (
+          <div className="space-y-6 animate-fadeIn">
+            {/* Telemetry Header */}
+            <div className="bg-gradient-to-r from-emerald-950 via-[#072417] to-cyan-950 text-white p-6 rounded-3xl border border-cyan-500/30 shadow-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div className="space-y-1">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/20 text-cyan-300 font-extrabold text-xs">
+                  <Activity className="w-3.5 h-3.5" />
+                  <span>Real-Time Vehicle IoT Telemetry • MH-15-EG-8821</span>
+                </div>
+                <h2 className="text-xl sm:text-2xl font-black text-white">
+                  Cold-Chain Health & Spoilage AI Monitor
+                </h2>
+                <p className="text-xs text-cyan-100/80">
+                  Continuous sensor telemetry across temperature, humidity, container seal & road shock.
+                </p>
+              </div>
+
+              <div className="flex items-center gap-3 shrink-0">
+                <button
+                  type="button"
+                  onClick={handleToggleSpike}
+                  className={`px-4 py-2.5 rounded-xl font-extrabold text-xs shadow-lg transition flex items-center gap-2 ${
+                    simulatedSpike
+                      ? 'bg-red-600 hover:bg-red-700 text-white animate-pulse'
+                      : 'bg-cyan-600 hover:bg-cyan-700 text-white'
+                  }`}
+                >
+                  <AlertTriangle className="w-4 h-4" />
+                  <span>{simulatedSpike ? 'Reset to Optimal 4°C' : '⚡ Simulate Temp Spike (>12°C)'}</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setGatePassConsignment({
+                      orderId: activeOrders[0]?.id || 'ORD-TRN-8821',
+                      cropName: activeOrders[0]?.items?.[0]?.crop_name || 'Nashik Organic Tomatoes (Grade A+)',
+                      quantityKg: activeOrders[0]?.items?.[0]?.quantity || 500,
+                      farmerName: activeOrders[0]?.farmer_name || 'Ramesh Patil',
+                      buyerName: activeOrders[0]?.buyer_name || 'Annapurna Food Services',
+                      destinationAddress: activeOrders[0]?.delivery_address || 'Sector 19, Vashi Mandi Road, Navi Mumbai',
+                      vehicleNumber: 'MH-15-EG-8821',
+                      driverName: userName || 'Vikram Shinde',
+                    });
+                    setShowGatePassModal(true);
+                  }}
+                  className="px-4 py-2.5 bg-amber-500 hover:bg-amber-600 text-emerald-950 font-extrabold text-xs rounded-xl shadow transition flex items-center gap-1.5"
+                >
+                  <FileText className="w-4 h-4" />
+                  <span>Gate Pass</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Live Sensor Metrics 4-Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {/* Temp */}
+              <div className={`p-5 rounded-2xl border transition-all ${
+                simulatedSpike
+                  ? 'bg-red-50 dark:bg-red-950/30 border-red-500/50 shadow-lg'
+                  : 'bg-white dark:bg-[#081B13] border-emerald-900/15 dark:border-emerald-500/30 shadow-sm'
+              }`}>
+                <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
+                  <span className="font-bold uppercase tracking-wider">Reefer Cabin Temp</span>
+                  <Thermometer className={`w-4 h-4 ${simulatedSpike ? 'text-red-600' : 'text-cyan-500'}`} />
+                </div>
+                <div className="mt-2 flex items-baseline gap-2">
+                  <span className={`text-3xl font-black font-mono ${
+                    simulatedSpike ? 'text-red-600 dark:text-red-400' : 'text-cyan-600 dark:text-cyan-400'
+                  }`}>
+                    {reeferTemp}°C
+                  </span>
+                  <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                    simulatedSpike ? 'bg-red-100 text-red-800' : 'bg-cyan-100 text-cyan-800'
+                  }`}>
+                    {simulatedSpike ? 'Critical Surge' : 'Safe (2°C-6°C)'}
+                  </span>
+                </div>
+                <p className="text-[11px] text-gray-500 mt-2">Sensor: SHT31 Digital Thermal Probe</p>
+              </div>
+
+              {/* Humidity */}
+              <div className="bg-white dark:bg-[#081B13] p-5 rounded-2xl border border-emerald-900/15 dark:border-emerald-500/30 shadow-sm">
+                <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
+                  <span className="font-bold uppercase tracking-wider">Relative Humidity</span>
+                  <Droplets className="w-4 h-4 text-blue-500" />
+                </div>
+                <div className="mt-2 flex items-baseline gap-2">
+                  <span className="text-3xl font-black font-mono text-blue-600 dark:text-blue-400">
+                    {reeferHumidity}%
+                  </span>
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-100 dark:bg-blue-950 text-blue-800 dark:text-blue-300">
+                    Optimal Vapor
+                  </span>
+                </div>
+                <p className="text-[11px] text-gray-500 mt-2">Prevents Produce Transpiration Loss</p>
+              </div>
+
+              {/* Door Seal */}
+              <div className="bg-white dark:bg-[#081B13] p-5 rounded-2xl border border-emerald-900/15 dark:border-emerald-500/30 shadow-sm">
+                <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
+                  <span className="font-bold uppercase tracking-wider">Container Door Seal</span>
+                  <ShieldCheck className={`w-4 h-4 ${doorStatus === 'SEALED' ? 'text-emerald-600' : 'text-amber-500'}`} />
+                </div>
+                <div className="mt-2 flex items-baseline gap-2">
+                  <span className={`text-2xl font-black font-mono ${
+                    doorStatus === 'SEALED' ? 'text-emerald-700 dark:text-emerald-400' : 'text-amber-600 dark:text-amber-400'
+                  }`}>
+                    {doorStatus}
+                  </span>
+                  <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                    doorStatus === 'SEALED' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'
+                  }`}>
+                    {doorStatus === 'SEALED' ? 'Zero Bleed' : 'Door Ajar!'}
+                  </span>
+                </div>
+                <p className="text-[11px] text-gray-500 mt-2">Sensor: Hall-Effect Magnetic Seal</p>
+              </div>
+
+              {/* Vibration */}
+              <div className="bg-white dark:bg-[#081B13] p-5 rounded-2xl border border-emerald-900/15 dark:border-emerald-500/30 shadow-sm">
+                <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
+                  <span className="font-bold uppercase tracking-wider">Road Shock / G-Force</span>
+                  <Activity className="w-4 h-4 text-emerald-600" />
+                </div>
+                <div className="mt-2 flex items-baseline gap-2">
+                  <span className="text-3xl font-black font-mono text-emerald-800 dark:text-emerald-300">
+                    {vibrationG}G
+                  </span>
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300">
+                    {vibrationG < 1.2 ? 'Smooth Transit' : 'Bumpy Highway'}
+                  </span>
+                </div>
+                <p className="text-[11px] text-gray-500 mt-2">Sensor: ADXL345 3-Axis Accelerometer</p>
+              </div>
+            </div>
+
+            {/* Nira Spoilage AI Warning Banner (Conditional) */}
+            {simulatedSpike ? (
+              <div className="p-6 bg-red-50 dark:bg-red-950/40 border-2 border-red-500 rounded-3xl space-y-4 shadow-xl animate-fadeIn">
+                <div className="flex items-center gap-3 text-red-700 dark:text-red-300">
+                  <div className="p-3 bg-red-100 dark:bg-red-900/50 rounded-2xl">
+                    <AlertTriangle className="w-6 h-6 text-red-600 animate-bounce" />
+                  </div>
+                  <div>
+                    <h3 className="text-base font-black text-red-950 dark:text-red-100">
+                      CRITICAL COLD-CHAIN BREACH DETECTED (12.6°C)
+                    </h3>
+                    <p className="text-xs text-red-800 dark:text-red-300">
+                      Reefer compressor temperature exceeded the 8°C perishable threshold for 22 minutes.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="p-4 bg-white dark:bg-[#0c1f15] rounded-2xl border border-red-200 dark:border-red-900/50 text-xs space-y-2 text-gray-800 dark:text-gray-200">
+                  <div className="flex justify-between font-bold">
+                    <span>Estimated Produce Quality Impact:</span>
+                    <span className="text-red-600 font-extrabold">-45% Shelf-Life Degradation Rate</span>
+                  </div>
+                  <div className="flex justify-between font-bold">
+                    <span>Target Perishable:</span>
+                    <span>Tomato / Fresh Vegetables (Solanine & Soft Rot Risk)</span>
+                  </div>
+                  <div className="pt-2 border-t border-gray-200 dark:border-gray-800 text-[11px] text-gray-600 dark:text-gray-400">
+                    <strong>Nira Spoilage AI Autonomous Advisory:</strong> Rather than continuing the full 145 km to Mumbai Vashi where produce may arrive Grade B, AI recommends an emergency divert to 
+                    <strong className="text-emerald-700 dark:text-emerald-400"> Nashik Agro Collection Hub #02 Cold Vault (14 km away) </strong>
+                    or broadcasting an automated 15% salvage discount to nearby ketchup & puree processors.
+                  </div>
+                </div>
+
+                <div className="flex flex-wrap gap-3">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      alert('✅ AI Emergency Reroute Accepted! Navigation GPS updated to Nashik Agro Hub #02 Cold Storage Vault (14 km away).');
+                      handleToggleSpike();
+                    }}
+                    className="px-5 py-2.5 bg-emerald-800 hover:bg-emerald-900 text-white font-extrabold text-xs rounded-xl shadow transition flex items-center gap-2"
+                  >
+                    <CheckCircle2 className="w-4 h-4 text-emerald-300" />
+                    <span>Accept AI Reroute to Cold Storage Hub (14 km)</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={handleToggleSpike}
+                    className="px-4 py-2.5 bg-gray-200 hover:bg-gray-300 dark:bg-white/10 dark:hover:bg-white/20 text-gray-800 dark:text-gray-200 font-bold text-xs rounded-xl transition"
+                  >
+                    Dismiss Simulation
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div className="p-5 bg-emerald-50/60 dark:bg-emerald-950/20 border border-emerald-500/30 rounded-3xl flex items-center justify-between gap-4 text-xs">
+                <div className="flex items-center gap-3">
+                  <div className="p-2.5 bg-emerald-100 dark:bg-emerald-900/40 text-emerald-800 dark:text-emerald-300 rounded-2xl">
+                    <CheckCircle2 className="w-5 h-5 text-emerald-600" />
+                  </div>
+                  <div>
+                    <h4 className="font-extrabold text-emerald-950 dark:text-emerald-100">
+                      Cold-Chain Integrity 100% Guaranteed
+                    </h4>
+                    <p className="text-emerald-900/70 dark:text-emerald-300/70 text-[11px]">
+                      Zero thermal breaches detected. Produce will arrive at buyer destination at peak harvest freshness.
+                    </p>
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={handleToggleSpike}
+                  className="px-3.5 py-2 bg-white dark:bg-[#0c1f15] hover:bg-emerald-50 dark:hover:bg-emerald-900/30 text-emerald-900 dark:text-emerald-200 rounded-xl text-xs font-bold border border-emerald-900/10 shadow-sm shrink-0"
+                >
+                  Simulate Sensor Event
+                </button>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Official Agri Transit Gate Pass Modal */}
+        <TransitGatePassModal
+          isOpen={showGatePassModal}
+          onClose={() => setShowGatePassModal(false)}
+          consignment={gatePassConsignment}
+        />
       </div>
     </PortalGuard>
   );
