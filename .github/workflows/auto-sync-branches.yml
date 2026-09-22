@@ -1,0 +1,43 @@
+name: Auto Sync Collaborator Branches to Main
+
+on:
+  push:
+    branches-ignore:
+      - main
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  auto-sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Git identity
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Merge branch into main
+        run: |
+          BRANCH_NAME="${{ github.ref_name }}"
+          echo "Syncing branch $BRANCH_NAME to main..."
+          
+          git checkout main
+          git pull origin main --rebase=false
+
+          # Attempt fast-forward or standard merge
+          if git merge origin/$BRANCH_NAME -m "chore(auto-sync): auto merge $BRANCH_NAME into main for live deployment" --allow-unrelated-histories; then
+            echo "Successfully merged $BRANCH_NAME into main. Pushing..."
+            git push origin main
+            echo "Production deployment triggered on Vercel!"
+          else
+            echo "Merge conflict encountered. Aborting direct merge and creating automated PR."
+            git merge --abort || true
+          fi
