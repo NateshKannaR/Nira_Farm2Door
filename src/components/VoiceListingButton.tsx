@@ -74,9 +74,17 @@ export default function VoiceListingButton({ onExtracted }: VoiceListingButtonPr
           if (event.error === 'not-allowed') {
             setErrorMsg(
               language === 'hi'
-                ? 'माइक्रोफ़ोन अनुमति नहीं मिली। आप नीचे दिए गए उदाहरणों पर क्लिक करके भी आज़मा सकते हैं।'
-                : 'Microphone permission blocked. You can also tap any preset sample below.'
+                ? 'माइक्रोफ़ोन सिस्टम स्तर पर म्यूट है (टॉप बार में 🎙️❌ चेक करें) या नीचे दिए गए उदाहरणों में से चुनें।'
+                : 'Microphone is muted at system level (notice the 🎙️❌ icon in your top bar) or choose a preset sample below.'
             );
+          } else if (event.error === 'network') {
+            setErrorMsg(
+              language === 'hi'
+                ? 'ब्राउज़र वॉयस नेटवर्क अनुपलब्ध है। आप नीचे दिए गए उदाहरणों या टाइपिंग का उपयोग कर सकते हैं।'
+                : 'Browser cloud speech service unavailable. You can type or tap any preset sample below.'
+            );
+          } else {
+            setErrorMsg(`Mic note: ${event.error}. You can also type or use presets below.`);
           }
         };
 
@@ -92,22 +100,14 @@ export default function VoiceListingButton({ onExtracted }: VoiceListingButtonPr
   const startListening = async () => {
     setErrorMsg(null);
     setStatusMessage(null);
-    setTranscript('');
 
+    // If mediaDevices is available, attempt a non-blocking check
     if (typeof window !== 'undefined' && navigator?.mediaDevices?.getUserMedia) {
       try {
         const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
         stream.getTracks().forEach((t) => t.stop());
       } catch (err: any) {
-        console.warn('Microphone permission check:', err);
-        if (err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError') {
-          setErrorMsg(
-            language === 'hi'
-              ? 'माइक्रोफ़ोन अनुमति ब्लॉक है। कृपया ब्राउज़र URL बार में 🔒 या सेटिंग्स आइकन पर क्लिक करके Microphone को "Allow" करें।'
-              : 'Microphone permission blocked in Chrome. Click the site settings icon (left of localhost:3000 in your URL bar) and switch Microphone to "Allow".'
-          );
-          return;
-        }
+        console.warn('Microphone permission check notice:', err);
       }
     }
 
@@ -116,13 +116,18 @@ export default function VoiceListingButton({ onExtracted }: VoiceListingButtonPr
         recognitionRef.current.lang = language === 'hi' ? 'hi-IN' : 'en-IN';
         recognitionRef.current.start();
         setIsListening(true);
-      } catch (err) {
+      } catch (err: any) {
         console.warn('Failed to start speech recognition:', err);
+        setErrorMsg(
+          language === 'hi'
+            ? 'माइक शुरू नहीं हो सका। कृपया नीचे दिए गए उदाहरणों में से चुनें या वाक्य टाइप करें।'
+            : 'Could not start mic listener. Check the 🎙️❌ mute icon in your top bar, or choose a preset below.'
+        );
       }
     } else {
       setErrorMsg(
         language === 'hi'
-          ? 'आपका ब्राउज़र सीधे माइक्रोफ़ोन को सपोर्ट नहीं करता, कृपया नीचे दिए गए उदाहरणों में से चुनें।'
+          ? 'यह ब्राउज़र सीधे माइक्रोफ़ोन को सपोर्ट नहीं करता, कृपया नीचे दिए गए उदाहरणों में से चुनें।'
           : 'Speech recognition not supported in this browser. Please select a sample prompt below.'
       );
     }
@@ -251,11 +256,31 @@ export default function VoiceListingButton({ onExtracted }: VoiceListingButtonPr
                   : 'Tap the mic to start speaking'}
               </p>
 
-              {transcript && (
-                <div className="w-full p-3 bg-white dark:bg-[#07170f] rounded-xl border border-amber-500/30 text-xs font-medium text-gray-800 dark:text-gray-200 shadow-inner">
-                  "{transcript}"
+              <div className="w-full space-y-1.5 text-left">
+                <div className="flex items-center justify-between text-[11px] font-bold text-gray-700 dark:text-gray-300">
+                  <span>{language === 'hi' ? 'बोले गए शब्द (या टाइप करें):' : 'Spoken Speech (or Type Here):'}</span>
+                  {transcript && (
+                    <button
+                      type="button"
+                      onClick={() => setTranscript('')}
+                      className="text-amber-600 dark:text-amber-400 hover:underline text-[10px] font-bold"
+                    >
+                      {language === 'hi' ? 'साफ़ करें' : 'Clear'}
+                    </button>
+                  )}
                 </div>
-              )}
+                <textarea
+                  rows={2}
+                  value={transcript}
+                  onChange={(e) => setTranscript(e.target.value)}
+                  placeholder={
+                    language === 'hi'
+                      ? 'माइक से बोलें या यहाँ लिखें: "मेरे पास 800 किलो नासिक प्याज है 22 रुपये प्रति किलो"'
+                      : 'Speak into mic or type here: "I have 500 kg Grade A organic tomatoes at 30 rupees per kg"'
+                  }
+                  className="w-full p-3 bg-white dark:bg-[#07170f] rounded-xl border border-amber-500/30 text-xs font-medium text-gray-800 dark:text-gray-200 shadow-inner focus:outline-none focus:ring-2 focus:ring-amber-500 resize-none"
+                />
+              </div>
             </div>
 
             {/* Status & Error */}
