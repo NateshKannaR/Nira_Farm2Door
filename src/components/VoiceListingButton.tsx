@@ -267,9 +267,18 @@ export default function VoiceListingButton({ onExtracted }: VoiceListingButtonPr
             )}
 
             {errorMsg && (
-              <div className="p-3 bg-red-50 dark:bg-red-950/40 border border-red-500/30 rounded-xl text-xs text-red-800 dark:text-red-200 font-bold flex items-center gap-2">
-                <AlertCircle className="w-4 h-4 text-red-600 flex-shrink-0" />
-                <span>{errorMsg}</span>
+              <div className="p-3 bg-red-50 dark:bg-red-950/40 border border-red-500/30 rounded-xl text-xs text-red-800 dark:text-red-200 font-bold flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <div className="flex items-center gap-2">
+                  <AlertCircle className="w-4 h-4 text-red-600 flex-shrink-0" />
+                  <span>{errorMsg}</span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => window.location.reload()}
+                  className="px-3 py-1 bg-amber-500 hover:bg-amber-600 text-emerald-950 rounded-lg text-[11px] font-black whitespace-nowrap shadow transition self-end sm:self-auto"
+                >
+                  {language === 'hi' ? '🔄 पेज रीलोड करें (Apply)' : '🔄 Reload Page to Apply'}
+                </button>
               </div>
             )}
 
