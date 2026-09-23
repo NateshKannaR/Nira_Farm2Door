@@ -705,14 +705,19 @@ export default function FarmerDashboardPage() {
 
             <button
               onClick={() => {
+                const latestOrder = farmerOrders && farmerOrders.length > 0 ? farmerOrders[0] : null;
                 setGatePassConsignment({
-                  cropName: myListings[0]?.crop || 'Fresh Farm Produce',
-                  quantityKg: myListings[0]?.qty || 500,
+                  orderId: latestOrder?.id || 'ORD-NIRA-2026-8910',
+                  cropName: latestOrder?.items?.[0]?.crop_name || myListings[0]?.crop || 'Fresh Farm Produce',
+                  quantityKg: latestOrder?.items?.[0]?.quantity || myListings[0]?.qty || 500,
                   farmerName: userName || 'Ramesh Patil',
                   farmerVillage: 'Pimpalgaon Baswant, Nashik, MH',
-                  buyerName: 'Verified Direct Buyer Hub',
-                  vehicleNumber: 'MH-15-EG-8821',
-                  driverName: 'Vikram Shinde',
+                  buyerName: latestOrder?.shipping?.fullName || latestOrder?.recipient_name || latestOrder?.buyer_name || 'Verified Direct Buyer Hub',
+                  destinationAddress: latestOrder?.delivery_address || 'Direct Buyer Mandi Collection Hub',
+                  vehicleNumber: latestOrder?.driver_vehicle || 'MH-15-EG-8821',
+                  driverName: latestOrder?.driver_name || 'Vikram Shinde',
+                  driverPhone: latestOrder?.driver_phone || '+91 99000 11122',
+                  pickupOtpVerified: latestOrder?.status === 'DELIVERED' || latestOrder?.status === 'IN_TRANSIT',
                 });
                 setShowGatePassModal(true);
               }}
@@ -832,8 +837,33 @@ export default function FarmerDashboardPage() {
 
                 return (
                   <div key={ord.id} className="p-4 bg-white rounded-2xl border border-emerald-900/10 shadow-sm space-y-3">
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs font-mono font-bold text-emerald-800">#{ord.id}</span>
+                    <div className="flex items-center justify-between flex-wrap gap-2">
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs font-mono font-bold text-emerald-800">#{ord.id}</span>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setGatePassConsignment({
+                              orderId: ord.id,
+                              cropName: ord.items?.[0]?.crop_name || 'Fresh Produce',
+                              quantityKg: ord.items?.[0]?.quantity || 500,
+                              farmerName: userName || 'Ramesh Patil',
+                              farmerVillage: 'Pimpalgaon Baswant, Nashik, MH',
+                              buyerName: ord.shipping?.fullName || ord.recipient_name || ord.buyer_name || 'Verified Direct Buyer Hub',
+                              destinationAddress: ord.delivery_address || (ord.shipping?.flatBuilding ? `${ord.shipping.flatBuilding}, ${ord.shipping.areaStreet}` : 'Direct Buyer Mandi Collection Hub'),
+                              vehicleNumber: ord.driver_vehicle || 'MH-15-EG-8821',
+                              driverName: ord.driver_name || 'Vikram Shinde',
+                              driverPhone: ord.driver_phone || '+91 99000 11122',
+                              pickupOtpVerified: isPickedUp || isDelivered,
+                            });
+                            setShowGatePassModal(true);
+                          }}
+                          className="px-2 py-0.5 bg-[#0F3826] hover:bg-emerald-900 text-amber-300 font-extrabold text-[10px] rounded-lg shadow-sm flex items-center gap-1 transition"
+                        >
+                          <FileText className="w-3 h-3 text-amber-400" />
+                          <span>🏛️ Gate Pass</span>
+                        </button>
+                      </div>
                       <span className={`text-[10px] px-2.5 py-0.5 font-extrabold rounded-full ${
                         isDelivered
                           ? 'bg-emerald-100 text-emerald-900 border border-emerald-300'
