@@ -26,7 +26,17 @@ interface AuthContextType {
   resetPassword: (email: string) => Promise<{ success: boolean; message?: string; error?: string }>;
   signInWithGoogle: () => Promise<void>;
   developerLogin: () => void;
+  loginAsDemoRole: (role: UserRole) => void;
 }
+
+export const DEMO_PERSONAS: Record<UserRole, AuthUser> = {
+  FARMER: { id: 'u_farmer_1', name: 'Ramesh Patil (Lead Farmer)', email: 'farmer@nira.ai', role: 'FARMER', phone: '9876543210' },
+  BUYER: { id: 'u_buyer_2', name: 'Annapurna Hotel & Catering', email: 'buyer@nira.ai', role: 'BUYER', phone: '9822233344' },
+  HUB_OPERATOR: { id: 'u_hub_1', name: 'Rajesh Kulkarni (Quality Inspector)', email: 'rajesh.hub@nira.ai', role: 'HUB_OPERATOR', phone: '9900088877' },
+  TRANSPORTER: { id: 'u_partner_1', name: 'Vikram Shinde Fleet Logistics', email: 'transporter@nira.ai', role: 'TRANSPORTER', phone: '9900011122' },
+  FPO: { id: 'u_fpo_1', name: 'Sanjay Deshmukh (FPO Lead)', email: 'fpo@nira.ai', role: 'FPO', phone: '9876543219' },
+  ADMIN: { id: 'u_dev_master', name: 'Natesh (National Governance & Admin)', email: 'natesh@nira.ai', role: 'ADMIN', phone: '9999999999' },
+};
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -417,6 +427,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     closeAuthModal();
   };
 
+  const loginAsDemoRole = (targetRole: UserRole) => {
+    const persona = DEMO_PERSONAS[targetRole] || DEMO_PERSONAS.FARMER;
+    setUser(persona);
+    localStorage.setItem('nira_manual_login', 'true');
+    localStorage.setItem('nira_auth_user', JSON.stringify(persona));
+    localStorage.setItem('nira_role', targetRole);
+    closeAuthModal();
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -433,6 +452,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         resetPassword,
         signInWithGoogle,
         developerLogin,
+        loginAsDemoRole,
       }}
     >
       {children}

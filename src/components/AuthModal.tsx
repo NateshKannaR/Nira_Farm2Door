@@ -30,6 +30,7 @@ export default function AuthModal() {
     resetPassword,
     signInWithGoogle,
     developerLogin,
+    loginAsDemoRole,
   } = useAuth();
   const { language } = useLanguage();
 
@@ -292,56 +293,41 @@ export default function AuthModal() {
               <div className="p-3 bg-emerald-900/5 dark:bg-emerald-950/50 rounded-2xl border border-emerald-900/10 dark:border-emerald-500/20 space-y-2">
                 <p className="text-[10px] font-bold text-amber-900 dark:text-amber-300 flex items-center gap-1">
                   <Sparkles className="w-3 h-3 text-amber-600 dark:text-amber-400" />
-                  <span>Instant Quick Demo Login Accounts:</span>
+                  <span>Instant 1-Click Quick Demo Login Accounts:</span>
                 </p>
                 <div className="grid grid-cols-2 gap-1.5 text-[11px] font-extrabold">
                   <button
                     type="button"
-                    onClick={() => {
-                      setEmail('farmer@nira.ai');
-                      setPassword('Kisan#9824!Agri');
-                    }}
-                    className="p-2 bg-white dark:bg-[#07170f] hover:bg-amber-100/60 dark:hover:bg-emerald-900/40 border border-emerald-900/10 dark:border-emerald-500/20 rounded-xl text-left truncate text-emerald-950 dark:text-emerald-100 transition"
+                    onClick={() => loginAsDemoRole('FARMER')}
+                    className="p-2 bg-white dark:bg-[#07170f] hover:bg-amber-100/60 dark:hover:bg-emerald-900/40 border border-emerald-900/10 dark:border-emerald-500/20 rounded-xl text-left truncate text-emerald-950 dark:text-emerald-100 transition active:scale-95 cursor-pointer"
                   >
                     🚜 Ramesh Patil (Farmer)
                   </button>
                   <button
                     type="button"
-                    onClick={() => {
-                      setEmail('buyer@nira.ai');
-                      setPassword('Kisan#9824!Agri');
-                    }}
-                    className="p-2 bg-white dark:bg-[#07170f] hover:bg-amber-100/60 dark:hover:bg-emerald-900/40 border border-emerald-900/10 dark:border-emerald-500/20 rounded-xl text-left truncate text-emerald-950 dark:text-emerald-100 transition"
+                    onClick={() => loginAsDemoRole('BUYER')}
+                    className="p-2 bg-white dark:bg-[#07170f] hover:bg-amber-100/60 dark:hover:bg-emerald-900/40 border border-emerald-900/10 dark:border-emerald-500/20 rounded-xl text-left truncate text-emerald-950 dark:text-emerald-100 transition active:scale-95 cursor-pointer"
                   >
                     🛒 Annapurna (Buyer)
                   </button>
                   <button
                     type="button"
-                    onClick={() => {
-                      setEmail('fpo@nira.ai');
-                      setPassword('Kisan#9824!Agri');
-                    }}
-                    className="p-2 bg-white dark:bg-[#07170f] hover:bg-amber-100/60 dark:hover:bg-emerald-900/40 border border-emerald-900/10 dark:border-emerald-500/20 rounded-xl text-left truncate text-emerald-950 dark:text-emerald-100 transition"
+                    onClick={() => loginAsDemoRole('FPO')}
+                    className="p-2 bg-white dark:bg-[#07170f] hover:bg-amber-100/60 dark:hover:bg-emerald-900/40 border border-emerald-900/10 dark:border-emerald-500/20 rounded-xl text-left truncate text-emerald-950 dark:text-emerald-100 transition active:scale-95 cursor-pointer"
                   >
                     🏢 Sanjay Lead (FPO)
                   </button>
                   <button
                     type="button"
-                    onClick={() => {
-                      setEmail('rajesh.hub@nira.ai');
-                      setPassword('Kisan#9824!Agri');
-                    }}
-                    className="p-2 bg-white dark:bg-[#07170f] hover:bg-amber-100/60 dark:hover:bg-emerald-900/40 border border-emerald-900/10 dark:border-emerald-500/20 rounded-xl text-left truncate text-emerald-950 dark:text-emerald-100 transition"
+                    onClick={() => loginAsDemoRole('HUB_OPERATOR')}
+                    className="p-2 bg-white dark:bg-[#07170f] hover:bg-amber-100/60 dark:hover:bg-emerald-900/40 border border-emerald-900/10 dark:border-emerald-500/20 rounded-xl text-left truncate text-emerald-950 dark:text-emerald-100 transition active:scale-95 cursor-pointer"
                   >
                     🔬 Rajesh (Hub Inspector)
                   </button>
                   <button
                     type="button"
-                    onClick={() => {
-                      setEmail('natesh@nira.ai');
-                      setPassword('dev');
-                    }}
-                    className="p-2 bg-amber-50 hover:bg-amber-100/80 border border-amber-500/30 rounded-xl text-left truncate text-amber-950 transition font-black col-span-2 text-center"
+                    onClick={() => developerLogin()}
+                    className="p-2 bg-amber-50 hover:bg-amber-100/80 border border-amber-500/30 rounded-xl text-left truncate text-amber-950 transition font-black col-span-2 text-center active:scale-95 cursor-pointer"
                   >
                     ⚡ Natesh Dev God Mode (Full Access)
                   </button>

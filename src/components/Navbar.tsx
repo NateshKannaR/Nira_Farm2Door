@@ -43,7 +43,7 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
     supportedLanguages
   } = useLanguage();
   const { role, setRole, userName, isDeveloperMode } = useRole();
-  const { user, isAuthenticated, openAuthModal, logout } = useAuth();
+  const { user, isAuthenticated, openAuthModal, logout, loginAsDemoRole } = useAuth();
   const { itemCount, setIsCartOpen } = useCart();
   const { theme, resolvedTheme, toggleTheme } = useTheme();
   const [showProfileMenu, setShowProfileMenu] = useState(false);
@@ -52,13 +52,26 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
   const profileRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (pathname === '/farmer') setRole('FARMER');
-    else if (pathname === '/fpo') setRole('FPO');
-    else if (pathname === '/buyer') setRole('BUYER');
-    else if (pathname === '/hub') setRole('HUB_OPERATOR');
-    else if (pathname === '/transporter') setRole('TRANSPORTER');
-    else if (pathname === '/admin') setRole('ADMIN');
-  }, [pathname, setRole]);
+    if (pathname === '/farmer') {
+      setRole('FARMER');
+      if (!user) loginAsDemoRole('FARMER');
+    } else if (pathname === '/fpo') {
+      setRole('FPO');
+      if (!user) loginAsDemoRole('FPO');
+    } else if (pathname === '/buyer') {
+      setRole('BUYER');
+      if (!user) loginAsDemoRole('BUYER');
+    } else if (pathname === '/hub') {
+      setRole('HUB_OPERATOR');
+      if (!user) loginAsDemoRole('HUB_OPERATOR');
+    } else if (pathname === '/transporter') {
+      setRole('TRANSPORTER');
+      if (!user) loginAsDemoRole('TRANSPORTER');
+    } else if (pathname === '/admin') {
+      setRole('ADMIN');
+      if (!user) loginAsDemoRole('ADMIN');
+    }
+  }, [pathname, setRole, user, loginAsDemoRole]);
 
   // Close dropdowns on outside click or Escape key
   useEffect(() => {
@@ -152,7 +165,10 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
 
           <Link
             href="/farmer"
-            onClick={() => setRole('FARMER')}
+            onClick={() => {
+              setRole('FARMER');
+              loginAsDemoRole('FARMER');
+            }}
             className={`px-3 py-1.5 rounded-xl transition ${
               pathname === '/farmer'
                 ? 'bg-[#0F3826] text-amber-50 shadow-sm'
@@ -164,7 +180,10 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
 
           <Link
             href="/fpo"
-            onClick={() => setRole('FPO')}
+            onClick={() => {
+              setRole('FPO');
+              loginAsDemoRole('FPO');
+            }}
             className={`px-3 py-1.5 rounded-xl transition ${
               pathname === '/fpo'
                 ? 'bg-[#0F3826] text-amber-50 shadow-sm'
@@ -176,7 +195,10 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
 
           <Link
             href="/buyer"
-            onClick={() => setRole('BUYER')}
+            onClick={() => {
+              setRole('BUYER');
+              loginAsDemoRole('BUYER');
+            }}
             className={`px-3 py-1.5 rounded-xl transition ${
               pathname === '/buyer'
                 ? 'bg-[#0F3826] text-amber-50 shadow-sm'
@@ -188,7 +210,10 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
 
           <Link
             href="/hub"
-            onClick={() => setRole('HUB_OPERATOR')}
+            onClick={() => {
+              setRole('HUB_OPERATOR');
+              loginAsDemoRole('HUB_OPERATOR');
+            }}
             className={`px-3 py-1.5 rounded-xl transition ${
               pathname === '/hub'
                 ? 'bg-[#0F3826] text-amber-50 shadow-sm'
@@ -200,7 +225,10 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
 
           <Link
             href="/transporter"
-            onClick={() => setRole('TRANSPORTER')}
+            onClick={() => {
+              setRole('TRANSPORTER');
+              loginAsDemoRole('TRANSPORTER');
+            }}
             className={`px-3 py-1.5 rounded-xl transition ${
               pathname === '/transporter'
                 ? 'bg-[#0F3826] text-amber-50 shadow-sm'
@@ -212,7 +240,10 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
 
           <Link
             href="/admin"
-            onClick={() => setRole('ADMIN')}
+            onClick={() => {
+              setRole('ADMIN');
+              loginAsDemoRole('ADMIN');
+            }}
             className={`px-3 py-1.5 rounded-xl transition ${
               pathname === '/admin'
                 ? 'bg-[#0F3826] text-amber-50 shadow-sm'
@@ -577,7 +608,10 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
 
           <Link
             href="/farmer"
-            onClick={() => setRole('FARMER')}
+            onClick={() => {
+              setRole('FARMER');
+              loginAsDemoRole('FARMER');
+            }}
             className={`px-3 py-1.5 rounded-xl transition ${
               pathname === '/farmer'
                 ? 'bg-[#0F3826] text-amber-50 shadow-sm'
@@ -589,7 +623,10 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
 
           <Link
             href="/fpo"
-            onClick={() => setRole('FPO')}
+            onClick={() => {
+              setRole('FPO');
+              loginAsDemoRole('FPO');
+            }}
             className={`px-3 py-1.5 rounded-xl transition ${
               pathname === '/fpo'
                 ? 'bg-[#0F3826] text-amber-50 shadow-sm'
@@ -601,7 +638,10 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
 
           <Link
             href="/buyer"
-            onClick={() => setRole('BUYER')}
+            onClick={() => {
+              setRole('BUYER');
+              loginAsDemoRole('BUYER');
+            }}
             className={`px-3 py-1.5 rounded-xl transition ${
               pathname === '/buyer'
                 ? 'bg-[#0F3826] text-amber-50 shadow-sm'
@@ -613,7 +653,10 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
 
           <Link
             href="/hub"
-            onClick={() => setRole('HUB_OPERATOR')}
+            onClick={() => {
+              setRole('HUB_OPERATOR');
+              loginAsDemoRole('HUB_OPERATOR');
+            }}
             className={`px-3 py-1.5 rounded-xl transition ${
               pathname === '/hub'
                 ? 'bg-[#0F3826] text-amber-50 shadow-sm'
@@ -625,7 +668,10 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
 
           <Link
             href="/transporter"
-            onClick={() => setRole('TRANSPORTER')}
+            onClick={() => {
+              setRole('TRANSPORTER');
+              loginAsDemoRole('TRANSPORTER');
+            }}
             className={`px-3 py-1.5 rounded-xl transition ${
               pathname === '/transporter'
                 ? 'bg-[#0F3826] text-amber-50 shadow-sm'
@@ -637,7 +683,10 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
 
           <Link
             href="/admin"
-            onClick={() => setRole('ADMIN')}
+            onClick={() => {
+              setRole('ADMIN');
+              loginAsDemoRole('ADMIN');
+            }}
             className={`px-3 py-1.5 rounded-xl transition ${
               pathname === '/admin'
                 ? 'bg-[#0F3826] text-amber-50 shadow-sm'

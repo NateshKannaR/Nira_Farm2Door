@@ -5,6 +5,7 @@ import { useLanguage } from '@/context/LanguageContext';
 import { getLocalizedCropName, getLocalizedCategory, getLocalizedGrade, getLocalizedLocation, getLocalizedFarmer } from '@/lib/i18n';
 import { useRole } from '@/context/RoleContext';
 import { useCart } from '@/context/CartContext';
+import { useAuth } from '@/context/AuthContext';
 import {
   Sparkles,
   ShoppingBag,
@@ -53,6 +54,7 @@ export default function HomePage() {
   const { t, language } = useLanguage();
   const { role, setRole } = useRole();
   const { addToCart } = useCart();
+  const { loginAsDemoRole } = useAuth();
 
   const [listings, setListings] = useState<Listing[]>([]);
   const [loading, setLoading] = useState(true);
@@ -269,22 +271,70 @@ export default function HomePage() {
         {/* 1-Click Role Portals Direct Navigation */}
         <div className="flex flex-wrap items-center gap-2 pt-1 text-xs">
           <span className="text-[11px] font-bold text-amber-300 shrink-0">Direct Portal Jump:</span>
-          <Link href="/farmer" className="px-3 py-1 rounded-xl bg-white/10 hover:bg-emerald-500/30 border border-white/15 transition text-amber-100 font-bold flex items-center gap-1">
+          <Link
+            href="/farmer"
+            onClick={() => {
+              setRole('FARMER');
+              loginAsDemoRole('FARMER');
+            }}
+            className="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-emerald-500/30 border border-white/15 transition text-amber-100 font-bold flex items-center gap-1 active:scale-95 cursor-pointer"
+          >
             🌾 Farmer Desk
           </Link>
-          <Link href="/buyer" className="px-3 py-1 rounded-xl bg-white/10 hover:bg-emerald-500/30 border border-white/15 transition text-amber-100 font-bold flex items-center gap-1">
+          <Link
+            href="/buyer"
+            onClick={() => {
+              setRole('BUYER');
+              loginAsDemoRole('BUYER');
+            }}
+            className="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-emerald-500/30 border border-white/15 transition text-amber-100 font-bold flex items-center gap-1 active:scale-95 cursor-pointer"
+          >
             🛒 Direct Buyer
           </Link>
-          <Link href="/transporter" className="px-3 py-1 rounded-xl bg-white/10 hover:bg-emerald-500/30 border border-white/15 transition text-amber-100 font-bold flex items-center gap-1">
+          <Link
+            href="/hub"
+            onClick={() => {
+              setRole('HUB_OPERATOR');
+              loginAsDemoRole('HUB_OPERATOR');
+            }}
+            className="px-3 py-1.5 rounded-xl bg-amber-500/20 hover:bg-amber-500/40 border border-amber-400/40 transition text-amber-200 font-black flex items-center gap-1 active:scale-95 shadow-xs cursor-pointer"
+          >
+            🔬 Hub Inspector
+          </Link>
+          <Link
+            href="/transporter"
+            onClick={() => {
+              setRole('TRANSPORTER');
+              loginAsDemoRole('TRANSPORTER');
+            }}
+            className="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-emerald-500/30 border border-white/15 transition text-amber-100 font-bold flex items-center gap-1 active:scale-95 cursor-pointer"
+          >
             🚚 Fleet Logistics
           </Link>
-          <Link href="/forecast" className="px-3 py-1 rounded-xl bg-white/10 hover:bg-emerald-500/30 border border-white/15 transition text-amber-100 font-bold flex items-center gap-1">
+          <Link
+            href="/forecast"
+            className="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-emerald-500/30 border border-white/15 transition text-amber-100 font-bold flex items-center gap-1 active:scale-95 cursor-pointer"
+          >
             📈 7-Day Forecast
           </Link>
-          <Link href="/fpo" className="px-3 py-1 rounded-xl bg-white/10 hover:bg-emerald-500/30 border border-white/15 transition text-amber-100 font-bold flex items-center gap-1">
+          <Link
+            href="/fpo"
+            onClick={() => {
+              setRole('FPO');
+              loginAsDemoRole('FPO');
+            }}
+            className="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-emerald-500/30 border border-white/15 transition text-amber-100 font-bold flex items-center gap-1 active:scale-95 cursor-pointer"
+          >
             🏢 FPO Aggregator
           </Link>
-          <Link href="/admin" className="px-3 py-1 rounded-xl bg-white/10 hover:bg-emerald-500/30 border border-white/15 transition text-amber-100 font-bold flex items-center gap-1">
+          <Link
+            href="/admin"
+            onClick={() => {
+              setRole('ADMIN');
+              loginAsDemoRole('ADMIN');
+            }}
+            className="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-emerald-500/30 border border-white/15 transition text-amber-100 font-bold flex items-center gap-1 active:scale-95 cursor-pointer"
+          >
             ⚖️ Mandi Governance
           </Link>
         </div>

@@ -2,9 +2,9 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { useAuth, UserRole } from '@/context/AuthContext';
+import { useAuth, UserRole, DEMO_PERSONAS } from '@/context/AuthContext';
 import { useLanguage } from '@/context/LanguageContext';
-import { ShieldAlert, Lock, ArrowRight, LogIn, UserPlus, ArrowLeft, RefreshCw } from 'lucide-react';
+import { ShieldAlert, Lock, ArrowRight, LogIn, UserPlus, ArrowLeft, RefreshCw, Zap } from 'lucide-react';
 
 interface PortalGuardProps {
   requiredRole: UserRole | UserRole[];
@@ -37,7 +37,7 @@ export default function PortalGuard({
   portalDescription,
   children,
 }: PortalGuardProps) {
-  const { user, isAuthenticated, openAuthModal, logout } = useAuth();
+  const { user, isAuthenticated, openAuthModal, logout, loginAsDemoRole } = useAuth();
   const { language } = useLanguage();
 
   const allowedRoles = Array.isArray(requiredRole) ? requiredRole : [requiredRole];
@@ -54,7 +54,7 @@ export default function PortalGuard({
 
           <div className="space-y-2">
             <span className="inline-block px-3 py-1 bg-amber-500/20 text-amber-900 dark:text-amber-300 font-extrabold text-[10px] rounded-full uppercase tracking-wider border border-amber-500/30">
-              Secure Portal • Login Required
+              Secure Portal • Instant Demo Mode Ready
             </span>
             <h2 className="text-2xl font-black text-emerald-950 dark:text-amber-100">
               {portalName}
@@ -66,23 +66,24 @@ export default function PortalGuard({
           </div>
 
           <div className="space-y-3 pt-2">
+            {/* 1-Click Instant Demo Entry */}
             <button
-              onClick={() => openAuthModal('login')}
-              className="w-full py-3.5 px-4 bg-[#0F3826] hover:bg-emerald-900 text-amber-50 font-bold rounded-2xl text-xs flex items-center justify-center gap-2 shadow-lg transition"
+              onClick={() => loginAsDemoRole(primaryRequired)}
+              className="w-full py-3.5 px-4 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-emerald-950 font-black rounded-2xl text-xs flex items-center justify-center gap-2 shadow-lg transition active:scale-95 border border-amber-400 cursor-pointer"
             >
-              <LogIn className="w-4 h-4 text-amber-400" />
+              <Zap className="w-4 h-4 text-emerald-950 fill-emerald-950" />
               <span>
-                Log In as {roleDisplayName[primaryRequired]?.en}
+                ⚡ Instant 1-Click Access as {roleDisplayName[primaryRequired]?.en}
               </span>
             </button>
 
             <button
-              onClick={() => openAuthModal('signup')}
-              className="w-full py-3 px-4 bg-white dark:bg-[#07170f] hover:bg-amber-50/80 dark:hover:bg-emerald-900/40 text-emerald-950 dark:text-emerald-100 font-bold rounded-2xl text-xs border border-emerald-900/20 dark:border-emerald-500/30 flex items-center justify-center gap-2 shadow-sm transition"
+              onClick={() => openAuthModal('login')}
+              className="w-full py-3 px-4 bg-[#0F3826] hover:bg-emerald-900 text-amber-50 font-bold rounded-2xl text-xs flex items-center justify-center gap-2 shadow-sm transition"
             >
-              <UserPlus className="w-4 h-4 text-emerald-700 dark:text-emerald-400" />
+              <LogIn className="w-4 h-4 text-amber-400" />
               <span>
-                Register as New {roleDisplayName[primaryRequired]?.en}
+                Log In with Password
               </span>
             </button>
 
@@ -110,60 +111,55 @@ export default function PortalGuard({
 
     return (
       <div className="min-h-[70vh] flex items-center justify-center px-4 py-12 animate-fadeIn">
-        <div className="max-w-lg w-full bg-[#FAF5EB] dark:bg-[#0c2217] border-2 border-red-500/20 dark:border-red-500/30 rounded-3xl p-8 shadow-2xl text-center space-y-6 text-[#1A2E26] dark:text-[#E2E8F0] transition-colors duration-200">
-          <div className="w-16 h-16 mx-auto bg-red-100 dark:bg-red-950/70 text-red-700 dark:text-red-300 border border-red-300 dark:border-red-500/40 rounded-2xl flex items-center justify-center shadow-inner">
-            <ShieldAlert className="w-8 h-8 text-red-600 dark:text-red-400" />
+        <div className="max-w-lg w-full bg-[#FAF5EB] dark:bg-[#0c2217] border-2 border-amber-500/20 dark:border-amber-500/30 rounded-3xl p-8 shadow-2xl text-center space-y-6 text-[#1A2E26] dark:text-[#E2E8F0] transition-colors duration-200">
+          <div className="w-16 h-16 mx-auto bg-amber-100 dark:bg-emerald-950/70 text-amber-700 dark:text-amber-300 border border-amber-300 dark:border-amber-500/40 rounded-2xl flex items-center justify-center shadow-inner">
+            <ShieldAlert className="w-8 h-8 text-amber-600 dark:text-amber-400" />
           </div>
 
           <div className="space-y-2">
-            <span className="inline-block px-3 py-1 bg-red-100 dark:bg-red-950/70 text-red-900 dark:text-red-200 font-extrabold text-[10px] rounded-full uppercase tracking-wider border border-red-200 dark:border-red-500/40">
-              Role Restricted • Access Prohibited
+            <span className="inline-block px-3 py-1 bg-amber-100 dark:bg-amber-950/70 text-amber-900 dark:text-amber-200 font-extrabold text-[10px] rounded-full uppercase tracking-wider border border-amber-200 dark:border-amber-500/40">
+              Role Switch Required
             </span>
             <h2 className="text-2xl font-black text-emerald-950 dark:text-amber-100">
-              Portal Access Prohibited
+              Switch to {targetRoleText.en}
             </h2>
-            <div className="bg-red-50/80 dark:bg-red-950/40 border border-red-200 dark:border-red-500/30 rounded-2xl p-4 text-xs text-emerald-950 dark:text-emerald-100 space-y-1.5 text-left">
+            <div className="bg-amber-50/80 dark:bg-emerald-950/40 border border-amber-200 dark:border-emerald-500/30 rounded-2xl p-4 text-xs text-emerald-950 dark:text-emerald-100 space-y-1.5 text-left">
               <p>
-                <strong>Your Current Role: </strong>
+                <strong>Current Active User: </strong>
                 <span className="px-2 py-0.5 bg-amber-500/20 text-amber-950 dark:text-amber-300 rounded-md font-extrabold">
                   {userRoleText.en} ({user.name})
                 </span>
               </p>
               <p>
-                <strong>Required Role: </strong>
+                <strong>Target Portal: </strong>
                 <span className="px-2 py-0.5 bg-emerald-700 text-white rounded-md font-bold">
-                  {targetRoleText.en}
+                  {targetRoleText.en} ({portalName})
                 </span>
-              </p>
-              <p className="text-emerald-900/70 dark:text-emerald-300/70 pt-1 text-[11px] leading-relaxed">
-                To protect supply-chain integrity, only verified {targetRoleText.en} accounts can access this portal.
               </p>
             </div>
           </div>
 
           <div className="space-y-3 pt-2">
-            <Link
-              href={myDashboardHref}
-              className="w-full py-3.5 px-4 bg-[#0F3826] hover:bg-emerald-900 text-amber-50 font-bold rounded-2xl text-xs flex items-center justify-center gap-2 shadow-lg transition"
-            >
-              <span>
-                Go to your {userRoleText.en} Dashboard
-              </span>
-              <ArrowRight className="w-4 h-4 text-amber-400" />
-            </Link>
-
+            {/* 1-Click Instant Role Switch */}
             <button
-              onClick={async () => {
-                await logout();
-                openAuthModal('login');
-              }}
-              className="w-full py-3 px-4 bg-white dark:bg-[#07170f] hover:bg-amber-50/80 dark:hover:bg-emerald-900/40 text-emerald-950 dark:text-emerald-100 font-bold rounded-2xl text-xs border border-emerald-900/20 dark:border-emerald-500/30 flex items-center justify-center gap-2 shadow-sm transition"
+              onClick={() => loginAsDemoRole(primaryRequired)}
+              className="w-full py-3.5 px-4 bg-gradient-to-r from-emerald-700 to-emerald-800 hover:from-emerald-600 hover:to-emerald-700 text-amber-100 font-black rounded-2xl text-xs flex items-center justify-center gap-2 shadow-lg transition active:scale-95 border border-emerald-500/30 cursor-pointer"
             >
-              <RefreshCw className="w-4 h-4 text-amber-700 dark:text-amber-400" />
+              <Zap className="w-4 h-4 text-amber-300 fill-amber-300" />
               <span>
-                Switch Account / Login as {targetRoleText.en}
+                ⚡ 1-Click Switch to {targetRoleText.en} ({DEMO_PERSONAS[primaryRequired]?.name})
               </span>
             </button>
+
+            <Link
+              href={myDashboardHref}
+              className="w-full py-3 px-4 bg-white dark:bg-[#07170f] hover:bg-amber-50/80 dark:hover:bg-emerald-900/40 text-emerald-950 dark:text-emerald-100 font-bold rounded-2xl text-xs border border-emerald-900/20 dark:border-emerald-500/30 flex items-center justify-center gap-2 shadow-sm transition"
+            >
+              <span>
+                Stay on {userRoleText.en} Dashboard
+              </span>
+              <ArrowRight className="w-4 h-4 text-emerald-700 dark:text-emerald-400" />
+            </Link>
           </div>
         </div>
       </div>
