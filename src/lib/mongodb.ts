@@ -1,10 +1,7 @@
 import mongoose from 'mongoose';
 
-const MONGODB_URI = process.env.MONGODB_URI || '';
-
-if (!MONGODB_URI) {
-  throw new Error('Please define the MONGODB_URI environment variable');
-}
+const DEFAULT_MONGODB_URI = 'mongodb+srv://Natesh:Natesh@cluster0.wwp3oig.mongodb.net/kisanbandhan';
+const MONGODB_URI = process.env.MONGODB_URI || DEFAULT_MONGODB_URI;
 
 let cached = (global as any).mongoose;
 
@@ -13,6 +10,12 @@ if (!cached) {
 }
 
 export async function connectToDatabase() {
+  const uri = process.env.MONGODB_URI || DEFAULT_MONGODB_URI;
+  if (!uri) {
+    console.warn('MongoDB URI not defined, skipping database connection.');
+    return null;
+  }
+
   if (cached.conn) {
     return cached.conn;
   }
@@ -20,16 +23,16 @@ export async function connectToDatabase() {
   if (!cached.promise) {
     const opts = {
       bufferCommands: false,
-      serverSelectionTimeoutMS: 10000,
+      serverSelectionTimeoutMS: 8000,
     };
 
-    cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongooseInstance) => {
+    cached.promise = mongoose.connect(uri, opts).then((mongooseInstance) => {
       console.log('Successfully connected to MongoDB Atlas (Cluster0.wwp3oig.mongodb.net)');
       return mongooseInstance;
     }).catch((err) => {
       console.error('MongoDB connection error:', err);
       cached.promise = null;
-      throw err;
+      return null;
     });
   }
 
@@ -37,7 +40,8 @@ export async function connectToDatabase() {
     cached.conn = await cached.promise;
   } catch (e) {
     cached.promise = null;
-    throw e;
+    console.warn('Failed to resolve MongoDB connection:', e);
+    return null;
   }
 
   return cached.conn;
