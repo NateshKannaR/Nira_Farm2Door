@@ -103,61 +103,54 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
     supportedLanguages[0];
 
   return (
-    <header className="sticky top-0 z-[100] w-full backdrop-blur-2xl backdrop-saturate-200 bg-[#FAF5EB]/90 dark:bg-[#07170f]/90 border-b border-emerald-900/15 dark:border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.05)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.4)] transition-all duration-200">
-      {/* Background ambient glow container with overflow-hidden so orbs don't bleed outside the navbar boundary */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10">
-        <div className="absolute -top-12 left-[15%] w-72 h-28 bg-emerald-500/25 dark:bg-emerald-400/20 rounded-full blur-3xl" />
-        <div className="absolute -top-12 right-[15%] w-72 h-28 bg-amber-500/25 dark:bg-amber-400/20 rounded-full blur-3xl" />
-        <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 w-96 h-16 bg-teal-500/20 dark:bg-teal-400/15 rounded-full blur-2xl" />
-      </div>
-
-      {/* Top Banner with Frosted Glass */}
-      <div className="relative z-10 bg-[#0F3826]/85 dark:bg-[#040e09]/85 text-amber-200 text-[10px] sm:text-xs py-1 px-3 sm:px-8 border-b border-emerald-500/20 backdrop-blur-md flex items-center justify-between gap-2 overflow-hidden">
-        <div className="flex items-center gap-1.5 shrink-0">
-          <span className="px-1.5 py-0.5 bg-amber-500/20 text-amber-300 font-extrabold rounded-md text-[9px] sm:text-[10px] border border-amber-400/30">
+    <header className="sticky top-0 z-[100] w-full backdrop-blur-xl bg-white/90 dark:bg-[#09110D]/90 border-b border-slate-200/80 dark:border-emerald-500/15 shadow-xs transition-all duration-200">
+      {/* Top Banner with Clean Enterprise Style */}
+      <div className="relative z-10 bg-slate-900 dark:bg-[#040e09] text-slate-300 text-[11px] py-1.5 px-4 sm:px-8 border-b border-slate-800/80 flex items-center justify-between gap-2 overflow-hidden">
+        <div className="flex items-center gap-2 shrink-0">
+          <span className="px-2 py-0.5 bg-emerald-500/20 text-emerald-300 font-bold rounded-md text-[10px] border border-emerald-500/30">
             SIH 2026 PS 26033
           </span>
-          <span className="truncate hidden sm:inline text-amber-100">{t.subTitle}</span>
+          <span className="truncate hidden sm:inline text-slate-300 font-normal">{t.subTitle}</span>
         </div>
 
-        <div className="flex items-center gap-2 text-[10px] sm:text-xs shrink-0">
+        <div className="flex items-center gap-2.5 text-[11px] shrink-0 font-medium">
           {isDeveloperMode && (
-            <span className="px-1.5 py-0.5 bg-amber-500/25 text-amber-300 font-extrabold rounded-md text-[9px] sm:text-[10px] border border-amber-400/40 flex items-center gap-1 shadow-xs">
+            <span className="px-2 py-0.5 bg-amber-500/20 text-amber-300 font-bold rounded-md text-[10px] border border-amber-400/30 flex items-center gap-1">
               <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping" />
-              ⚡ DEV GOD MODE
+              DEV GOD MODE
             </span>
           )}
-          <span className="truncate max-w-[150px] sm:max-w-none">
-            Active Role: <strong className="text-amber-300">{userName ? `${userName} (${role})` : role}</strong>
+          <span className="truncate max-w-[160px] sm:max-w-none text-slate-400">
+            Active Role: <strong className="text-emerald-400 font-semibold">{userName ? `${userName} (${role})` : role}</strong>
           </span>
         </div>
       </div>
 
-      {/* Main Navbar Row with Frosted Glass - overflow is visible so dropdowns & profile popups render freely above page content */}
-      <div className="relative z-20 w-full px-2.5 sm:px-8 lg:px-12 py-2 sm:py-3 flex items-center justify-between gap-1.5 sm:gap-3 bg-white/35 dark:bg-black/20 backdrop-blur-md max-w-full">
+      {/* Main Navbar Row */}
+      <div className="relative z-20 w-full px-3 sm:px-8 lg:px-12 py-2.5 flex items-center justify-between gap-2 sm:gap-4 max-w-full">
         {/* Brand */}
-        <Link href="/" className="flex items-center gap-1.5 sm:gap-2.5 shrink-0 group">
-          <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-emerald-600 to-emerald-800 flex items-center justify-center text-amber-200 shadow-md group-hover:scale-105 transition shrink-0">
-            <Leaf className="w-4 h-4 sm:w-5 sm:h-5 fill-amber-300" />
+        <Link href="/" className="flex items-center gap-2.5 shrink-0 group">
+          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-emerald-600 to-emerald-700 flex items-center justify-center text-white shadow-sm group-hover:scale-105 transition shrink-0">
+            <Leaf className="w-4 h-4 sm:w-5 sm:h-5 fill-white/90" />
           </div>
           <div>
-            <h1 className="font-extrabold text-base sm:text-xl text-emerald-950 dark:text-amber-100 leading-none tracking-tight">
+            <h1 className="font-extrabold text-lg sm:text-xl text-slate-900 dark:text-white leading-none tracking-tight">
               {t.appName}
             </h1>
-            <span className="text-[9px] sm:text-[10px] text-amber-800 dark:text-amber-400 font-semibold leading-none hidden xs:block">
-              {t.subTitle || 'Kisan Diwas Agri-Tech Platform'}
+            <span className="text-[10px] text-emerald-700 dark:text-emerald-400 font-semibold leading-none hidden xs:block mt-0.5">
+              Direct Farm-to-Buyer Platform
             </span>
           </div>
         </Link>
 
-        {/* Desktop 6 Role Nav Links */}
-        <nav className="hidden lg:flex items-center gap-1 bg-white/50 dark:bg-emerald-950/50 p-1 rounded-2xl border border-emerald-900/10 dark:border-white/10 text-xs font-bold backdrop-blur-lg shadow-xs">
+        {/* Desktop Role Navigation Tabs */}
+        <nav className="hidden lg:flex items-center gap-1 bg-slate-100/90 dark:bg-slate-900/90 p-1 rounded-xl border border-slate-200/80 dark:border-slate-800 text-xs font-semibold backdrop-blur-md">
           <Link
             href="/"
-            className={`px-3 py-1.5 rounded-xl transition ${
+            className={`px-3 py-1.5 rounded-lg transition ${
               pathname === '/'
-                ? 'bg-[#0F3826] text-amber-50 shadow-sm'
-                : 'text-emerald-950 dark:text-emerald-200 hover:bg-emerald-100/60 dark:hover:bg-emerald-900/40'
+                ? 'bg-emerald-700 text-white shadow-xs'
+                : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-white/80 dark:hover:bg-slate-800'
             }`}
           >
             {t.navHome}
@@ -169,10 +162,10 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
               setRole('FARMER');
               loginAsDemoRole('FARMER');
             }}
-            className={`px-3 py-1.5 rounded-xl transition ${
+            className={`px-3 py-1.5 rounded-lg transition ${
               pathname === '/farmer'
-                ? 'bg-[#0F3826] text-amber-50 shadow-sm'
-                : 'text-emerald-950 dark:text-emerald-200 hover:bg-emerald-100/60 dark:hover:bg-emerald-900/40'
+                ? 'bg-emerald-700 text-white shadow-xs'
+                : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-white/80 dark:hover:bg-slate-800'
             }`}
           >
             {t.navFarmer}
@@ -184,10 +177,10 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
               setRole('FPO');
               loginAsDemoRole('FPO');
             }}
-            className={`px-3 py-1.5 rounded-xl transition ${
+            className={`px-3 py-1.5 rounded-lg transition ${
               pathname === '/fpo'
-                ? 'bg-[#0F3826] text-amber-50 shadow-sm'
-                : 'text-emerald-950 dark:text-emerald-200 hover:bg-emerald-100/60 dark:hover:bg-emerald-900/40'
+                ? 'bg-emerald-700 text-white shadow-xs'
+                : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-white/80 dark:hover:bg-slate-800'
             }`}
           >
             {t.navFPO}
@@ -199,10 +192,10 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
               setRole('BUYER');
               loginAsDemoRole('BUYER');
             }}
-            className={`px-3 py-1.5 rounded-xl transition ${
+            className={`px-3 py-1.5 rounded-lg transition ${
               pathname === '/buyer'
-                ? 'bg-[#0F3826] text-amber-50 shadow-sm'
-                : 'text-emerald-950 dark:text-emerald-200 hover:bg-emerald-100/60 dark:hover:bg-emerald-900/40'
+                ? 'bg-emerald-700 text-white shadow-xs'
+                : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-white/80 dark:hover:bg-slate-800'
             }`}
           >
             {t.navBuyer}
@@ -214,10 +207,10 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
               setRole('HUB_OPERATOR');
               loginAsDemoRole('HUB_OPERATOR');
             }}
-            className={`px-3 py-1.5 rounded-xl transition ${
+            className={`px-3 py-1.5 rounded-lg transition ${
               pathname === '/hub'
-                ? 'bg-[#0F3826] text-amber-50 shadow-sm'
-                : 'text-emerald-950 dark:text-emerald-200 hover:bg-emerald-100/60 dark:hover:bg-emerald-900/40'
+                ? 'bg-emerald-700 text-white shadow-xs'
+                : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-white/80 dark:hover:bg-slate-800'
             }`}
           >
             {t.navHub}
@@ -229,10 +222,10 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
               setRole('TRANSPORTER');
               loginAsDemoRole('TRANSPORTER');
             }}
-            className={`px-3 py-1.5 rounded-xl transition ${
+            className={`px-3 py-1.5 rounded-lg transition ${
               pathname === '/transporter'
-                ? 'bg-[#0F3826] text-amber-50 shadow-sm'
-                : 'text-emerald-950 dark:text-emerald-200 hover:bg-emerald-100/60 dark:hover:bg-emerald-900/40'
+                ? 'bg-emerald-700 text-white shadow-xs'
+                : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-white/80 dark:hover:bg-slate-800'
             }`}
           >
             {t.navTransporter}
@@ -244,10 +237,10 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
               setRole('ADMIN');
               loginAsDemoRole('ADMIN');
             }}
-            className={`px-3 py-1.5 rounded-xl transition ${
+            className={`px-3 py-1.5 rounded-lg transition ${
               pathname === '/admin'
-                ? 'bg-[#0F3826] text-amber-50 shadow-sm'
-                : 'text-emerald-950 dark:text-emerald-200 hover:bg-emerald-100/60 dark:hover:bg-emerald-900/40'
+                ? 'bg-emerald-700 text-white shadow-xs'
+                : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-white/80 dark:hover:bg-slate-800'
             }`}
           >
             {t.navAdmin}
@@ -255,10 +248,10 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
 
           <Link
             href="/forecast"
-            className={`px-3 py-1.5 rounded-xl transition flex items-center gap-1.5 ${
+            className={`px-3 py-1.5 rounded-lg transition flex items-center gap-1.5 ${
               pathname === '/forecast'
-                ? 'bg-amber-400 text-emerald-950 font-black shadow-sm'
-                : 'text-amber-800 dark:text-amber-300 hover:bg-amber-100/60 dark:hover:bg-amber-950/40 border border-amber-500/30'
+                ? 'bg-amber-500 text-slate-950 font-bold shadow-xs'
+                : 'text-amber-800 dark:text-amber-300 hover:bg-amber-50 dark:hover:bg-amber-950/40 border border-amber-500/30'
             }`}
           >
             <Sparkles className="w-3.5 h-3.5 text-amber-500 shrink-0" />
@@ -267,7 +260,7 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
         </nav>
 
         {/* Right Buttons: Theme Toggle + India Translator + 11-Language Dropdown + Cart + User Profile / Login */}
-        <div className="flex items-center gap-1 sm:gap-2 shrink-0">
+        <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
           {/* 1. Theme Toggle Button (Sun / Moon) */}
           <button
             type="button"
@@ -313,12 +306,12 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
 
             {/* Dropdown Menu */}
             {isLangDropdownOpen && (
-              <div className="absolute right-0 mt-2 w-60 sm:w-72 max-w-[calc(100vw-1.5rem)] bg-white dark:bg-[#0c2217] rounded-2xl shadow-2xl border border-emerald-900/15 dark:border-emerald-500/30 py-2 z-[100] animate-fadeIn">
-                <div className="px-3 py-1.5 border-b border-emerald-900/10 dark:border-emerald-500/20 flex items-center justify-between">
-                  <span className="text-[11px] font-extrabold text-emerald-950 dark:text-emerald-100 uppercase tracking-wider">
+              <div className="absolute right-0 mt-2 w-64 sm:w-72 max-w-[calc(100vw-1.5rem)] bg-white dark:bg-[#0F1C16] rounded-2xl shadow-xl border border-slate-200 dark:border-emerald-500/25 py-2 z-[100] animate-fadeIn">
+                <div className="px-3.5 py-2 border-b border-slate-100 dark:border-emerald-950/80 flex items-center justify-between">
+                  <span className="text-[11px] font-bold text-slate-900 dark:text-slate-100 uppercase tracking-wider">
                     {t.selectLanguage || 'Select Language'} (11 Languages)
                   </span>
-                  <span className="text-[10px] text-amber-700 dark:text-amber-300 font-bold bg-amber-100 dark:bg-amber-950/80 px-1.5 py-0.5 rounded">
+                  <span className="text-[10px] text-amber-700 dark:text-amber-300 font-bold bg-amber-50 dark:bg-amber-950/50 px-2 py-0.5 rounded-full border border-amber-500/20">
                     Pan-India
                   </span>
                 </div>
@@ -402,9 +395,9 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
 
             {/* Comprehensive Profile & User Actions Popup */}
             {showProfileMenu && isAuthenticated && user && (
-              <div className="absolute right-0 top-full mt-2 w-72 sm:w-80 max-w-[calc(100vw-1.5rem)] bg-[#FAF5EB] dark:bg-[#0c2217] rounded-3xl shadow-2xl border border-emerald-900/20 dark:border-emerald-500/30 p-3.5 z-[120] animate-fadeIn space-y-3">
+              <div className="absolute right-0 top-full mt-2 w-72 sm:w-80 max-w-[calc(100vw-1.5rem)] bg-white dark:bg-[#0F1C16] rounded-2xl shadow-xl border border-slate-200 dark:border-emerald-500/25 p-3.5 z-[120] animate-fadeIn space-y-3">
                 {/* Profile Header */}
-                <div className="flex items-center gap-3 p-3 bg-emerald-900/10 dark:bg-emerald-950/80 rounded-2xl border border-emerald-900/15 dark:border-emerald-500/20">
+                <div className="flex items-center gap-3 p-3 bg-slate-50 dark:bg-[#09110D] rounded-xl border border-slate-200/80 dark:border-emerald-500/15">
                   <UserAvatar name={user.name} size="md" />
                   <div className="overflow-hidden flex-1">
                     <p className="text-xs font-black text-emerald-950 dark:text-amber-100 truncate">{user.name}</p>
@@ -593,14 +586,14 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
       </div>
 
       {/* Mobile / Tablet Horizontal Role Navigation Strip */}
-      <div className="lg:hidden border-t border-emerald-900/10 dark:border-emerald-500/20 bg-emerald-900/5 dark:bg-[#07170f] px-3 sm:px-4 py-2 overflow-x-auto no-scrollbar w-full max-w-full">
-        <nav className="flex items-center gap-1.5 w-max max-w-none text-xs font-bold">
+      <div className="lg:hidden border-t border-slate-200/80 dark:border-emerald-500/20 bg-slate-50 dark:bg-[#07130d] px-3 sm:px-4 py-2 overflow-x-auto no-scrollbar w-full max-w-full">
+        <nav className="flex items-center gap-1.5 w-max max-w-none text-xs font-semibold">
           <Link
             href="/"
-            className={`px-3 py-1.5 rounded-xl transition ${
+            className={`px-3 py-1.5 rounded-lg transition ${
               pathname === '/'
-                ? 'bg-[#0F3826] text-amber-50 shadow-sm'
-                : 'bg-white/70 dark:bg-emerald-950/80 text-emerald-950 dark:text-emerald-100 hover:bg-white dark:hover:bg-emerald-900 border border-transparent dark:border-emerald-500/20'
+                ? 'bg-emerald-700 text-white shadow-xs'
+                : 'bg-white dark:bg-[#0F1C16] text-slate-700 dark:text-slate-200 hover:bg-slate-50 border border-slate-200/80 dark:border-emerald-500/20'
             }`}
           >
             {t.navHome}
@@ -612,10 +605,10 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
               setRole('FARMER');
               loginAsDemoRole('FARMER');
             }}
-            className={`px-3 py-1.5 rounded-xl transition ${
+            className={`px-3 py-1.5 rounded-lg transition ${
               pathname === '/farmer'
-                ? 'bg-[#0F3826] text-amber-50 shadow-sm'
-                : 'bg-white/70 dark:bg-emerald-950/80 text-emerald-950 dark:text-emerald-100 hover:bg-white dark:hover:bg-emerald-900 border border-transparent dark:border-emerald-500/20'
+                ? 'bg-emerald-700 text-white shadow-xs'
+                : 'bg-white dark:bg-[#0F1C16] text-slate-700 dark:text-slate-200 hover:bg-slate-50 border border-slate-200/80 dark:border-emerald-500/20'
             }`}
           >
             {t.navFarmer}
@@ -627,10 +620,10 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
               setRole('FPO');
               loginAsDemoRole('FPO');
             }}
-            className={`px-3 py-1.5 rounded-xl transition ${
+            className={`px-3 py-1.5 rounded-lg transition ${
               pathname === '/fpo'
-                ? 'bg-[#0F3826] text-amber-50 shadow-sm'
-                : 'bg-white/70 dark:bg-emerald-950/80 text-emerald-950 dark:text-emerald-100 hover:bg-white dark:hover:bg-emerald-900 border border-transparent dark:border-emerald-500/20'
+                ? 'bg-emerald-700 text-white shadow-xs'
+                : 'bg-white dark:bg-[#0F1C16] text-slate-700 dark:text-slate-200 hover:bg-slate-50 border border-slate-200/80 dark:border-emerald-500/20'
             }`}
           >
             {t.navFPO}
@@ -642,10 +635,10 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
               setRole('BUYER');
               loginAsDemoRole('BUYER');
             }}
-            className={`px-3 py-1.5 rounded-xl transition ${
+            className={`px-3 py-1.5 rounded-lg transition ${
               pathname === '/buyer'
-                ? 'bg-[#0F3826] text-amber-50 shadow-sm'
-                : 'bg-white/70 dark:bg-emerald-950/80 text-emerald-950 dark:text-emerald-100 hover:bg-white dark:hover:bg-emerald-900 border border-transparent dark:border-emerald-500/20'
+                ? 'bg-emerald-700 text-white shadow-xs'
+                : 'bg-white dark:bg-[#0F1C16] text-slate-700 dark:text-slate-200 hover:bg-slate-50 border border-slate-200/80 dark:border-emerald-500/20'
             }`}
           >
             {t.navBuyer}
@@ -657,10 +650,10 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
               setRole('HUB_OPERATOR');
               loginAsDemoRole('HUB_OPERATOR');
             }}
-            className={`px-3 py-1.5 rounded-xl transition ${
+            className={`px-3 py-1.5 rounded-lg transition ${
               pathname === '/hub'
-                ? 'bg-[#0F3826] text-amber-50 shadow-sm'
-                : 'bg-white/70 dark:bg-emerald-950/80 text-emerald-950 dark:text-emerald-100 hover:bg-white dark:hover:bg-emerald-900 border border-transparent dark:border-emerald-500/20'
+                ? 'bg-emerald-700 text-white shadow-xs'
+                : 'bg-white dark:bg-[#0F1C16] text-slate-700 dark:text-slate-200 hover:bg-slate-50 border border-slate-200/80 dark:border-emerald-500/20'
             }`}
           >
             {t.navHub}
@@ -672,10 +665,10 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
               setRole('TRANSPORTER');
               loginAsDemoRole('TRANSPORTER');
             }}
-            className={`px-3 py-1.5 rounded-xl transition ${
+            className={`px-3 py-1.5 rounded-lg transition ${
               pathname === '/transporter'
-                ? 'bg-[#0F3826] text-amber-50 shadow-sm'
-                : 'bg-white/70 dark:bg-emerald-950/80 text-emerald-950 dark:text-emerald-100 hover:bg-white dark:hover:bg-emerald-900 border border-transparent dark:border-emerald-500/20'
+                ? 'bg-emerald-700 text-white shadow-xs'
+                : 'bg-white dark:bg-[#0F1C16] text-slate-700 dark:text-slate-200 hover:bg-slate-50 border border-slate-200/80 dark:border-emerald-500/20'
             }`}
           >
             {t.navTransporter}
@@ -687,10 +680,10 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
               setRole('ADMIN');
               loginAsDemoRole('ADMIN');
             }}
-            className={`px-3 py-1.5 rounded-xl transition ${
+            className={`px-3 py-1.5 rounded-lg transition ${
               pathname === '/admin'
-                ? 'bg-[#0F3826] text-amber-50 shadow-sm'
-                : 'bg-white/70 dark:bg-emerald-950/80 text-emerald-950 dark:text-emerald-100 hover:bg-white dark:hover:bg-emerald-900 border border-transparent dark:border-emerald-500/20'
+                ? 'bg-emerald-700 text-white shadow-xs'
+                : 'bg-white dark:bg-[#0F1C16] text-slate-700 dark:text-slate-200 hover:bg-slate-50 border border-slate-200/80 dark:border-emerald-500/20'
             }`}
           >
             {t.navAdmin}
@@ -698,10 +691,10 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
 
           <Link
             href="/forecast"
-            className={`px-3 py-1.5 rounded-xl transition flex items-center gap-1 ${
+            className={`px-3 py-1.5 rounded-lg transition flex items-center gap-1.5 ${
               pathname === '/forecast'
-                ? 'bg-amber-400 text-emerald-950 font-black shadow-sm'
-                : 'bg-amber-100/80 dark:bg-amber-950/60 text-amber-900 dark:text-amber-200 border border-amber-400/40'
+                ? 'bg-amber-500 text-slate-950 font-bold shadow-xs'
+                : 'bg-amber-50 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300 border border-amber-500/30'
             }`}
           >
             <Sparkles className="w-3 h-3 text-amber-500 shrink-0" />

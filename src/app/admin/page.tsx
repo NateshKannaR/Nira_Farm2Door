@@ -111,98 +111,98 @@ export default function AdminPage() {
     >
       <div className="space-y-8">
       {/* Header */}
-      <div className="flex items-center gap-4 bg-[#0F3826] text-amber-50 p-6 rounded-3xl shadow-xl border border-amber-500/20">
-        <div className="p-3 bg-amber-500/20 rounded-2xl">
-          <ShieldCheck className="w-8 h-8 text-amber-400" />
+      <div className="flex items-center gap-4 bg-white dark:bg-[#0F1C16] text-slate-900 dark:text-white p-6 rounded-2xl border border-slate-200 dark:border-emerald-500/20 shadow-xs">
+        <div className="p-3 bg-emerald-50 dark:bg-emerald-950/60 rounded-xl text-emerald-600 dark:text-emerald-400 border border-emerald-100 dark:border-emerald-800/40">
+          <ShieldCheck className="w-8 h-8" />
         </div>
         <div>
-          <span className="text-[10px] font-extrabold tracking-widest text-amber-400 uppercase bg-emerald-950 px-2.5 py-0.5 rounded-full border border-amber-400/20">
+          <span className="text-[10px] font-bold tracking-wider text-emerald-700 dark:text-emerald-300 uppercase bg-emerald-50 dark:bg-emerald-950/60 px-2.5 py-0.5 rounded-full border border-emerald-200 dark:border-emerald-800">
             Nira Command • SIH 2026 PS 26033 National Mandi Governance
           </span>
-          <h1 className="text-2xl sm:text-3xl font-extrabold mt-1">
+          <h1 className="text-2xl sm:text-3xl font-bold mt-1 text-slate-900 dark:text-white">
             Ministry Governance & Mandi Control Room
           </h1>
-          <p className="text-xs sm:text-sm text-amber-200/70 mt-0.5">
+          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-0.5">
             Ministry of Consumer Affairs, Food & Public Distribution — Direct Agri Trade Control
           </p>
         </div>
       </div>
 
       {/* Impact Metric Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-        <div className="glass-card p-5 rounded-2xl space-y-2 border-l-4 border-l-emerald-700">
-          <span className="text-xs font-bold text-emerald-800">
-            Total National Gross Merchandise Value (GMV)
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="p-5 rounded-2xl bg-white dark:bg-[#0F1C16] border border-slate-200 dark:border-slate-800 shadow-xs space-y-1">
+          <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">
+            National Gross Merchandise Value
           </span>
-          <div className="text-2xl font-extrabold text-emerald-950">
+          <div className="text-2xl font-bold text-slate-900 dark:text-white font-mono">
             ₹{(totalGmvPaise / 100).toFixed(2)}
           </div>
-          <span className="text-[11px] text-emerald-700 font-mono font-medium">
+          <span className="text-[11px] text-emerald-600 dark:text-emerald-400 font-mono font-medium">
             ({totalGmvPaise} {t.paiseSuffix}) • Verified Ledger
           </span>
         </div>
 
-        <div className="glass-card p-5 rounded-2xl space-y-2 border-l-4 border-l-blue-600">
-          <span className="text-xs font-bold text-emerald-800">
+        <div className="p-5 rounded-2xl bg-white dark:bg-[#0F1C16] border border-slate-200 dark:border-slate-800 shadow-xs space-y-1">
+          <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">
             Farmer Income Share
           </span>
-          <div className="text-2xl font-extrabold text-blue-700">82.4%</div>
-          <span className="text-[11px] text-blue-600 font-medium">
+          <div className="text-2xl font-bold text-emerald-600 dark:text-emerald-400 font-mono">82.4%</div>
+          <span className="text-[11px] text-slate-500 dark:text-slate-400 font-medium">
             vs Traditional Mandi (35%)
           </span>
         </div>
 
-        <div className="glass-card p-5 rounded-2xl space-y-2 border-l-4 border-l-amber-600">
-          <span className="text-xs font-bold text-emerald-800">
+        <div className="p-5 rounded-2xl bg-white dark:bg-[#0F1C16] border border-slate-200 dark:border-slate-800 shadow-xs space-y-1">
+          <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">
             Buyer Cost Savings
           </span>
-          <div className="text-2xl font-extrabold text-amber-700">37.8%</div>
-          <span className="text-[11px] text-amber-600 font-medium">
+          <div className="text-2xl font-bold text-amber-600 dark:text-amber-400 font-mono">37.8%</div>
+          <span className="text-[11px] text-slate-500 dark:text-slate-400 font-medium">
             Middleman Commission Eliminated
           </span>
         </div>
 
-        <div className="glass-card p-5 rounded-2xl space-y-2 border-l-4 border-l-purple-600">
-          <span className="text-xs font-bold text-emerald-800">
+        <div className="p-5 rounded-2xl bg-white dark:bg-[#0F1C16] border border-slate-200 dark:border-slate-800 shadow-xs space-y-1">
+          <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">
             Food Saved (Spoilage Prevention)
           </span>
-          <div className="text-2xl font-extrabold text-purple-700">4.2 Tons</div>
-          <span className="text-[11px] text-purple-600 font-medium">
+          <div className="text-2xl font-bold text-blue-600 dark:text-blue-400 font-mono">4.2 Tons</div>
+          <span className="text-[11px] text-slate-500 dark:text-slate-400 font-medium">
             AI Route & Logistics Optimization
           </span>
         </div>
       </div>
 
       {/* AI Confidence & Governance Panel */}
-      <div className="bg-[#0F3826] text-amber-50 p-6 rounded-3xl shadow-xl space-y-6 border border-amber-500/20">
-        <div className="flex items-center gap-3 border-b border-emerald-800/60 pb-4">
-          <Sparkles className="w-6 h-6 text-amber-400" />
-          <h2 className="text-lg font-bold">
+      <div className="bg-slate-900 text-white p-6 rounded-2xl shadow-xs space-y-6 border border-slate-800">
+        <div className="flex items-center gap-3 border-b border-slate-800 pb-4">
+          <Sparkles className="w-5 h-5 text-emerald-400" />
+          <h2 className="text-base font-bold">
             6 AI Models Live National Reliability Tracker
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          <div className="bg-emerald-950/80 p-4 rounded-2xl border border-emerald-800 space-y-2">
-            <span className="text-xs text-amber-300 font-bold">Fair Price AI (Model 1)</span>
-            <div className="text-xl font-extrabold text-amber-50">94.8% Accuracy</div>
-            <p className="text-[11px] text-amber-200/70">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="bg-slate-800/80 p-4 rounded-xl border border-slate-700 space-y-1">
+            <span className="text-xs text-emerald-400 font-semibold">Fair Price AI (Model 1)</span>
+            <div className="text-xl font-bold text-white font-mono">94.8% Accuracy</div>
+            <p className="text-[11px] text-slate-400">
               Agmarknet Mandi Index + Grade Premium
             </p>
           </div>
 
-          <div className="bg-emerald-950/80 p-4 rounded-2xl border border-emerald-800 space-y-2">
-            <span className="text-xs text-amber-300 font-bold">CV Auto-Grading (Model 2)</span>
-            <div className="text-xl font-extrabold text-amber-50">99.4% Grade Confidence</div>
-            <p className="text-[11px] text-amber-200/70">
+          <div className="bg-slate-800/80 p-4 rounded-xl border border-slate-700 space-y-1">
+            <span className="text-xs text-emerald-400 font-semibold">CV Auto-Grading (Model 2)</span>
+            <div className="text-xl font-bold text-white font-mono">99.4% Grade Confidence</div>
+            <p className="text-[11px] text-slate-400">
               Automated Quality via FSSAI Standard
             </p>
           </div>
 
-          <div className="bg-emerald-950/80 p-4 rounded-2xl border border-emerald-800 space-y-2">
-            <span className="text-xs text-amber-300 font-bold">Route & Waste Prevention (Model 3 & 4)</span>
-            <div className="text-xl font-extrabold text-amber-50">+24.0% Fuel Savings</div>
-            <p className="text-[11px] text-amber-200/70">
+          <div className="bg-slate-800/80 p-4 rounded-xl border border-slate-700 space-y-1">
+            <span className="text-xs text-emerald-400 font-semibold">Route & Waste Prevention (Model 3 & 4)</span>
+            <div className="text-xl font-bold text-white font-mono">+24.0% Fuel Savings</div>
+            <p className="text-[11px] text-slate-400">
               Multi-stop pickup & 0% spoilage guarantee
             </p>
           </div>

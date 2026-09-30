@@ -680,19 +680,19 @@ export default function FarmerDashboardPage() {
     >
       <div className="space-y-8">
         {/* Top Welcome Banner */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-[#0F3826] text-amber-50 p-6 rounded-3xl shadow-xl border border-amber-500/20">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-white dark:bg-[#0F1C16] text-slate-900 dark:text-white p-6 rounded-2xl border border-slate-200 dark:border-emerald-500/20 shadow-xs">
           <div className="flex items-center gap-4">
-            <div className="p-3 bg-amber-500/20 rounded-2xl">
-              <Tractor className="w-8 h-8 text-amber-400" />
+            <div className="p-3 bg-emerald-50 dark:bg-emerald-950/60 rounded-xl text-emerald-600 dark:text-emerald-400 border border-emerald-100 dark:border-emerald-800/40">
+              <Tractor className="w-8 h-8" />
             </div>
             <div>
-              <span className="text-[10px] font-extrabold tracking-widest text-amber-400 uppercase bg-emerald-950 px-2.5 py-0.5 rounded-full border border-amber-400/20">
+              <span className="text-[10px] font-bold tracking-wider text-emerald-700 dark:text-emerald-300 uppercase bg-emerald-50 dark:bg-emerald-950/60 px-2.5 py-0.5 rounded-full border border-emerald-200 dark:border-emerald-800">
                 {t.farmerBadge}
               </span>
-              <h1 className="text-2xl sm:text-3xl font-extrabold mt-1">
+              <h1 className="text-2xl sm:text-3xl font-bold mt-1 text-slate-900 dark:text-white">
                 {t.farmerWelcome}{userName ? `, ${userName}` : ''}
               </h1>
-              <p className="text-xs sm:text-sm text-amber-200/70 mt-0.5">
+              <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-0.5">
                 {language === 'hi'
                   ? 'फसल जोड़ें और सीधे खरीदार पोर्टल (Buyer Desk) तक पहुँचाएं'
                   : 'Add produce and broadcast directly to Buyer Desk'}
@@ -721,9 +721,9 @@ export default function FarmerDashboardPage() {
                 });
                 setShowGatePassModal(true);
               }}
-              className="px-4 py-3 bg-white/10 hover:bg-white/20 text-amber-200 border border-amber-400/30 rounded-xl font-bold text-xs shadow transition flex items-center gap-1.5"
+              className="px-4 py-2.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 rounded-xl font-semibold text-xs transition flex items-center gap-1.5"
             >
-              <FileText className="w-4 h-4 text-amber-400" />
+              <FileText className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
               <span>{language === 'hi' ? '🏛️ राजकीय गेट पास' : '🏛️ Transit Gate Pass'}</span>
             </button>
 
@@ -733,9 +733,9 @@ export default function FarmerDashboardPage() {
                 setShowInlineAddForm(true);
                 setTimeout(() => formContainerRef.current?.scrollIntoView({ behavior: 'smooth' }), 100);
               }}
-              className="px-5 py-3 bg-gradient-to-r from-emerald-600 to-emerald-700 text-white font-extrabold rounded-xl shadow-lg hover:from-emerald-500 hover:to-emerald-600 transition flex items-center gap-2 text-sm border border-emerald-400/30 cursor-pointer"
+              className="px-5 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white font-semibold rounded-xl shadow-xs transition flex items-center gap-2 text-xs cursor-pointer"
             >
-              <Plus className="w-4 h-4 text-amber-300" />
+              <Plus className="w-4 h-4 text-emerald-100" />
               <span>{language === 'hi' ? '+ नया उत्पाद जोड़ें' : '+ Add Product'}</span>
             </button>
           </div>
@@ -745,21 +745,21 @@ export default function FarmerDashboardPage() {
         {/* ===================================================
             3 MAIN SECTIONS SWITCHER: "MY PRODUCTS", "ORDERS" & "MANDI ARBITRAGE"
             =================================================== */}
-        <div className="flex items-center justify-center p-2 bg-[#072417]/90 dark:bg-[#03140c]/95 backdrop-blur-xl rounded-3xl max-w-2xl mx-auto border-2 border-amber-500/40 shadow-2xl">
+        <div className="flex items-center justify-center p-1.5 bg-slate-100 dark:bg-slate-900 rounded-xl max-w-xl mx-auto border border-slate-200 dark:border-slate-800 shadow-xs">
           <button
             type="button"
             id="tab-my-products"
             onClick={() => setFarmerActiveSection('products')}
-            className={`flex-1 py-3 px-3 sm:px-5 rounded-2xl font-black text-xs sm:text-sm flex items-center justify-center gap-1.5 sm:gap-2 transition-all cursor-pointer ${
+            className={`flex-1 py-2.5 px-3 sm:px-4 rounded-lg font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all cursor-pointer ${
               farmerActiveSection === 'products'
-                ? 'bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 text-emerald-950 shadow-xl scale-[1.02] ring-2 ring-white/50'
-                : 'text-amber-100/90 hover:text-white hover:bg-white/10'
+                ? 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-xs'
+                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
-            <Sprout className="w-4 h-4 text-emerald-950/80 shrink-0" />
+            <Sprout className="w-4 h-4 shrink-0 text-emerald-600 dark:text-emerald-400" />
             <span>{language === 'hi' ? 'मेरे उत्पाद' : 'My Products'}</span>
-            <span className={`px-2 py-0.5 text-[10px] rounded-full font-mono font-extrabold shadow-xs ${
-              farmerActiveSection === 'products' ? 'bg-emerald-950 text-amber-300' : 'bg-amber-500/25 text-amber-300'
+            <span className={`px-2 py-0.5 text-[10px] rounded-full font-mono font-bold ${
+              farmerActiveSection === 'products' ? 'bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300' : 'bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
             }`}>
               {myListings.length}
             </span>
@@ -769,16 +769,16 @@ export default function FarmerDashboardPage() {
             type="button"
             id="tab-received-orders"
             onClick={() => setFarmerActiveSection('orders')}
-            className={`flex-1 py-3 px-3 sm:px-5 rounded-2xl font-black text-xs sm:text-sm flex items-center justify-center gap-1.5 sm:gap-2 transition-all cursor-pointer ${
+            className={`flex-1 py-2.5 px-3 sm:px-4 rounded-lg font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all cursor-pointer ${
               farmerActiveSection === 'orders'
-                ? 'bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 text-emerald-950 shadow-xl scale-[1.02] ring-2 ring-white/50'
-                : 'text-amber-100/90 hover:text-white hover:bg-white/10'
+                ? 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-xs'
+                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
-            <ShoppingBag className="w-4 h-4 text-emerald-950/80 shrink-0" />
+            <ShoppingBag className="w-4 h-4 shrink-0 text-emerald-600 dark:text-emerald-400" />
             <span>{language === 'hi' ? 'आया Orders' : 'Orders'}</span>
-            <span className={`px-2 py-0.5 text-[10px] rounded-full font-mono font-extrabold shadow-xs ${
-              farmerActiveSection === 'orders' ? 'bg-emerald-950 text-amber-300' : 'bg-amber-500/25 text-amber-300'
+            <span className={`px-2 py-0.5 text-[10px] rounded-full font-mono font-bold ${
+              farmerActiveSection === 'orders' ? 'bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300' : 'bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
             }`}>
               {farmerOrders.length}
             </span>
@@ -788,13 +788,13 @@ export default function FarmerDashboardPage() {
             type="button"
             id="tab-mandi-arbitrage"
             onClick={() => setFarmerActiveSection('arbitrage')}
-            className={`flex-1 py-3 px-3 sm:px-5 rounded-2xl font-black text-xs sm:text-sm flex items-center justify-center gap-1.5 sm:gap-2 transition-all cursor-pointer ${
+            className={`flex-1 py-2.5 px-3 sm:px-4 rounded-lg font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all cursor-pointer ${
               farmerActiveSection === 'arbitrage'
-                ? 'bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 text-emerald-950 shadow-xl scale-[1.02] ring-2 ring-white/50'
-                : 'text-amber-100/90 hover:text-white hover:bg-white/10'
+                ? 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-xs'
+                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
-            <TrendingUp className="w-4 h-4 text-emerald-950/80 shrink-0" />
+            <TrendingUp className="w-4 h-4 shrink-0 text-emerald-600 dark:text-emerald-400" />
             <span>{language === 'hi' ? 'मंडी लाभ तुलना' : 'Mandi Arbitrage'}</span>
           </button>
         </div>

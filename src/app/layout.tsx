@@ -62,7 +62,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="antialiased selection:bg-amber-200 selection:text-emerald-950 dark:selection:bg-amber-500/30 dark:selection:text-amber-200 bg-[#FAF5EB] dark:bg-[#07170f] text-[#1A2E26] dark:text-[#E2E8F0] transition-colors duration-200 w-full max-w-full overflow-x-hidden">
+      <body className="antialiased selection:bg-emerald-200 selection:text-emerald-950 dark:selection:bg-emerald-800/40 dark:selection:text-emerald-200 bg-slate-50 dark:bg-[#09110D] text-slate-900 dark:text-slate-100 transition-colors duration-200 w-full max-w-full overflow-x-hidden font-sans">
         <ThemeProvider>
           <LanguageProvider>
             <AuthProvider>

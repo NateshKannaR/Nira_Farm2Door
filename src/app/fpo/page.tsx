@@ -99,19 +99,19 @@ export default function FpoDashboardPage() {
     >
       <div className="space-y-8 pb-16">
         {/* Header */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-[#0F3826] text-amber-50 p-6 sm:p-8 rounded-3xl shadow-xl border border-amber-500/20">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-white dark:bg-[#0F1C16] text-slate-900 dark:text-white p-6 sm:p-8 rounded-2xl border border-slate-200 dark:border-emerald-500/20 shadow-xs">
           <div className="flex items-center gap-4">
-            <div className="p-3 bg-amber-500/20 rounded-2xl text-amber-400">
+            <div className="p-3 bg-emerald-50 dark:bg-emerald-950/60 rounded-xl text-emerald-600 dark:text-emerald-400 border border-emerald-100 dark:border-emerald-800/40">
               <Building2 className="w-8 h-8" />
             </div>
             <div>
-              <span className="text-[10px] font-extrabold tracking-widest text-amber-400 uppercase bg-emerald-950 px-2.5 py-0.5 rounded-full border border-amber-400/20">
+              <span className="text-[10px] font-bold tracking-wider text-emerald-700 dark:text-emerald-300 uppercase bg-emerald-50 dark:bg-emerald-950/60 px-2.5 py-0.5 rounded-full border border-emerald-200 dark:border-emerald-800">
                 {t.fpoHeaderBadge}
               </span>
-              <h1 className="text-2xl sm:text-3xl font-extrabold mt-1">
+              <h1 className="text-2xl sm:text-3xl font-bold mt-1 text-slate-900 dark:text-white">
                 Sahyadri Farmers Producer FPO Group
               </h1>
-              <p className="text-xs sm:text-sm text-amber-200/70 mt-0.5">
+              <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-0.5">
                 Manager: {userName} • {totalMembersCount} Member Farmers Pooled (Collective Bargaining)
               </p>
             </div>
@@ -120,7 +120,7 @@ export default function FpoDashboardPage() {
           <button
             type="button"
             onClick={() => setShowNewPoolModal(true)}
-            className="px-4 py-2.5 bg-amber-400 hover:bg-amber-300 text-emerald-950 font-black text-xs rounded-xl shadow-lg transition flex items-center gap-2 cursor-pointer"
+            className="px-4 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white font-semibold text-xs rounded-xl shadow-xs transition flex items-center gap-2 cursor-pointer"
           >
             <Plus className="w-4 h-4" />
             <span>Pool New Member Yield Lot</span>
@@ -128,16 +128,16 @@ export default function FpoDashboardPage() {
         </div>
 
         {/* AI Advisory Callout Banner */}
-        <div className="p-5 bg-gradient-to-r from-amber-500/15 via-emerald-500/10 to-transparent border border-amber-500/30 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div className="p-5 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/50 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-amber-400/20 rounded-xl text-amber-800 dark:text-amber-300 shrink-0">
-              <Sparkles className="w-5 h-5 text-amber-500 animate-pulse" />
+            <div className="p-2 bg-emerald-100 dark:bg-emerald-900/60 rounded-xl text-emerald-700 dark:text-emerald-300 shrink-0">
+              <Sparkles className="w-5 h-5 text-emerald-600 dark:text-emerald-400 animate-pulse" />
             </div>
             <div>
-              <h4 className="font-extrabold text-sm text-emerald-950 dark:text-amber-100">
+              <h4 className="font-bold text-sm text-slate-900 dark:text-white">
                 AI Crop Planning & Demand Advisory for FPO Members
               </h4>
-              <p className="text-xs text-emerald-800/80 dark:text-emerald-300/80 mt-0.5">
+              <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">
                 Tomatoes projecting <strong>+21.4% price surge</strong> next week in Pune mandis. Lasalgaon onions facing temporary harvest glut. Recommend member pooling for tomatoes.
               </p>
             </div>
@@ -145,7 +145,7 @@ export default function FpoDashboardPage() {
 
           <Link
             href="/forecast"
-            className="px-4 py-2 bg-[#0F3826] hover:bg-emerald-900 text-amber-200 text-xs font-bold rounded-xl transition flex items-center gap-1.5 shrink-0"
+            className="px-4 py-2 bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-semibold rounded-xl shadow-xs transition flex items-center gap-1.5 shrink-0"
           >
             <span>Open AI Forecast Studio</span>
             <ArrowRight className="w-3.5 h-3.5" />
@@ -154,26 +154,26 @@ export default function FpoDashboardPage() {
 
         {/* Metrics Row */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-          <div className="bg-white dark:bg-[#07170f] p-5 rounded-2xl space-y-1 border-l-4 border-l-emerald-700 shadow-sm border border-emerald-900/10 dark:border-emerald-500/20">
-            <span className="text-xs font-bold text-emerald-800 dark:text-emerald-300">{t.fpoStatTotalSupply}</span>
-            <div className="text-2xl font-extrabold text-emerald-950 dark:text-amber-100">
+          <div className="bg-white dark:bg-[#0F1C16] p-5 rounded-2xl space-y-1 shadow-xs border border-slate-200 dark:border-slate-800">
+            <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">{t.fpoStatTotalSupply}</span>
+            <div className="text-2xl font-bold text-slate-900 dark:text-white font-mono">
               {(pooledLots.reduce((acc, l) => acc + l.total_quantity_kg, 0) / 1000).toFixed(1)} Tons
             </div>
-            <span className="text-[11px] text-emerald-700 dark:text-emerald-400 font-bold">{t.fpoStatBargaining}</span>
+            <span className="text-[11px] text-emerald-600 dark:text-emerald-400 font-semibold">{t.fpoStatBargaining}</span>
           </div>
 
-          <div className="bg-white dark:bg-[#07170f] p-5 rounded-2xl space-y-1 border-l-4 border-l-amber-600 shadow-sm border border-emerald-900/10 dark:border-emerald-500/20">
-            <span className="text-xs font-bold text-emerald-800 dark:text-emerald-300">{t.fpoStatVirtualLots}</span>
-            <div className="text-2xl font-extrabold text-amber-800 dark:text-amber-400">{pooledLots.length} Lots</div>
-            <span className="text-[11px] text-amber-700 dark:text-amber-300 font-medium">
+          <div className="bg-white dark:bg-[#0F1C16] p-5 rounded-2xl space-y-1 shadow-xs border border-slate-200 dark:border-slate-800">
+            <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">{t.fpoStatVirtualLots}</span>
+            <div className="text-2xl font-bold text-amber-600 dark:text-amber-400 font-mono">{pooledLots.length} Lots</div>
+            <span className="text-[11px] text-slate-500 dark:text-slate-400 font-medium">
               {pooledLots.reduce((acc, l) => acc + l.members, 0)} Smallholder Farmers Pooled
             </span>
           </div>
 
-          <div className="bg-white dark:bg-[#07170f] p-5 rounded-2xl space-y-1 border-l-4 border-l-blue-600 shadow-sm border border-emerald-900/10 dark:border-emerald-500/20">
-            <span className="text-xs font-bold text-emerald-800 dark:text-emerald-300">{t.fpoStatBuyerReqs}</span>
-            <div className="text-2xl font-extrabold text-blue-700 dark:text-blue-400">{bulkReqs.length} Offers</div>
-            <span className="text-[11px] text-blue-600 dark:text-blue-300 font-medium">Institutional Bulk Demand Ready</span>
+          <div className="bg-white dark:bg-[#0F1C16] p-5 rounded-2xl space-y-1 shadow-xs border border-slate-200 dark:border-slate-800">
+            <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">{t.fpoStatBuyerReqs}</span>
+            <div className="text-2xl font-bold text-blue-600 dark:text-blue-400 font-mono">{bulkReqs.length} Offers</div>
+            <span className="text-[11px] text-slate-500 dark:text-slate-400 font-medium">Institutional Bulk Demand Ready</span>
           </div>
         </div>
 

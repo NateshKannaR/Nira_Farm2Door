@@ -186,7 +186,7 @@ export default function BulmaProductCard({
           <div className="bulma-media">
             {/* Category / Crop Emblem */}
             <div className="bulma-media-left">
-              <div className="relative w-12 h-12 rounded-2xl overflow-hidden border-2 border-amber-500/40 shadow-md bg-gradient-to-br from-[#0F3826] to-[#072115] shrink-0 flex items-center justify-center">
+              <div className="relative w-11 h-11 rounded-xl overflow-hidden border border-emerald-500/30 shadow-xs bg-slate-900 shrink-0 flex items-center justify-center">
                 {effectiveLogo ? (
                   <img
                     src={effectiveLogo}
@@ -201,36 +201,36 @@ export default function BulmaProductCard({
                     {renderCategoryBadgeIcon(category)}
                   </div>
                 )}
-                <span className="absolute bottom-0.5 right-0.5 w-2.5 h-2.5 bg-emerald-500 border border-white rounded-full" />
+                <span className="absolute bottom-0.5 right-0.5 w-2 h-2 bg-emerald-500 border border-white rounded-full" />
               </div>
             </div>
 
             {/* Product Name & Subtitles */}
-            <div className="bulma-media-content">
+            <div className="bulma-media-content min-w-0">
               <div className="flex items-center gap-1.5 flex-wrap">
                 <span className="bulma-tag is-success-light">
                   {getLocalizedCategory(category, language)}
                 </span>
                 {variety && (
-                  <span className="text-[10px] text-emerald-900 dark:text-amber-200 font-medium bg-amber-100/80 dark:bg-emerald-950/80 border border-amber-300/60 dark:border-emerald-700/50 px-2 py-0.5 rounded-full shadow-xs">
+                  <span className="text-[10px] text-slate-700 dark:text-slate-300 font-medium bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded-full border border-slate-200 dark:border-slate-700">
                     {variety}
                   </span>
                 )}
                 {isOfficiallyOrganic && (
-                  <span className="text-[10px] font-extrabold text-emerald-800 dark:text-emerald-300 bg-emerald-100/90 dark:bg-emerald-950/80 px-2 py-0.5 rounded-full border border-emerald-400/50 flex items-center gap-1 shadow-xs">
+                  <span className="text-[10px] font-bold text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/60 px-2 py-0.5 rounded-full border border-emerald-300/60 dark:border-emerald-800 flex items-center gap-1">
                     <Leaf className="w-2.5 h-2.5 text-emerald-600 dark:text-emerald-400" />
-                    <span>{language === 'hi' ? '100% जैविक' : '100% Organic'}</span>
+                    <span>{language === 'hi' ? 'जैविक' : 'Organic'}</span>
                   </span>
                 )}
                 {badge && (
-                  <span className="text-[10px] bg-red-600 text-white font-extrabold px-1.5 py-0.5 rounded">
+                  <span className="text-[10px] bg-red-600 text-white font-bold px-1.5 py-0.5 rounded">
                     {badge}
                   </span>
                 )}
               </div>
 
               <div className="flex items-center gap-1.5 mt-1 flex-wrap">
-                <h3 className="font-extrabold text-base sm:text-lg text-emerald-950 dark:text-amber-100 leading-snug truncate">
+                <h3 className="font-bold text-base text-slate-900 dark:text-white leading-snug truncate">
                   {displayCropName}
                 </h3>
                 {isOfficiallyVerified && (
@@ -246,11 +246,11 @@ export default function BulmaProductCard({
 
             {/* Upper Right Badges */}
             <div className="bulma-media-right flex flex-col items-end gap-1">
-              <span className="bulma-tag is-warning-dark shadow-sm">
-                <Award className="w-3 h-3 text-amber-400 shrink-0" />
+              <span className="bulma-tag is-warning-dark shadow-xs">
+                <Award className="w-3 h-3 text-amber-300 shrink-0" />
                 <span>{getLocalizedGrade(effectiveGrade, language)}</span>
               </span>
-              <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200 flex items-center gap-1">
+              <span className="text-[10px] font-bold text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/60 px-2 py-0.5 rounded-full border border-emerald-200 dark:border-emerald-800 flex items-center gap-1">
                 <Sparkles className="w-2.5 h-2.5 text-amber-500" />
                 <span>CV {cv_trust_score}%</span>
               </span>
@@ -263,7 +263,7 @@ export default function BulmaProductCard({
             =================================================== */}
         {activePhoto && (
           <div
-            className="relative w-full h-44 sm:h-48 overflow-hidden bg-black/5 dark:bg-black/40 border-y border-emerald-900/10 dark:border-emerald-500/20 group/img cursor-pointer"
+            className="relative w-full h-44 sm:h-48 overflow-hidden bg-slate-100 dark:bg-slate-900 border-y border-slate-200/80 dark:border-emerald-500/15 group/img cursor-pointer"
             onClick={() => setShowDetailsModal(true)}
             title={language === 'hi' ? 'विस्तृत विवरण देखें' : 'Click to view full specifications'}
           >
@@ -273,26 +273,26 @@ export default function BulmaProductCard({
               className="w-full h-full object-cover transition-transform duration-500 group-hover/img:scale-105"
               loading="lazy"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent pointer-events-none" />
 
             <div className="absolute top-2 left-2 flex items-center gap-1.5">
-              <span className="px-2 py-0.5 bg-black/60 backdrop-blur-md text-amber-300 font-extrabold text-[10px] rounded-full border border-amber-400/30 flex items-center gap-1">
-                <Sparkles className="w-2.5 h-2.5 text-amber-400" />
+              <span className="px-2 py-0.5 bg-slate-950/75 backdrop-blur-md text-emerald-300 font-bold text-[10px] rounded-full border border-emerald-500/30 flex items-center gap-1">
+                <Sparkles className="w-2.5 h-2.5 text-emerald-400" />
                 <span>CV {cv_trust_score}% Verified</span>
               </span>
             </div>
 
             {effectivePhotos.length > 1 && (
-              <div className="absolute top-2 right-2 flex items-center gap-1 bg-black/60 backdrop-blur-md text-white px-2 py-0.5 rounded-full text-[10px] font-mono">
+              <div className="absolute top-2 right-2 flex items-center gap-1 bg-slate-950/75 backdrop-blur-md text-white px-2 py-0.5 rounded-full text-[10px] font-mono">
                 <span>📷 {effectivePhotos.length} Photos</span>
               </div>
             )}
 
             <div className="absolute bottom-2 left-3 right-3 flex items-center justify-between text-white text-xs">
-              <span className="font-extrabold text-amber-300 drop-shadow">
-                ₹{priceRupees} / {unit}
+              <span className="font-extrabold text-white text-sm drop-shadow">
+                ₹{priceRupees} <span className="text-[11px] font-normal text-slate-300">/ {unit}</span>
               </span>
-              <span className="text-[11px] text-emerald-200 font-semibold bg-[#0F3826]/80 px-2 py-0.5 rounded-lg border border-emerald-400/30">
+              <span className="text-[10px] text-emerald-200 font-semibold bg-emerald-950/80 px-2 py-0.5 rounded-md border border-emerald-400/30">
                 {language === 'hi' ? 'सीधा खेत से' : 'Direct from Farm'}
               </span>
             </div>
@@ -300,43 +300,40 @@ export default function BulmaProductCard({
         )}
 
         {/* ===================================================
-            NICHE SECTION (Bottom): Detailed Product Specifications
+            NICHE SECTION: Detailed Product Specifications
             =================================================== */}
         <div className="card-content space-y-3">
           {/* Price & Quantity Available Highlight */}
-          <div className="flex items-center justify-between bg-amber-50/70 dark:bg-amber-950/40 p-2.5 rounded-xl border border-amber-200/60 dark:border-amber-500/20">
+          <div className="flex items-center justify-between bg-slate-50 dark:bg-slate-900/60 p-2.5 rounded-xl border border-slate-200/80 dark:border-slate-800">
             <div>
-              <span className="text-[10px] uppercase tracking-wider font-extrabold text-amber-900/80 dark:text-amber-300 block">
-                {language === 'hi' ? 'उचित मूल्य AI दर' : (t.fairPriceAiTag || 'Fair Price AI Rate')}
+              <span className="text-[10px] uppercase tracking-wider font-bold text-slate-500 dark:text-slate-400 block">
+                {language === 'hi' ? 'उचित मूल्य दर' : (t.fairPriceAiTag || 'Fair Price AI Rate')}
               </span>
-              <div className="text-xl font-extrabold text-amber-900 dark:text-amber-300 flex items-baseline gap-1">
+              <div className="text-xl font-black text-slate-900 dark:text-white flex items-baseline gap-1">
                 <span>₹{priceRupees}</span>
-                <span className="text-xs font-semibold text-emerald-950 dark:text-emerald-200">/ {unit}</span>
+                <span className="text-xs font-normal text-slate-500 dark:text-slate-400">/ {unit}</span>
               </div>
-              <span className="text-[10px] font-mono text-emerald-800 dark:text-emerald-300/80 block">
-                ({safePaise} {language === 'hi' ? 'पैसे' : 'paise'})
-              </span>
             </div>
 
             <div className="text-right">
-              <span className="text-[10px] uppercase tracking-wider font-extrabold text-emerald-900/80 dark:text-emerald-200 block">
+              <span className="text-[10px] uppercase tracking-wider font-bold text-slate-500 dark:text-slate-400 block">
                 {language === 'hi' ? 'उपलब्ध स्टॉक' : (t.availableQty || 'Stock Ready')}
               </span>
-              <div className="text-base font-extrabold text-emerald-950 dark:text-emerald-100">
+              <div className="text-base font-bold text-slate-900 dark:text-white">
                 {quantity_kg.toLocaleString()} {unit}
               </div>
-              <span className="text-[10px] text-emerald-700 dark:text-emerald-300 font-bold bg-emerald-100/80 dark:bg-emerald-900/50 px-1.5 py-0.5 rounded-full inline-block mt-0.5">
+              <span className="text-[10px] text-emerald-700 dark:text-emerald-300 font-semibold bg-emerald-50 dark:bg-emerald-950/50 px-1.5 py-0.5 rounded-full inline-block mt-0.5 border border-emerald-200 dark:border-emerald-800/60">
                 {language === 'hi' ? 'सत्यापित लॉट' : 'Verified Lot'}
               </span>
             </div>
           </div>
 
-          {/* Farmer & Location Niche Info */}
-          <div className="text-xs space-y-1.5 text-emerald-900/90 dark:text-emerald-200 bg-[#FAF5EB] dark:bg-[#07170f] p-2.5 rounded-xl border border-emerald-900/10 dark:border-emerald-500/20">
+          {/* Farmer & Location Info */}
+          <div className="text-xs space-y-1.5 text-slate-700 dark:text-slate-200 bg-slate-50 dark:bg-slate-900/40 p-2.5 rounded-xl border border-slate-200/80 dark:border-slate-800">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-1.5 truncate">
-                <ShieldCheck className="w-3.5 h-3.5 text-emerald-700 dark:text-emerald-400 shrink-0" />
-                <span className="font-bold truncate">
+                <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 shrink-0" />
+                <span className="font-semibold truncate">
                   {getLocalizedFarmer(farmer_name, language)}
                 </span>
                 {isOfficiallyVerified && (
@@ -348,37 +345,37 @@ export default function BulmaProductCard({
                   />
                 )}
               </div>
-              <span className="text-[10px] font-extrabold text-emerald-800 dark:text-emerald-200 uppercase bg-emerald-200/60 dark:bg-emerald-900/60 px-1.5 py-0.5 rounded">
+              <span className="text-[10px] font-bold text-slate-600 dark:text-slate-300 uppercase bg-slate-200/70 dark:bg-slate-800 px-1.5 py-0.5 rounded">
                 {language === 'hi' ? 'किसान' : (t.farmerLabel || 'Farmer')}
               </span>
             </div>
 
-            <div className="flex items-center gap-1.5 text-emerald-800/80 dark:text-emerald-300/80 text-[11px] truncate">
-              <MapPin className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 shrink-0" />
+            <div className="flex items-center gap-1.5 text-slate-500 dark:text-slate-400 text-[11px] truncate">
+              <MapPin className="w-3.5 h-3.5 text-amber-500 shrink-0" />
               <span className="truncate">{getLocalizedLocation(location, language)}</span>
             </div>
 
-            <div className="flex items-center justify-between text-[10px] text-emerald-700/80 dark:text-emerald-300/80 pt-1 border-t border-emerald-900/10 dark:border-emerald-500/20">
+            <div className="flex items-center justify-between text-[10px] text-slate-500 dark:text-slate-400 pt-1 border-t border-slate-200 dark:border-slate-800">
               <span className="flex items-center gap-1">
-                <Calendar className="w-3 h-3 text-amber-600 dark:text-amber-400" />
-                <span>{language === 'hi' ? 'फसल कटाई' : 'Harvest'}: {harvest_date}</span>
+                <Calendar className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
+                <span>{language === 'hi' ? 'कटाई' : 'Harvest'}: {harvest_date}</span>
               </span>
               <button
                 onClick={() => setShowDetailsModal(true)}
-                className="text-amber-800 dark:text-amber-400 hover:text-amber-900 dark:hover:text-amber-300 font-bold underline flex items-center gap-0.5"
+                className="text-emerald-700 dark:text-emerald-400 hover:underline font-semibold flex items-center gap-0.5 cursor-pointer"
               >
                 <Info className="w-3 h-3" />
-                <span>{language === 'hi' ? 'पूर्ण विवरण' : 'Full Specs'}</span>
+                <span>{language === 'hi' ? 'विवरण' : 'Full Specs'}</span>
               </button>
             </div>
           </div>
 
-          {/* SIH Innovation Buttons: Middleman Eliminated & Traceability QR */}
-          <div className="grid grid-cols-2 gap-2 pt-1">
+          {/* Innovation Quick Actions: Middleman Eliminated & Traceability QR */}
+          <div className="grid grid-cols-2 gap-2 pt-0.5">
             <button
               type="button"
               onClick={() => setShowCalculatorModal(true)}
-              className="px-2 py-1.5 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 text-amber-900 dark:text-amber-300 border border-amber-500/30 text-[10px] font-black flex items-center justify-center gap-1 transition cursor-pointer"
+              className="px-2 py-1.5 rounded-lg bg-amber-50 dark:bg-amber-950/40 hover:bg-amber-100 dark:hover:bg-amber-900/50 text-amber-800 dark:text-amber-300 border border-amber-300/60 dark:border-amber-500/30 text-[10px] font-bold flex items-center justify-center gap-1 transition cursor-pointer"
               title="View how 4 brokers were eliminated for this price"
             >
               <TrendingDown className="w-3 h-3 text-amber-600 dark:text-amber-400 shrink-0" />
@@ -388,11 +385,11 @@ export default function BulmaProductCard({
             <button
               type="button"
               onClick={() => setShowTraceModal(true)}
-              className="px-2 py-1.5 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-900 dark:text-emerald-300 border border-emerald-500/30 text-[10px] font-black flex items-center justify-center gap-1 transition cursor-pointer"
+              className="px-2 py-1.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/40 hover:bg-emerald-100 dark:hover:bg-emerald-900/50 text-emerald-800 dark:text-emerald-300 border border-emerald-300/60 dark:border-emerald-500/30 text-[10px] font-bold flex items-center justify-center gap-1 transition cursor-pointer"
               title="View Farm-to-Fork Traceability Passport"
             >
               <QrCode className="w-3 h-3 text-emerald-600 dark:text-emerald-400 shrink-0" />
-              <span className="truncate">{language === 'hi' ? 'खेत उत्पत्ति (QR)' : 'Trace Origin (QR)'}</span>
+              <span className="truncate">{language === 'hi' ? 'उत्पत्ति (QR)' : 'Trace Origin (QR)'}</span>
             </button>
           </div>
         </div>
@@ -402,15 +399,15 @@ export default function BulmaProductCard({
             =================================================== */}
         <div className="card-footer flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5">
           {/* Quick Quantity Counter */}
-          <div className="flex items-center justify-between sm:justify-start gap-2 bg-white dark:bg-[#07170f] px-2.5 py-1.5 rounded-xl border border-emerald-900/15 dark:border-emerald-500/25">
-            <span className="text-[11px] font-bold text-emerald-900 dark:text-emerald-200">
+          <div className="flex items-center justify-between sm:justify-start gap-2 bg-white dark:bg-slate-900 px-2.5 py-1 rounded-lg border border-slate-200 dark:border-slate-800">
+            <span className="text-[11px] font-medium text-slate-600 dark:text-slate-300">
               {language === 'hi' ? 'मात्रा:' : 'Qty:'}
             </span>
-            <div className="flex items-center gap-1.5">
+            <div className="flex items-center gap-1">
               <button
                 type="button"
                 onClick={() => setOrderQty((q) => Math.max(10, q - 10))}
-                className="w-6 h-6 rounded-md bg-emerald-100 dark:bg-emerald-900/80 hover:bg-emerald-200 dark:hover:bg-emerald-800 text-emerald-950 dark:text-emerald-100 font-bold text-xs flex items-center justify-center transition"
+                className="w-5 h-5 rounded bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-bold text-xs flex items-center justify-center transition cursor-pointer"
               >
                 -
               </button>
@@ -418,13 +415,13 @@ export default function BulmaProductCard({
                 type="number"
                 value={orderQty}
                 onChange={(e) => setOrderQty(Math.max(1, parseInt(e.target.value) || 1))}
-                className="w-12 text-center text-xs font-bold text-emerald-950 dark:text-emerald-100 bg-transparent focus:outline-none border-b border-emerald-900/30 dark:border-emerald-500/30"
+                className="w-12 text-center text-xs font-bold text-slate-900 dark:text-white bg-transparent focus:outline-none"
               />
-              <span className="text-[10px] text-emerald-800 dark:text-emerald-300 font-semibold">{unit}</span>
+              <span className="text-[10px] text-slate-500 font-medium">{unit}</span>
               <button
                 type="button"
                 onClick={() => setOrderQty((q) => Math.min(quantity_kg, q + 10))}
-                className="w-6 h-6 rounded-md bg-emerald-100 dark:bg-emerald-900/80 hover:bg-emerald-200 dark:hover:bg-emerald-800 text-emerald-950 dark:text-emerald-100 font-bold text-xs flex items-center justify-center transition"
+                className="w-5 h-5 rounded bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-bold text-xs flex items-center justify-center transition cursor-pointer"
               >
                 +
               </button>
@@ -435,9 +432,9 @@ export default function BulmaProductCard({
           <button
             type="button"
             onClick={handleAddToCart}
-            className="flex-1 px-4 py-2.5 bg-[#0F3826] hover:bg-emerald-900 text-amber-50 font-bold rounded-xl shadow-md transition flex items-center justify-center gap-2 text-xs"
+            className="flex-1 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-xs transition flex items-center justify-center gap-2 text-xs active:scale-95 cursor-pointer"
           >
-            <ShoppingBag className="w-4 h-4 text-amber-400" />
+            <ShoppingBag className="w-3.5 h-3.5 text-white" />
             <span>{language === 'hi' ? 'कार्ट में जोड़ें' : (t.addToCart || 'Add to Cart')}</span>
           </button>
         </div>
@@ -448,10 +445,10 @@ export default function BulmaProductCard({
           =================================================== */}
       {showDetailsModal && (
         <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/70 backdrop-blur-sm p-4 animate-fadeIn">
-          <div className="bg-[#FAF5EB] dark:bg-[#0c2217] rounded-3xl p-6 w-full max-w-lg shadow-2xl border border-emerald-900/20 dark:border-emerald-500/30 space-y-4 max-h-[90vh] overflow-y-auto">
-            <div className="flex items-center justify-between border-b border-emerald-900/10 dark:border-emerald-500/20 pb-3">
+          <div className="bg-white dark:bg-[#0F1C16] rounded-2xl p-6 w-full max-w-lg shadow-2xl border border-slate-200 dark:border-emerald-500/25 space-y-4 max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-xl overflow-hidden flex items-center justify-center bg-[#0F3826] border border-amber-500 text-amber-300 shrink-0">
+                <div className="w-12 h-12 rounded-xl overflow-hidden flex items-center justify-center bg-slate-900 border border-emerald-500/30 text-white shrink-0">
                   {effectiveLogo ? (
                     <img src={effectiveLogo} alt={crop_name} className="w-full h-full object-cover" />
                   ) : (
@@ -459,7 +456,7 @@ export default function BulmaProductCard({
                   )}
                 </div>
                 <div>
-                  <h3 className="font-extrabold text-lg text-emerald-950 dark:text-amber-100">
+                  <h3 className="font-bold text-lg text-slate-900 dark:text-white">
                     {displayCropName}
                   </h3>
                   <span className="bulma-tag is-success-light text-[10px]">
@@ -469,7 +466,7 @@ export default function BulmaProductCard({
               </div>
               <button
                 onClick={() => setShowDetailsModal(false)}
-                className="p-1 hover:bg-emerald-100 dark:hover:bg-emerald-900/60 rounded-full text-emerald-800 dark:text-emerald-200"
+                className="p-1 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full text-slate-500 hover:text-slate-800 dark:text-slate-400"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -478,7 +475,7 @@ export default function BulmaProductCard({
             {/* Photos Strip in Modal */}
             {effectivePhotos.length > 0 && (
               <div className="space-y-2">
-                <div className="relative w-full h-44 rounded-2xl overflow-hidden border border-emerald-900/15 shadow-inner">
+                <div className="relative w-full h-44 rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-inner">
                   <img
                     src={activePhoto}
                     alt={crop_name}
@@ -494,8 +491,8 @@ export default function BulmaProductCard({
                         onClick={() => setActivePhotoIdx(idx)}
                         className={`w-14 h-14 rounded-xl overflow-hidden border-2 shrink-0 transition-all ${
                           activePhotoIdx === idx
-                            ? 'border-emerald-700 ring-2 ring-emerald-500/30 shadow-sm scale-105'
-                            : 'border-emerald-900/20 opacity-70 hover:opacity-100'
+                            ? 'border-emerald-600 ring-2 ring-emerald-500/30 shadow-sm scale-105'
+                            : 'border-slate-200 dark:border-slate-800 opacity-70 hover:opacity-100'
                         }`}
                       >
                         <img src={ph} alt="" className="w-full h-full object-cover" />
@@ -507,7 +504,7 @@ export default function BulmaProductCard({
             )}
 
             {/* Details Table */}
-            <div className="bg-white dark:bg-[#07170f] p-4 rounded-2xl border border-emerald-900/10 dark:border-emerald-500/20 space-y-2 text-xs">
+            <div className="bg-slate-50 dark:bg-slate-900/60 p-4 rounded-xl border border-slate-200/80 dark:border-slate-800 space-y-2 text-xs">
               <div className="flex justify-between py-1 border-b border-emerald-900/5 dark:border-emerald-500/10">
                 <span className="text-emerald-800/80 dark:text-emerald-300/80">{language === 'hi' ? 'मूल्य दर:' : 'Rate:'}</span>
                 <span className="font-bold text-amber-900 dark:text-amber-300">₹{priceRupees} / {unit}</span>

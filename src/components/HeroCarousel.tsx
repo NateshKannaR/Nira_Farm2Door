@@ -209,8 +209,8 @@ export default function HeroCarousel({ onExploreClick, tickerSlot }: HeroCarouse
                 />
               </div>
 
-              {/* Clean, clear overlay with natural contrast - zero light flair, zero white flare */}
-              <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/50 to-black/60" />
+              {/* Clean, clear overlay with natural contrast */}
+              <div className="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-slate-950/65 to-slate-950/70" />
 
               {/* Content Overlay */}
               <div className="relative z-10 h-full max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 flex items-center pt-20 sm:pt-24 pb-10 sm:pb-16 w-full">
@@ -218,28 +218,28 @@ export default function HeroCarousel({ onExploreClick, tickerSlot }: HeroCarouse
                   {/* Left Column: Heading, Description & CTA */}
                   <div className="lg:col-span-7 space-y-4 sm:space-y-6">
                     {/* Tag / Badge */}
-                    <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-500/25 text-amber-300 border border-amber-500/40 text-[10px] sm:text-xs font-semibold backdrop-blur-md shadow-sm max-w-full">
-                      <Sparkles className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                    <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/35 text-[11px] sm:text-xs font-semibold backdrop-blur-md shadow-sm max-w-full">
+                      <Sparkles className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
                       <span className="truncate">{slide.badgeEn}</span>
                     </div>
 
                     {/* Main Title */}
-                    <h1 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-amber-50 leading-tight drop-shadow-md">
+                    <h1 className="text-3xl sm:text-5xl font-black text-white leading-tight tracking-tight drop-shadow">
                       {slide.titleEn}
                     </h1>
 
                     {/* Description */}
-                    <p className="text-xs sm:text-sm lg:text-base text-amber-100/90 leading-relaxed max-w-2xl drop-shadow-sm font-normal">
+                    <p className="text-sm sm:text-base text-slate-200 leading-relaxed max-w-2xl drop-shadow-sm font-normal">
                       {slide.descEn}
                     </p>
 
                     {/* Action Buttons */}
-                    <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 pt-2">
+                    <div className="flex flex-wrap items-center gap-3 pt-2">
                       {/* CTA 1: Explore Products */}
                       <a
                         href="#marketplace"
                         onClick={onExploreClick}
-                        className="px-5 sm:px-6 py-3 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-emerald-950 font-extrabold rounded-xl shadow-lg hover:shadow-amber-500/30 transition-all flex items-center gap-2 text-xs sm:text-sm active:scale-95"
+                        className="px-6 py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl shadow-lg transition-all flex items-center gap-2 text-sm active:scale-95 cursor-pointer"
                         id="hero-carousel-explore-cta"
                       >
                         <ShoppingBag className="w-4 h-4" />
@@ -249,55 +249,51 @@ export default function HeroCarousel({ onExploreClick, tickerSlot }: HeroCarouse
                       {/* CTA 2: Register as Farmer */}
                       <Link
                         href="/farmer"
-                        className="px-5 sm:px-6 py-3 bg-emerald-800/80 hover:bg-emerald-700 text-amber-100 border border-amber-400/40 font-bold rounded-xl shadow-md transition-all flex items-center gap-2 text-xs sm:text-sm active:scale-95 backdrop-blur-sm"
+                        className="px-6 py-3 bg-white/10 hover:bg-white/20 text-white border border-white/20 font-bold rounded-xl shadow-sm transition-all flex items-center gap-2 text-sm active:scale-95 backdrop-blur-sm cursor-pointer"
                         id="hero-carousel-register-cta"
                       >
-                        <Sprout className="w-4 h-4 text-amber-400" />
+                        <Sprout className="w-4 h-4 text-emerald-400" />
                         <span>{slide.ctaSecondaryEn}</span>
                       </Link>
 
                       {/* Toll-free IVR Voice badge */}
-                      <div className="w-full sm:w-auto px-3.5 py-2.5 bg-emerald-950/90 border border-amber-500/30 rounded-xl text-[11px] sm:text-xs text-amber-200 flex items-center gap-2 shadow-inner">
+                      <div className="w-full sm:w-auto px-3.5 py-2.5 bg-slate-900/80 border border-slate-700/60 rounded-xl text-xs text-slate-300 flex items-center gap-2 shadow-xs">
                         <PhoneCall className="w-3.5 h-3.5 text-amber-400 shrink-0" />
                         <span>
-                          <strong className="text-amber-300">1800-KISAN-AI</strong> (Toll-Free IVR Helpline)
+                          <strong className="text-amber-300">1800-KISAN-AI</strong> (Toll-Free IVR)
                         </span>
                       </div>
                     </div>
                   </div>
 
-                  {/* Right Column: Platform Proof & Live Trust Metrics with True Realistic Glassmorphism */}
+                  {/* Right Column: Platform Proof & Live Trust Metrics */}
                   <div className="lg:col-span-5 grid grid-cols-2 gap-3 sm:gap-4">
                     {/* Card 1: 0% Middlemen */}
-                    <div className="group/card relative overflow-hidden p-3.5 sm:p-5 rounded-2xl bg-black/40 dark:bg-black/50 backdrop-blur-md border border-white/25 border-b-white/10 shadow-[0_8px_25px_rgba(0,0,0,0.3)] hover:bg-black/50 hover:border-amber-400/50 transition-all duration-300 text-center space-y-1">
-                      <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-black/20 pointer-events-none" />
-                      <div className="relative z-10 text-2xl sm:text-4xl font-extrabold text-amber-300 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] tracking-tight">0%</div>
-                      <div className="relative z-10 text-[11px] sm:text-xs text-white font-semibold tracking-wide drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">{t.statMiddlemen || 'Middlemen Commission'}</div>
-                      <p className="relative z-10 text-[9px] sm:text-[10px] text-amber-200/90 font-medium drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">{t.statMiddlemenDesc || 'Direct Bank Transfers'}</p>
+                    <div className="group/card relative overflow-hidden p-4 sm:p-5 rounded-2xl bg-slate-900/70 backdrop-blur-md border border-white/10 shadow-lg hover:border-amber-400/40 transition-all text-center space-y-1">
+                      <div className="text-3xl sm:text-4xl font-black text-amber-400 tracking-tight font-mono">0%</div>
+                      <div className="text-xs text-white font-semibold">{t.statMiddlemen || 'Middlemen Commission'}</div>
+                      <p className="text-[11px] text-slate-400 font-medium">{t.statMiddlemenDesc || 'Direct Bank Transfers'}</p>
                     </div>
 
                     {/* Card 2: 99.4% CV Grading */}
-                    <div className="group/card relative overflow-hidden p-3.5 sm:p-5 rounded-2xl bg-black/40 dark:bg-black/50 backdrop-blur-md border border-white/25 border-b-white/10 shadow-[0_8px_25px_rgba(0,0,0,0.3)] hover:bg-black/50 hover:border-emerald-400/50 transition-all duration-300 text-center space-y-1">
-                      <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-black/20 pointer-events-none" />
-                      <div className="relative z-10 text-2xl sm:text-4xl font-extrabold text-emerald-300 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] tracking-tight">99.4%</div>
-                      <div className="relative z-10 text-[11px] sm:text-xs text-white font-semibold tracking-wide drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">{t.statCVGrading || 'AI Grading Accuracy'}</div>
-                      <p className="relative z-10 text-[9px] sm:text-[10px] text-emerald-200/90 font-medium drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">{t.statCVGradingDesc || 'Computer Vision Lab'}</p>
+                    <div className="group/card relative overflow-hidden p-4 sm:p-5 rounded-2xl bg-slate-900/70 backdrop-blur-md border border-white/10 shadow-lg hover:border-emerald-400/40 transition-all text-center space-y-1">
+                      <div className="text-3xl sm:text-4xl font-black text-emerald-400 tracking-tight font-mono">99.4%</div>
+                      <div className="text-xs text-white font-semibold">{t.statCVGrading || 'AI Grading Accuracy'}</div>
+                      <p className="text-[11px] text-slate-400 font-medium">{t.statCVGradingDesc || 'Computer Vision Lab'}</p>
                     </div>
 
                     {/* Card 3: 6 AI Engines */}
-                    <div className="group/card relative overflow-hidden p-3.5 sm:p-5 rounded-2xl bg-black/40 dark:bg-black/50 backdrop-blur-md border border-white/25 border-b-white/10 shadow-[0_8px_25px_rgba(0,0,0,0.3)] hover:bg-black/50 hover:border-amber-400/50 transition-all duration-300 text-center space-y-1">
-                      <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-black/20 pointer-events-none" />
-                      <div className="relative z-10 text-2xl sm:text-4xl font-extrabold text-amber-300 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] tracking-tight">6 AI</div>
-                      <div className="relative z-10 text-[11px] sm:text-xs text-white font-semibold tracking-wide drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">{t.statAIEngines || 'Engines Integrated'}</div>
-                      <p className="relative z-10 text-[9px] sm:text-[10px] text-amber-200/90 font-medium drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">{t.statAIEnginesDesc || 'Pricing, Routes & Quality'}</p>
+                    <div className="group/card relative overflow-hidden p-4 sm:p-5 rounded-2xl bg-slate-900/70 backdrop-blur-md border border-white/10 shadow-lg hover:border-blue-400/40 transition-all text-center space-y-1">
+                      <div className="text-3xl sm:text-4xl font-black text-blue-400 tracking-tight font-mono">6 AI</div>
+                      <div className="text-xs text-white font-semibold">{t.statAIEngines || 'Engines Integrated'}</div>
+                      <p className="text-[11px] text-slate-400 font-medium">{t.statAIEnginesDesc || 'Pricing, Routes & Quality'}</p>
                     </div>
 
                     {/* Card 4: IVR/SMS Offline */}
-                    <div className="group/card relative overflow-hidden p-3.5 sm:p-5 rounded-2xl bg-black/40 dark:bg-black/50 backdrop-blur-md border border-white/25 border-b-white/10 shadow-[0_8px_25px_rgba(0,0,0,0.3)] hover:bg-black/50 hover:border-emerald-400/50 transition-all duration-300 text-center space-y-1">
-                      <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-black/20 pointer-events-none" />
-                      <div className="relative z-10 text-xl sm:text-3xl font-extrabold text-emerald-300 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] tracking-tight">IVR/SMS</div>
-                      <div className="relative z-10 text-[11px] sm:text-xs text-white font-semibold tracking-wide drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">{t.statNoInternet || 'Offline Support'}</div>
-                      <p className="relative z-10 text-[9px] sm:text-[10px] text-emerald-200/90 font-medium drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">{t.statNoInternetDesc || 'Keypad Phone Support'}</p>
+                    <div className="group/card relative overflow-hidden p-4 sm:p-5 rounded-2xl bg-slate-900/70 backdrop-blur-md border border-white/10 shadow-lg hover:border-purple-400/40 transition-all text-center space-y-1">
+                      <div className="text-2xl sm:text-3xl font-black text-purple-400 tracking-tight font-mono">IVR/SMS</div>
+                      <div className="text-xs text-white font-semibold">{t.statNoInternet || 'Offline Support'}</div>
+                      <p className="text-[11px] text-slate-400 font-medium">{t.statNoInternetDesc || 'Keypad Phone Support'}</p>
                     </div>
                   </div>
                 </div>

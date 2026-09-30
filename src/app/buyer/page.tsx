@@ -348,19 +348,19 @@ export default function BuyerDashboardPage() {
     >
       <div className="space-y-8">
         {/* Header */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-[#0F3826] text-amber-50 p-6 rounded-3xl shadow-xl border border-amber-500/20">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-white dark:bg-[#0F1C16] text-slate-900 dark:text-white p-6 rounded-2xl border border-slate-200 dark:border-emerald-500/20 shadow-xs">
           <div className="flex items-center gap-4">
-            <div className="p-3 bg-amber-500/20 rounded-2xl">
-              <ShoppingBag className="w-8 h-8 text-amber-400" />
+            <div className="p-3 bg-emerald-50 dark:bg-emerald-950/60 rounded-xl text-emerald-600 dark:text-emerald-400 border border-emerald-100 dark:border-emerald-800/40">
+              <ShoppingBag className="w-8 h-8" />
             </div>
             <div>
-              <span className="text-[10px] font-extrabold tracking-widest text-amber-400 uppercase bg-emerald-950 px-2.5 py-0.5 rounded-full border border-amber-400/20">
+              <span className="text-[10px] font-bold tracking-wider text-emerald-700 dark:text-emerald-300 uppercase bg-emerald-50 dark:bg-emerald-950/60 px-2.5 py-0.5 rounded-full border border-emerald-200 dark:border-emerald-800">
                 {t.buyerHeaderBadge}
               </span>
-              <h1 className="text-2xl sm:text-3xl font-extrabold mt-1">
+              <h1 className="text-2xl sm:text-3xl font-bold mt-1 text-slate-900 dark:text-white">
                 {t.buyerWelcome}, {userName}
               </h1>
-              <p className="text-xs sm:text-sm text-amber-200/70 mt-0.5">
+              <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-0.5">
                 Fresh Crops Direct from Farmers with Quality Produce at Better prices.
               </p>
             </div>
@@ -369,15 +369,15 @@ export default function BuyerDashboardPage() {
           <div className="flex items-center gap-2.5 shrink-0 flex-wrap">
             <Link
               href="/farmer"
-              className="px-4 py-3 bg-emerald-950/80 hover:bg-emerald-900 text-amber-300 font-bold rounded-xl border border-amber-400/30 transition flex items-center gap-2 text-xs shadow"
+              className="px-4 py-2.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-semibold rounded-xl border border-slate-200 dark:border-slate-700 transition flex items-center gap-2 text-xs shadow-xs"
             >
-              <Tractor className="w-4 h-4 text-amber-400" />
+              <Tractor className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
               <span>Farmer Desk Board</span>
             </Link>
 
             <button
               onClick={() => setShowAddReqModal(true)}
-              className="px-5 py-3 bg-gradient-to-r from-amber-500 to-amber-600 text-emerald-950 font-extrabold rounded-xl shadow-lg hover:from-amber-400 hover:to-amber-500 transition flex items-center gap-2 text-sm shrink-0"
+              className="px-5 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white font-semibold rounded-xl shadow-xs transition flex items-center gap-2 text-xs shrink-0 cursor-pointer"
             >
               <Plus className="w-4 h-4" />
               <span>Post Bulk Demand Request</span>
@@ -387,36 +387,36 @@ export default function BuyerDashboardPage() {
 
         {/* Metrics Row */}
         <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
-          <div className="glass-card p-5 rounded-2xl space-y-1 border-l-4 border-l-emerald-700 dark:border-l-emerald-400">
-            <span className="text-xs font-bold text-emerald-800 dark:text-emerald-300">{t.buyerStatTotalPurchase}</span>
-            <div className="text-2xl font-extrabold text-emerald-950 dark:text-white">
+          <div className="p-5 rounded-2xl bg-white dark:bg-[#0F1C16] border border-slate-200 dark:border-slate-800 shadow-xs space-y-1">
+            <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">{t.buyerStatTotalPurchase}</span>
+            <div className="text-2xl font-bold text-slate-900 dark:text-white font-mono">
               ₹{(totalPurchasedPaise / 100).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
             </div>
-            <span className="text-[11px] text-emerald-700 dark:text-emerald-400 font-bold">
+            <span className="text-[11px] text-emerald-600 dark:text-emerald-400 font-semibold">
               {totalPurchasedPaise > 0 
                 ? `₹${((totalPurchasedPaise * 0.15) / 100).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} farm savings`
                 : t.buyerStatMandiSavings}
             </span>
           </div>
 
-          <div className="glass-card p-5 rounded-2xl space-y-1 border-l-4 border-l-amber-600 dark:border-l-amber-400">
-            <span className="text-xs font-bold text-emerald-800 dark:text-emerald-300">{t.buyerStatActiveOrders}</span>
-            <div className="text-2xl font-extrabold text-amber-800 dark:text-amber-300">{buyerOrders.length} Orders</div>
-            <span className="text-[11px] text-amber-700 dark:text-amber-400 font-medium">{t.buyerStatGPSLogistics}</span>
+          <div className="p-5 rounded-2xl bg-white dark:bg-[#0F1C16] border border-slate-200 dark:border-slate-800 shadow-xs space-y-1">
+            <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">{t.buyerStatActiveOrders}</span>
+            <div className="text-2xl font-bold text-amber-600 dark:text-amber-400 font-mono">{buyerOrders.length} Orders</div>
+            <span className="text-[11px] text-slate-500 dark:text-slate-400 font-medium">{t.buyerStatGPSLogistics}</span>
           </div>
 
-          <div className="glass-card p-5 rounded-2xl space-y-1 border-l-4 border-l-purple-600 dark:border-l-purple-400">
-            <span className="text-xs font-bold text-emerald-800 dark:text-emerald-300">Direct Farmer Lots</span>
-            <div className="text-2xl font-extrabold text-purple-900 dark:text-purple-300">{farmerProduce.length} Fresh Lots</div>
-            <span className="text-[11px] text-purple-700 dark:text-purple-400 font-medium">Live from Farmer Desk</span>
+          <div className="p-5 rounded-2xl bg-white dark:bg-[#0F1C16] border border-slate-200 dark:border-slate-800 shadow-xs space-y-1">
+            <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">Direct Farmer Lots</span>
+            <div className="text-2xl font-bold text-emerald-600 dark:text-emerald-400 font-mono">{farmerProduce.length} Fresh Lots</div>
+            <span className="text-[11px] text-slate-500 dark:text-slate-400 font-medium">Live from Farmer Desk</span>
           </div>
 
-          <div className="glass-card p-5 rounded-2xl space-y-1 border-l-4 border-l-blue-600 dark:border-l-blue-400">
-            <span className="text-xs font-bold text-emerald-800 dark:text-emerald-300">{t.buyerStatRecurringContracts}</span>
-            <div className="text-2xl font-extrabold text-blue-700 dark:text-blue-300">
+          <div className="p-5 rounded-2xl bg-white dark:bg-[#0F1C16] border border-slate-200 dark:border-slate-800 shadow-xs space-y-1">
+            <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">{t.buyerStatRecurringContracts}</span>
+            <div className="text-2xl font-bold text-blue-600 dark:text-blue-400 font-mono">
               {activeContractsCount} {activeContractsCount === 1 ? 'Contract' : 'Contracts'}
             </div>
-            <span className="text-[11px] text-blue-600 dark:text-blue-400 font-medium">{t.buyerStatFPOGuarantee}</span>
+            <span className="text-[11px] text-slate-500 dark:text-slate-400 font-medium">{t.buyerStatFPOGuarantee}</span>
           </div>
         </div>
 

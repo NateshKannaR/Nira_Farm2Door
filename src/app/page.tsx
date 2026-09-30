@@ -228,56 +228,56 @@ export default function HomePage() {
       />
 
       {/* Nira Impact Statistics & Problem Statement 26033 Quick Bar */}
-      <div className="p-4 sm:p-5 rounded-3xl bg-gradient-to-r from-emerald-950 via-[#0a2e1d] to-[#071d12] border border-emerald-500/30 shadow-xl text-amber-50 space-y-4">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 border-b border-emerald-800/40 pb-3">
+      <div className="p-5 sm:p-6 rounded-2xl bg-white dark:bg-[#0F1C16] border border-slate-200 dark:border-emerald-500/20 shadow-xs space-y-4">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 border-b border-slate-100 dark:border-emerald-950 pb-3">
           <div className="flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping" />
-            <span className="text-xs font-black text-amber-300 tracking-wider uppercase">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
+            <span className="text-xs font-bold text-slate-900 dark:text-slate-100 tracking-wider uppercase">
               Nira • Direct Farm-to-Buyer Impact Metrics
             </span>
-            <span className="px-2 py-0.5 rounded-full bg-amber-400/20 text-amber-200 text-[10px] font-bold border border-amber-400/30">
+            <span className="px-2 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 text-[10px] font-bold border border-emerald-300/60">
               SIH 2026 PS 26033 Verified
             </span>
           </div>
-          <span className="text-[11px] text-emerald-300/80 font-medium">
+          <span className="text-[11px] text-slate-500 dark:text-slate-400 font-medium">
             Ministry of Consumer Affairs, Food & Public Distribution
           </span>
         </div>
 
         {/* 4 Core Stat Counters */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-          <div className="p-3 bg-white/5 rounded-2xl border border-white/10 backdrop-blur-sm">
-            <p className="text-[10px] sm:text-xs text-amber-200/80 uppercase tracking-wide font-bold">Farmer Income Gain</p>
-            <p className="text-xl sm:text-2xl font-black text-emerald-400 mt-0.5">+42.8% to +60%</p>
-            <p className="text-[10px] text-emerald-200/70">4 broker layers bypassed</p>
+          <div className="p-3.5 bg-slate-50 dark:bg-slate-900/60 rounded-xl border border-slate-200/80 dark:border-slate-800">
+            <p className="text-[11px] text-slate-500 dark:text-slate-400 uppercase tracking-wide font-semibold">Farmer Income Gain</p>
+            <p className="text-2xl font-black text-emerald-600 dark:text-emerald-400 mt-0.5 font-mono">+42.8% to +60%</p>
+            <p className="text-[10px] text-slate-500 dark:text-slate-400">4 broker layers bypassed</p>
           </div>
-          <div className="p-3 bg-white/5 rounded-2xl border border-white/10 backdrop-blur-sm">
-            <p className="text-[10px] sm:text-xs text-amber-200/80 uppercase tracking-wide font-bold">Consumer Price Relief</p>
-            <p className="text-xl sm:text-2xl font-black text-amber-300 mt-0.5">-14.2% Lower</p>
-            <p className="text-[10px] text-amber-100/70">Zero commission markups</p>
+          <div className="p-3.5 bg-slate-50 dark:bg-slate-900/60 rounded-xl border border-slate-200/80 dark:border-slate-800">
+            <p className="text-[11px] text-slate-500 dark:text-slate-400 uppercase tracking-wide font-semibold">Consumer Price Relief</p>
+            <p className="text-2xl font-black text-amber-600 dark:text-amber-400 mt-0.5 font-mono">-14.2% Lower</p>
+            <p className="text-[10px] text-slate-500 dark:text-slate-400">Zero commission markups</p>
           </div>
-          <div className="p-3 bg-white/5 rounded-2xl border border-white/10 backdrop-blur-sm">
-            <p className="text-[10px] sm:text-xs text-amber-200/80 uppercase tracking-wide font-bold">Post-Harvest Waste</p>
-            <p className="text-xl sm:text-2xl font-black text-emerald-300 mt-0.5">&lt; 2.1% Loss</p>
-            <p className="text-[10px] text-emerald-200/70">Down from 18% mandi rot</p>
+          <div className="p-3.5 bg-slate-50 dark:bg-slate-900/60 rounded-xl border border-slate-200/80 dark:border-slate-800">
+            <p className="text-[11px] text-slate-500 dark:text-slate-400 uppercase tracking-wide font-semibold">Post-Harvest Waste</p>
+            <p className="text-2xl font-black text-emerald-600 dark:text-emerald-400 mt-0.5 font-mono">&lt; 2.1% Loss</p>
+            <p className="text-[10px] text-slate-500 dark:text-slate-400">Down from 18% mandi rot</p>
           </div>
-          <div className="p-3 bg-white/5 rounded-2xl border border-white/10 backdrop-blur-sm">
-            <p className="text-[10px] sm:text-xs text-amber-200/80 uppercase tracking-wide font-bold">Zero-Ghost Custody</p>
-            <p className="text-xl sm:text-2xl font-black text-amber-200 mt-0.5">100% Escrow</p>
-            <p className="text-[10px] text-amber-100/70">Dual-OTP physical handshake</p>
+          <div className="p-3.5 bg-slate-50 dark:bg-slate-900/60 rounded-xl border border-slate-200/80 dark:border-slate-800">
+            <p className="text-[11px] text-slate-500 dark:text-slate-400 uppercase tracking-wide font-semibold">Zero-Ghost Custody</p>
+            <p className="text-2xl font-black text-blue-600 dark:text-blue-400 mt-0.5 font-mono">100% Escrow</p>
+            <p className="text-[10px] text-slate-500 dark:text-slate-400">Dual-OTP physical handshake</p>
           </div>
         </div>
 
         {/* 1-Click Role Portals Direct Navigation */}
         <div className="flex flex-wrap items-center gap-2 pt-1 text-xs">
-          <span className="text-[11px] font-bold text-amber-300 shrink-0">Direct Portal Jump:</span>
+          <span className="text-[11px] font-bold text-slate-500 dark:text-slate-400 shrink-0">Direct Portal Jump:</span>
           <Link
             href="/farmer"
             onClick={() => {
               setRole('FARMER');
               loginAsDemoRole('FARMER');
             }}
-            className="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-emerald-500/30 border border-white/15 transition text-amber-100 font-bold flex items-center gap-1 active:scale-95 cursor-pointer"
+            className="px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-emerald-50 dark:hover:bg-emerald-950/50 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 hover:text-emerald-700 dark:hover:text-emerald-300 font-semibold transition flex items-center gap-1.5 active:scale-95 cursor-pointer"
           >
             🌾 Farmer Desk
           </Link>
@@ -287,7 +287,7 @@ export default function HomePage() {
               setRole('BUYER');
               loginAsDemoRole('BUYER');
             }}
-            className="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-emerald-500/30 border border-white/15 transition text-amber-100 font-bold flex items-center gap-1 active:scale-95 cursor-pointer"
+            className="px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-emerald-50 dark:hover:bg-emerald-950/50 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 hover:text-emerald-700 dark:hover:text-emerald-300 font-semibold transition flex items-center gap-1.5 active:scale-95 cursor-pointer"
           >
             🛒 Direct Buyer
           </Link>
@@ -297,7 +297,7 @@ export default function HomePage() {
               setRole('HUB_OPERATOR');
               loginAsDemoRole('HUB_OPERATOR');
             }}
-            className="px-3 py-1.5 rounded-xl bg-amber-500/20 hover:bg-amber-500/40 border border-amber-400/40 transition text-amber-200 font-black flex items-center gap-1 active:scale-95 shadow-xs cursor-pointer"
+            className="px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-emerald-50 dark:hover:bg-emerald-950/50 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 hover:text-emerald-700 dark:hover:text-emerald-300 font-semibold transition flex items-center gap-1.5 active:scale-95 cursor-pointer"
           >
             🔬 Hub Inspector
           </Link>
@@ -307,13 +307,13 @@ export default function HomePage() {
               setRole('TRANSPORTER');
               loginAsDemoRole('TRANSPORTER');
             }}
-            className="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-emerald-500/30 border border-white/15 transition text-amber-100 font-bold flex items-center gap-1 active:scale-95 cursor-pointer"
+            className="px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-emerald-50 dark:hover:bg-emerald-950/50 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 hover:text-emerald-700 dark:hover:text-emerald-300 font-semibold transition flex items-center gap-1.5 active:scale-95 cursor-pointer"
           >
             🚚 Fleet Logistics
           </Link>
           <Link
             href="/forecast"
-            className="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-emerald-500/30 border border-white/15 transition text-amber-100 font-bold flex items-center gap-1 active:scale-95 cursor-pointer"
+            className="px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-emerald-50 dark:hover:bg-emerald-950/50 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 hover:text-emerald-700 dark:hover:text-emerald-300 font-semibold transition flex items-center gap-1.5 active:scale-95 cursor-pointer"
           >
             📈 7-Day Forecast
           </Link>
@@ -323,7 +323,7 @@ export default function HomePage() {
               setRole('FPO');
               loginAsDemoRole('FPO');
             }}
-            className="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-emerald-500/30 border border-white/15 transition text-amber-100 font-bold flex items-center gap-1 active:scale-95 cursor-pointer"
+            className="px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-emerald-50 dark:hover:bg-emerald-950/50 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 hover:text-emerald-700 dark:hover:text-emerald-300 font-semibold transition flex items-center gap-1.5 active:scale-95 cursor-pointer"
           >
             🏢 FPO Aggregator
           </Link>
@@ -333,35 +333,35 @@ export default function HomePage() {
               setRole('ADMIN');
               loginAsDemoRole('ADMIN');
             }}
-            className="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-emerald-500/30 border border-white/15 transition text-amber-100 font-bold flex items-center gap-1 active:scale-95 cursor-pointer"
+            className="px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-emerald-50 dark:hover:bg-emerald-950/50 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 hover:text-emerald-700 dark:hover:text-emerald-300 font-semibold transition flex items-center gap-1.5 active:scale-95 cursor-pointer"
           >
             ⚖️ Mandi Governance
           </Link>
         </div>
       </div>
 
-      {/* SIH Innovation Feature Cards: AI Demand Forecasting, Intermediary Proof, Logistics Support */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+      {/* SIH Innovation Feature Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-1">
         {/* Card 1: AI Demand Forecast */}
         <Link
           href="/forecast"
-          className="group p-5 rounded-3xl bg-gradient-to-br from-[#0F3826] to-[#164e35] text-amber-50 border border-emerald-500/25 shadow-lg hover:shadow-xl transition-all hover:scale-[1.01] flex flex-col justify-between space-y-4"
+          className="group p-5 rounded-2xl bg-white dark:bg-[#0F1C16] border border-slate-200 dark:border-emerald-500/20 shadow-xs hover:shadow-card-hover transition-all flex flex-col justify-between space-y-4"
         >
           <div className="space-y-2">
             <div className="flex items-center justify-between">
-              <span className="px-2.5 py-0.5 rounded-full bg-amber-400/20 text-amber-300 text-[10px] font-black uppercase tracking-wider">
+              <span className="px-2.5 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 text-[10px] font-bold uppercase tracking-wider border border-emerald-200 dark:border-emerald-800">
                 SIH Pillar 3: AI Engine
               </span>
-              <Sparkles className="w-4 h-4 text-amber-400 animate-pulse" />
+              <Sparkles className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
             </div>
-            <h3 className="text-lg font-black text-white group-hover:text-amber-200 transition">
+            <h3 className="text-base font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition">
               AI Demand & Price Forecasting
             </h3>
-            <p className="text-xs text-amber-100/80 leading-relaxed">
+            <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
               7-Day APMC mandi arrival projections, seasonal crop price trajectories, and inter-mandi price arbitrage radar powered by Google Gemini.
             </p>
           </div>
-          <div className="flex items-center gap-1 text-xs font-bold text-amber-300 pt-1 border-t border-emerald-700/50">
+          <div className="flex items-center gap-1 text-xs font-semibold text-emerald-600 dark:text-emerald-400 pt-2 border-t border-slate-100 dark:border-slate-800">
             <span>Explore 7-Day Forecast Studio</span>
             <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition" />
           </div>
@@ -370,23 +370,23 @@ export default function HomePage() {
         {/* Card 2: Middleman Elimination Proof */}
         <div
           onClick={() => setShowInlineCalculator(!showInlineCalculator)}
-          className="group p-5 rounded-3xl bg-white dark:bg-[#07170f] border border-emerald-900/15 dark:border-emerald-500/25 shadow-md hover:shadow-lg transition-all hover:scale-[1.01] flex flex-col justify-between space-y-4 cursor-pointer"
+          className="group p-5 rounded-2xl bg-white dark:bg-[#0F1C16] border border-slate-200 dark:border-emerald-500/20 shadow-xs hover:shadow-card-hover transition-all flex flex-col justify-between space-y-4 cursor-pointer"
         >
           <div className="space-y-2">
             <div className="flex items-center justify-between">
-              <span className="px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 text-[10px] font-black uppercase tracking-wider">
+              <span className="px-2.5 py-0.5 rounded-full bg-amber-50 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 text-[10px] font-bold uppercase tracking-wider border border-amber-200 dark:border-amber-800">
                 SIH Core Problem: Intermediaries
               </span>
-              <Layers className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+              <Layers className="w-4 h-4 text-amber-600 dark:text-amber-400" />
             </div>
-            <h3 className="text-lg font-black text-emerald-950 dark:text-amber-100 group-hover:text-emerald-700 dark:group-hover:text-amber-200 transition">
+            <h3 className="text-base font-bold text-slate-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition">
               Middleman Elimination Proof
             </h3>
-            <p className="text-xs text-emerald-800/80 dark:text-emerald-300/80 leading-relaxed">
+            <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
               Live mathematical breakdown showing how removing 4 traditional broker layers boosts farmer gross income by <strong>+45% to +60%</strong> and saves consumers <strong>14%</strong>.
             </p>
           </div>
-          <div className="flex items-center gap-1 text-xs font-bold text-amber-800 dark:text-amber-400 pt-1 border-t border-emerald-900/10 dark:border-emerald-500/20">
+          <div className="flex items-center gap-1 text-xs font-semibold text-amber-700 dark:text-amber-400 pt-2 border-t border-slate-100 dark:border-slate-800">
             <span>{showInlineCalculator ? 'Hide Spread Calculator' : 'Launch Value Spread Visualizer'}</span>
             <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition" />
           </div>
@@ -395,23 +395,23 @@ export default function HomePage() {
         {/* Card 3: Logistics Support */}
         <Link
           href="/transporter"
-          className="group p-5 rounded-3xl bg-gradient-to-br from-[#0c2e1f] to-[#082015] text-amber-50 border border-amber-500/25 shadow-lg hover:shadow-xl transition-all hover:scale-[1.01] flex flex-col justify-between space-y-4"
+          className="group p-5 rounded-2xl bg-white dark:bg-[#0F1C16] border border-slate-200 dark:border-emerald-500/20 shadow-xs hover:shadow-card-hover transition-all flex flex-col justify-between space-y-4"
         >
           <div className="space-y-2">
             <div className="flex items-center justify-between">
-              <span className="px-2.5 py-0.5 rounded-full bg-amber-400/20 text-amber-300 text-[10px] font-black uppercase tracking-wider">
+              <span className="px-2.5 py-0.5 rounded-full bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 text-[10px] font-bold uppercase tracking-wider border border-blue-200 dark:border-blue-800">
                 SIH Pillar 2: Logistics Support
               </span>
-              <Truck className="w-4 h-4 text-amber-400" />
+              <Truck className="w-4 h-4 text-blue-600 dark:text-blue-400" />
             </div>
-            <h3 className="text-lg font-black text-white group-hover:text-amber-200 transition">
+            <h3 className="text-base font-bold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition">
               AI Route Optimizer & Fleet Dispatch
             </h3>
-            <p className="text-xs text-amber-100/80 leading-relaxed">
+            <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
               Dynamic multi-stop TSP sequencing for smallholder farm pickups, pooled freight aggregation, fuel savings calculator, and dual-OTP custody handshakes.
             </p>
           </div>
-          <div className="flex items-center gap-1 text-xs font-bold text-amber-300 pt-1 border-t border-emerald-700/50">
+          <div className="flex items-center gap-1 text-xs font-semibold text-blue-600 dark:text-blue-400 pt-2 border-t border-slate-100 dark:border-slate-800">
             <span>View Transporter Logistics Hub</span>
             <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition" />
           </div>
@@ -428,37 +428,37 @@ export default function HomePage() {
       )}
 
       {/* Main Produce Marketplace */}
-      <div id="marketplace" className="space-y-6 pt-4">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-emerald-900/10 dark:border-emerald-500/20 pb-4">
+      <div id="marketplace" className="space-y-6 pt-2">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-4">
           <div>
             <div className="flex items-center gap-2">
-              <span className="px-2.5 py-0.5 bg-amber-500/20 text-amber-900 dark:text-amber-300 font-extrabold text-[11px] rounded-full border border-amber-500/30">
+              <span className="px-2.5 py-0.5 bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 font-bold text-[11px] rounded-full border border-emerald-200 dark:border-emerald-800">
                 Direct from Farmer Desk
               </span>
-              <span className="text-xs text-emerald-700 dark:text-emerald-300 font-bold flex items-center gap-1">
-                <Sparkles className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
+              <span className="text-xs text-slate-500 dark:text-slate-400 font-medium flex items-center gap-1">
+                <Sparkles className="w-3.5 h-3.5 text-amber-500" />
                 <span>2-6 Photos Verified</span>
               </span>
             </div>
-            <h2 className="text-2xl font-extrabold text-emerald-950 dark:text-emerald-50 flex items-center gap-2 mt-1">
-              <ShoppingBag className="w-6 h-6 text-amber-600 dark:text-amber-400" />
+            <h2 className="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2 mt-1">
+              <ShoppingBag className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
               <span>{t.marketplaceTitle}</span>
             </h2>
-            <p className="text-xs text-emerald-800/70 dark:text-emerald-300/80">
+            <p className="text-xs text-slate-500 dark:text-slate-400">
               {t.marketplaceSubtitle}
             </p>
           </div>
 
           <div className="flex flex-wrap items-center gap-2">
             {/* Dual Mode: Consumer vs Bulk B2B Selector */}
-            <div className="flex items-center bg-white dark:bg-[#07170f] p-1 rounded-xl border border-emerald-900/15 dark:border-emerald-500/20 shadow-xs text-xs font-bold">
+            <div className="flex items-center bg-slate-100 dark:bg-slate-900 p-1 rounded-xl border border-slate-200 dark:border-slate-800 shadow-xs text-xs font-semibold">
               <button
                 type="button"
                 onClick={() => setBuyerMode('all')}
                 className={`px-3 py-1 rounded-lg transition ${
                   buyerMode === 'all'
-                    ? 'bg-[#0F3826] text-amber-100 shadow-xs'
-                    : 'text-emerald-950 dark:text-emerald-200 hover:bg-emerald-50'
+                    ? 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-xs'
+                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900'
                 }`}
               >
                 All Lots
@@ -468,28 +468,28 @@ export default function HomePage() {
                 onClick={() => setBuyerMode('retail')}
                 className={`px-3 py-1 rounded-lg transition flex items-center gap-1 ${
                   buyerMode === 'retail'
-                    ? 'bg-[#0F3826] text-amber-100 shadow-xs'
-                    : 'text-emerald-950 dark:text-emerald-200 hover:bg-emerald-50'
+                    ? 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-xs'
+                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900'
                 }`}
               >
                 <span>Consumer Baskets</span>
-                <span className="text-[10px] font-mono text-amber-300">(5-50kg)</span>
+                <span className="text-[10px] text-slate-500">(5-50kg)</span>
               </button>
               <button
                 type="button"
                 onClick={() => setBuyerMode('bulk')}
                 className={`px-3 py-1 rounded-lg transition flex items-center gap-1 ${
                   buyerMode === 'bulk'
-                    ? 'bg-[#0F3826] text-amber-100 shadow-xs'
-                    : 'text-emerald-950 dark:text-emerald-200 hover:bg-emerald-50'
+                    ? 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-xs'
+                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900'
                 }`}
               >
                 <span>Commercial Bulk</span>
-                <span className="text-[10px] font-mono text-amber-300">(500kg+)</span>
+                <span className="text-[10px] text-slate-500">(500kg+)</span>
               </button>
             </div>
 
-            <span className="text-xs font-bold text-emerald-900 dark:text-emerald-200 bg-white dark:bg-[#07170f] px-3 py-1.5 rounded-xl border border-emerald-900/15 dark:border-emerald-500/20 shadow-sm">
+            <span className="text-xs font-semibold text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-900 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-xs">
               {filteredListings.length} Listed
             </span>
           </div>
@@ -499,13 +499,13 @@ export default function HomePage() {
         <div className="space-y-3">
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
             {/* Category Navigation Pills */}
-            <div className="flex items-center gap-1.5 bg-white dark:bg-[#07170f] p-1 rounded-2xl border border-emerald-900/15 dark:border-emerald-500/20 shadow-sm overflow-x-auto no-scrollbar max-w-full">
+            <div className="flex items-center gap-1 bg-white dark:bg-slate-900 p-1 rounded-xl border border-slate-200 dark:border-slate-800 shadow-xs overflow-x-auto no-scrollbar max-w-full">
               <button
                 type="button"
                 onClick={() => setSelectedCropCategory('All')}
-                className={`px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-xs font-extrabold transition whitespace-nowrap ${selectedCropCategory === 'All'
-                    ? 'bg-[#0F3826] text-amber-100 shadow'
-                    : 'text-emerald-950 dark:text-emerald-200 hover:bg-emerald-50 dark:hover:bg-emerald-900/30'
+                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition whitespace-nowrap ${selectedCropCategory === 'All'
+                    ? 'bg-emerald-700 text-white shadow-xs'
+                    : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800'
                   }`}
               >
                 All
@@ -514,9 +514,9 @@ export default function HomePage() {
               <button
                 type="button"
                 onClick={() => setSelectedCropCategory('Vegetables')}
-                className={`px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-xs font-extrabold transition whitespace-nowrap ${selectedCropCategory === 'Vegetables'
-                    ? 'bg-[#0F3826] text-amber-100 shadow'
-                    : 'text-emerald-950 dark:text-emerald-200 hover:bg-emerald-50 dark:hover:bg-emerald-900/30'
+                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition whitespace-nowrap ${selectedCropCategory === 'Vegetables'
+                    ? 'bg-emerald-700 text-white shadow-xs'
+                    : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800'
                   }`}
               >
                 +100 {getLocalizedCategory('Vegetables', language)}
@@ -525,9 +525,9 @@ export default function HomePage() {
               <button
                 type="button"
                 onClick={() => setSelectedCropCategory('Fruits')}
-                className={`px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-xs font-extrabold transition whitespace-nowrap ${selectedCropCategory === 'Fruits'
-                    ? 'bg-[#0F3826] text-amber-100 shadow'
-                    : 'text-emerald-950 dark:text-emerald-200 hover:bg-emerald-50 dark:hover:bg-emerald-900/30'
+                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition whitespace-nowrap ${selectedCropCategory === 'Fruits'
+                    ? 'bg-emerald-700 text-white shadow-xs'
+                    : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800'
                   }`}
               >
                 +100 {getLocalizedCategory('Fruits', language)}
@@ -536,9 +536,9 @@ export default function HomePage() {
               <button
                 type="button"
                 onClick={() => setSelectedCropCategory('Pulses')}
-                className={`px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-xs font-extrabold transition whitespace-nowrap ${selectedCropCategory === 'Pulses'
-                    ? 'bg-[#0F3826] text-amber-100 shadow'
-                    : 'text-emerald-950 dark:text-emerald-200 hover:bg-emerald-50 dark:hover:bg-emerald-900/30'
+                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition whitespace-nowrap ${selectedCropCategory === 'Pulses'
+                    ? 'bg-emerald-700 text-white shadow-xs'
+                    : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800'
                   }`}
               >
                 +100 {getLocalizedCategory('Pulses', language)}
@@ -547,9 +547,9 @@ export default function HomePage() {
               <button
                 type="button"
                 onClick={() => setSelectedCropCategory('Grains')}
-                className={`px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-xs font-extrabold transition whitespace-nowrap ${selectedCropCategory === 'Grains'
-                    ? 'bg-[#0F3826] text-amber-100 shadow'
-                    : 'text-emerald-950 dark:text-emerald-200 hover:bg-emerald-50 dark:hover:bg-emerald-900/30'
+                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition whitespace-nowrap ${selectedCropCategory === 'Grains'
+                    ? 'bg-emerald-700 text-white shadow-xs'
+                    : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800'
                   }`}
               >
                 +50 {getLocalizedCategory('Grains', language)}
@@ -558,18 +558,18 @@ export default function HomePage() {
 
             {/* Real-time Search Box */}
             <div className="relative w-full sm:w-80">
-              <Search className="w-4 h-4 absolute left-3.5 top-3 text-emerald-800/50 dark:text-emerald-400/60" />
+              <Search className="w-4 h-4 absolute left-3.5 top-2.5 text-slate-400" />
               <input
                 type="text"
                 placeholder={language === 'hi' ? 'फसल, किस्म या किसान खोजें...' : 'Search crop, variety, farmer...'}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 bg-white dark:bg-[#07170f] border border-emerald-900/20 dark:border-emerald-500/30 rounded-2xl text-xs text-emerald-950 dark:text-white placeholder-emerald-800/40 dark:placeholder-emerald-300/40 focus:outline-none focus:ring-2 focus:ring-amber-500 shadow-sm font-medium"
+                className="w-full pl-9 pr-8 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl text-xs text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 shadow-xs font-medium"
               />
               {searchQuery && (
                 <button
                   onClick={() => setSearchQuery('')}
-                  className="absolute right-3 top-2.5 text-xs text-emerald-800 dark:text-emerald-300 hover:text-emerald-950 dark:hover:text-white"
+                  className="absolute right-3 top-2 text-xs text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
                 >
                   ✕
                 </button>
@@ -578,34 +578,34 @@ export default function HomePage() {
           </div>
 
           {/* Secondary Quality Filters */}
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="text-[11px] font-bold text-emerald-900/70 dark:text-emerald-300/70">
+          <div className="flex flex-wrap items-center gap-2 pt-1">
+            <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400">
               {language === 'hi' ? 'गुणवत्ता फिल्टर:' : 'Quality Filter:'}
             </span>
-            <div className="flex flex-wrap items-center gap-1.5 bg-emerald-900/5 dark:bg-emerald-950/40 p-1 rounded-xl border border-emerald-900/10 dark:border-emerald-500/20 text-xs">
+            <div className="flex flex-wrap items-center gap-1 bg-slate-100 dark:bg-slate-900 p-1 rounded-lg border border-slate-200 dark:border-slate-800 text-xs">
               <button
                 onClick={() => setFilter('all')}
-                className={`px-3 py-1 rounded-lg font-bold transition ${filter === 'all'
-                    ? 'bg-[#0F3826] text-amber-50 shadow-sm'
-                    : 'text-emerald-900 dark:text-emerald-200 hover:bg-emerald-100/50 dark:hover:bg-emerald-900/40'
+                className={`px-3 py-1 rounded-md font-semibold transition ${filter === 'all'
+                    ? 'bg-emerald-700 text-white shadow-xs'
+                    : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
                   }`}
               >
                 {t.filterAll}
               </button>
               <button
                 onClick={() => setFilter('gradeA')}
-                className={`px-3 py-1 rounded-lg font-bold transition ${filter === 'gradeA'
-                    ? 'bg-[#0F3826] text-amber-50 shadow-sm'
-                    : 'text-emerald-900 dark:text-emerald-200 hover:bg-emerald-100/50 dark:hover:bg-emerald-900/40'
+                className={`px-3 py-1 rounded-md font-semibold transition ${filter === 'gradeA'
+                    ? 'bg-emerald-700 text-white shadow-xs'
+                    : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
                   }`}
               >
                 {t.filterGradeA}
               </button>
               <button
                 onClick={() => setFilter('organic')}
-                className={`px-3 py-1 rounded-lg font-bold transition ${filter === 'organic'
-                    ? 'bg-[#0F3826] text-amber-50 shadow-sm'
-                    : 'text-emerald-900 dark:text-emerald-200 hover:bg-emerald-100/50 dark:hover:bg-emerald-900/40'
+                className={`px-3 py-1 rounded-md font-semibold transition ${filter === 'organic'
+                    ? 'bg-emerald-700 text-white shadow-xs'
+                    : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
                   }`}
               >
                 {t.filterOrganic}
@@ -622,21 +622,21 @@ export default function HomePage() {
             ))}
           </div>
         ) : filteredListings.length === 0 ? (
-          <div className="py-16 px-4 text-center bg-white/60 border-2 border-dashed border-emerald-900/15 rounded-3xl space-y-4">
-            <div className="w-16 h-16 mx-auto bg-amber-500/10 text-amber-700 rounded-2xl flex items-center justify-center">
+          <div className="py-16 px-4 text-center bg-white dark:bg-[#0F1C16] border-2 border-dashed border-slate-200 dark:border-slate-800 rounded-2xl space-y-4">
+            <div className="w-16 h-16 mx-auto bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 rounded-2xl flex items-center justify-center border border-emerald-100 dark:border-emerald-800/40">
               <ShoppingBag className="w-8 h-8" />
             </div>
             <div>
-              <h3 className="text-xl font-extrabold text-emerald-950">
+              <h3 className="text-xl font-bold text-slate-900 dark:text-white">
                 No produce currently listed
               </h3>
-              <p className="text-xs text-emerald-800/70 max-w-md mx-auto mt-1">
+              <p className="text-xs text-slate-500 dark:text-slate-400 max-w-md mx-auto mt-1">
                 Registered farmers can log in to the Farmer Desk and list their fresh harvest with 2-6 photos.
               </p>
             </div>
             <Link
               href="/farmer"
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#0F3826] hover:bg-emerald-900 text-amber-50 font-bold rounded-xl text-xs shadow-md transition"
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white font-semibold rounded-xl text-xs shadow-xs transition"
             >
               <span>Go to Farmer Desk</span>
             </Link>

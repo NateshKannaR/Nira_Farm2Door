@@ -8,25 +8,25 @@ export default function Footer() {
   const { t } = useLanguage();
 
   return (
-    <footer className="bg-[#0A2619] dark:bg-[#040e09] text-amber-100/80 border-t border-emerald-900/30 dark:border-emerald-900/60 pt-12 pb-8 px-4 sm:px-8 mt-16">
+    <footer className="bg-slate-950 text-slate-300 border-t border-slate-800/80 pt-12 pb-8 px-4 sm:px-8 mt-16">
       <div className="w-full px-4 sm:px-8 lg:px-12 grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
         <div className="space-y-3">
-          <div className="flex items-center gap-2 text-amber-400 font-extrabold text-xl">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-amber-400 to-emerald-500 flex items-center justify-center text-emerald-950 shadow-md">
-              <Leaf className="w-5 h-5 fill-emerald-950" />
+          <div className="flex items-center gap-2 text-white font-extrabold text-xl">
+            <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-emerald-500 to-emerald-700 flex items-center justify-center text-white shadow-sm">
+              <Leaf className="w-4 h-4 fill-white" />
             </div>
             <span>{t.appName}</span>
           </div>
-          <p className="text-xs text-amber-200/70 leading-relaxed">
+          <p className="text-xs text-slate-400 leading-relaxed">
             {t.footerMission || `${t.subTitle}. Smart India Hackathon 2026 Problem Statement 26033 (Ministry of Consumer Affairs, Food & Public Distribution).`}
           </p>
         </div>
 
         <div>
-          <h4 className="font-bold text-amber-50 mb-3 text-sm flex items-center gap-2">
-            <Cpu className="w-4 h-4 text-amber-400" /> {t.aiEnginesCore || 'AI Engine Core (6 AI Engines)'}
+          <h4 className="font-bold text-white mb-3 text-sm flex items-center gap-2">
+            <Cpu className="w-4 h-4 text-emerald-400" /> {t.aiEnginesCore || 'AI Engine Core (6 AI Engines)'}
           </h4>
-          <ul className="space-y-1.5 text-xs text-amber-200/70">
+          <ul className="space-y-1.5 text-xs text-slate-400">
             <li>• Fair Price AI (Mandi MSP + Quality)</li>
             <li>• CV Computer Vision Quality Grading</li>
             <li>• Demand Forecasting AI Engine</li>
@@ -37,10 +37,10 @@ export default function Footer() {
         </div>
 
         <div>
-          <h4 className="font-bold text-amber-50 mb-3 text-sm flex items-center gap-2">
+          <h4 className="font-bold text-white mb-3 text-sm flex items-center gap-2">
             <Shield className="w-4 h-4 text-emerald-400" /> {t.userRolesFooter || 'User Roles (6 Personas)'}
           </h4>
-          <ul className="space-y-1.5 text-xs text-amber-200/70">
+          <ul className="space-y-1.5 text-xs text-slate-400">
             <li>• {t.roleFarmer} ({t.roleFarmerSub || 'IVR/SMS + Fair Price'})</li>
             <li>• {t.roleFPO} ({t.roleFPOSub || 'Virtual Lot Aggregation'})</li>
             <li>• {t.roleBuyer} ({t.roleBuyerSub || 'Bulk Procurement Contracts'})</li>
@@ -51,25 +51,25 @@ export default function Footer() {
         </div>
 
         <div>
-          <h4 className="font-bold text-amber-50 mb-3 text-sm flex items-center gap-2">
+          <h4 className="font-bold text-white mb-3 text-sm flex items-center gap-2">
             <Activity className="w-4 h-4 text-amber-400" /> {t.helplineTitle || 'Helpline & Support'}
           </h4>
-          <div className="p-3 bg-emerald-900/40 rounded-xl border border-emerald-800/40 text-xs space-y-1">
-            <p className="font-bold text-amber-300">{t.helplineDesc || 'Farmer Toll-Free IVR Helpline'}:</p>
-            <p className="text-sm font-mono text-amber-100 font-extrabold">1800-KISAN-AI (1800-54726-24)</p>
-            <p className="text-[11px] text-emerald-300/80">{t.allIndiaLangs247 || 'Available 24x7 in English, Hindi & Regional Languages'}</p>
+          <div className="p-3.5 bg-slate-900 rounded-xl border border-slate-800 text-xs space-y-1.5">
+            <p className="font-semibold text-emerald-400">{t.helplineDesc || 'Farmer Toll-Free IVR Helpline'}:</p>
+            <p className="text-sm font-mono text-white font-bold">1800-KISAN-AI (1800-54726-24)</p>
+            <p className="text-[11px] text-slate-400">{t.allIndiaLangs247 || 'Available 24x7 in English, Hindi & Regional Languages'}</p>
           </div>
         </div>
       </div>
 
-      <div className="w-full px-4 sm:px-8 lg:px-12 pt-6 border-t border-emerald-900/40 flex flex-col sm:flex-row items-center justify-between text-xs text-amber-200/50 gap-4">
+      <div className="w-full px-4 sm:px-8 lg:px-12 pt-6 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
         <p>© 2026 Nira — Direct Farm-to-Buyer Digital Agriculture Platform (SIH 2026 PS 26033). All rights reserved.</p>
         <div className="flex gap-4">
           <a
             href="https://github.com/ctrlaltsolveorg-cloud/sih2026"
             target="_blank"
             rel="noreferrer"
-            className="hover:text-amber-200 transition-colors"
+            className="hover:text-emerald-400 transition-colors"
           >
             GitHub
           </a>
@@ -77,7 +77,7 @@ export default function Footer() {
             href="https://sih2026-smoky.vercel.app"
             target="_blank"
             rel="noreferrer"
-            className="hover:text-amber-200 transition-colors"
+            className="hover:text-emerald-400 transition-colors"
           >
             Live App
           </a>
@@ -85,7 +85,7 @@ export default function Footer() {
             href="https://agmarknet.gov.in"
             target="_blank"
             rel="noreferrer"
-            className="hover:text-amber-200 transition-colors"
+            className="hover:text-emerald-400 transition-colors"
           >
             Agmarknet API
           </a>

@@ -334,25 +334,25 @@ export default function TransporterDashboardPage() {
     >
       <div className="space-y-8 max-w-7xl mx-auto pb-16">
         {/* Header */}
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 bg-[#0F3826] text-amber-50 p-6 md:p-8 rounded-3xl shadow-xl border border-amber-500/20">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 bg-white dark:bg-[#0F1C16] text-slate-900 dark:text-white p-6 md:p-8 rounded-2xl border border-slate-200 dark:border-emerald-500/20 shadow-xs">
           <div className="flex items-center gap-4">
-            <div className="p-3.5 bg-amber-500/20 rounded-2xl border border-amber-400/30">
-              <Truck className="w-9 h-9 text-amber-400" />
+            <div className="p-3.5 bg-emerald-50 dark:bg-emerald-950/60 rounded-xl text-emerald-600 dark:text-emerald-400 border border-emerald-100 dark:border-emerald-800/40">
+              <Truck className="w-9 h-9" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-[10px] font-extrabold tracking-widest text-amber-400 uppercase bg-emerald-950 px-2.5 py-0.5 rounded-full border border-amber-400/20">
+                <span className="text-[10px] font-bold tracking-wider text-emerald-700 dark:text-emerald-300 uppercase bg-emerald-50 dark:bg-emerald-950/60 px-2.5 py-0.5 rounded-full border border-emerald-200 dark:border-emerald-800">
                   Direct Fleet & Cold-Chain Logistics
                 </span>
-                <span className="flex items-center gap-1 text-[11px] text-emerald-300 font-bold bg-emerald-900/60 px-2 py-0.5 rounded-full">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span className="flex items-center gap-1 text-[11px] text-emerald-700 dark:text-emerald-400 font-semibold bg-emerald-50 dark:bg-emerald-950/60 px-2 py-0.5 rounded-full border border-emerald-200 dark:border-emerald-800">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
                   GPS Live
                 </span>
               </div>
-              <h1 className="text-2xl sm:text-3xl font-extrabold mt-1">
+              <h1 className="text-2xl sm:text-3xl font-bold mt-1 text-slate-900 dark:text-white">
                 Green-Way Logistics Fleet Partner
               </h1>
-              <p className="text-xs sm:text-sm text-amber-200/80 mt-0.5">
+              <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-0.5">
                 Driver: {userName || 'Vikram Shinde'} • Vehicle: MH-15-EG-8821 • 2-Stage OTP Handshake
               </p>
             </div>
@@ -361,42 +361,44 @@ export default function TransporterDashboardPage() {
           <button
             onClick={loadOrders}
             disabled={loading}
-            className="flex items-center gap-2 px-4 py-2.5 bg-emerald-900/80 hover:bg-emerald-800 text-amber-200 rounded-xl text-xs font-bold border border-emerald-700 transition"
+            className="flex items-center gap-2 px-4 py-2.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-xl text-xs font-semibold border border-slate-200 dark:border-slate-700 transition cursor-pointer"
           >
-            <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin text-amber-400' : ''}`} />
+            <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin text-emerald-600' : ''}`} />
             <span>Refresh Orders</span>
           </button>
         </div>
 
         {/* Navigation Tabs */}
-        <div className="flex items-center gap-2 border-b border-emerald-900/20 dark:border-emerald-500/20 pb-2 overflow-x-auto">
+        <div className="flex items-center gap-2 border-b border-slate-200 dark:border-slate-800 pb-2 overflow-x-auto no-scrollbar">
           <button
             onClick={() => setActiveTab('active')}
-            className={`px-5 py-2.5 rounded-2xl text-xs font-extrabold transition flex items-center gap-2 ${
+            className={`px-4 py-2 rounded-xl text-xs font-semibold transition flex items-center gap-2 whitespace-nowrap ${
               activeTab === 'active'
-                ? 'bg-[#0F3826] dark:bg-emerald-700 text-amber-400 dark:text-amber-200 shadow-md'
-                : 'bg-emerald-950/10 dark:bg-emerald-900/30 text-emerald-950 dark:text-emerald-200 hover:bg-emerald-900/10 dark:hover:bg-emerald-800/40'
+                ? 'bg-emerald-700 text-white shadow-xs'
+                : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
             <Truck className="w-4 h-4" />
             <span>Active Trips & OTPs</span>
-            <span className="px-2 py-0.5 bg-amber-400 dark:bg-amber-300 text-emerald-950 rounded-full text-[10px] font-black">
+            <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
+              activeTab === 'active' ? 'bg-emerald-900 text-emerald-200' : 'bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300'
+            }`}>
               {activeOrders.length}
             </span>
           </button>
 
           <button
             onClick={() => setActiveTab('available')}
-            className={`px-5 py-2.5 rounded-2xl text-xs font-extrabold transition flex items-center gap-2 ${
+            className={`px-4 py-2 rounded-xl text-xs font-semibold transition flex items-center gap-2 whitespace-nowrap ${
               activeTab === 'available'
-                ? 'bg-[#0F3826] dark:bg-emerald-700 text-amber-400 dark:text-amber-200 shadow-md'
-                : 'bg-emerald-950/10 dark:bg-emerald-900/30 text-emerald-950 dark:text-emerald-200 hover:bg-emerald-900/10 dark:hover:bg-emerald-800/40'
+                ? 'bg-emerald-700 text-white shadow-xs'
+                : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
             <Package className="w-4 h-4" />
             <span>Available Deliveries</span>
             {availableOrders.length > 0 && (
-              <span className="px-2 py-0.5 bg-emerald-500 text-white rounded-full text-[10px] font-black">
+              <span className="px-2 py-0.5 bg-emerald-500 text-white rounded-full text-[10px] font-bold">
                 {availableOrders.length}
               </span>
             )}
@@ -404,25 +406,27 @@ export default function TransporterDashboardPage() {
 
           <button
             onClick={() => setActiveTab('delivered')}
-            className={`px-5 py-2.5 rounded-2xl text-xs font-extrabold transition flex items-center gap-2 ${
+            className={`px-4 py-2 rounded-xl text-xs font-semibold transition flex items-center gap-2 whitespace-nowrap ${
               activeTab === 'delivered'
-                ? 'bg-[#0F3826] dark:bg-emerald-700 text-amber-400 dark:text-amber-200 shadow-md'
-                : 'bg-emerald-950/10 dark:bg-emerald-900/30 text-emerald-950 dark:text-emerald-200 hover:bg-emerald-900/10 dark:hover:bg-emerald-800/40'
+                ? 'bg-emerald-700 text-white shadow-xs'
+                : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
             <CheckCircle2 className="w-4 h-4" />
             <span>Delivered History</span>
-            <span className="px-2 py-0.5 bg-emerald-800/30 dark:bg-emerald-700/50 text-emerald-950 dark:text-emerald-100 rounded-full text-[10px] font-bold">
+            <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
+              activeTab === 'delivered' ? 'bg-emerald-900 text-emerald-200' : 'bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300'
+            }`}>
               {deliveredOrders.length}
             </span>
           </button>
 
           <button
             onClick={() => setActiveTab('route')}
-            className={`px-5 py-2.5 rounded-2xl text-xs font-extrabold transition flex items-center gap-2 ${
+            className={`px-4 py-2 rounded-xl text-xs font-semibold transition flex items-center gap-2 whitespace-nowrap ${
               activeTab === 'route'
-                ? 'bg-[#0F3826] dark:bg-emerald-700 text-amber-400 dark:text-amber-200 shadow-md'
-                : 'bg-emerald-950/10 dark:bg-emerald-900/30 text-emerald-950 dark:text-emerald-200 hover:bg-emerald-900/10 dark:hover:bg-emerald-800/40'
+                ? 'bg-emerald-700 text-white shadow-xs'
+                : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
             <Navigation className="w-4 h-4" />
@@ -431,16 +435,16 @@ export default function TransporterDashboardPage() {
 
           <button
             onClick={() => setActiveTab('telemetry')}
-            className={`px-5 py-2.5 rounded-2xl text-xs font-extrabold transition flex items-center gap-2 ${
+            className={`px-4 py-2 rounded-xl text-xs font-semibold transition flex items-center gap-2 whitespace-nowrap ${
               activeTab === 'telemetry'
-                ? 'bg-[#0F3826] dark:bg-emerald-700 text-amber-400 dark:text-amber-200 shadow-md'
-                : 'bg-emerald-950/10 dark:bg-emerald-900/30 text-emerald-950 dark:text-emerald-200 hover:bg-emerald-900/10 dark:hover:bg-emerald-800/40'
+                ? 'bg-emerald-700 text-white shadow-xs'
+                : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
             <Thermometer className="w-4 h-4 text-cyan-500" />
             <span>❄️ Cold-Chain IoT</span>
             {simulatedSpike && (
-              <span className="px-1.5 py-0.5 bg-red-500 text-white rounded-full text-[9px] font-black animate-ping">
+              <span className="px-1.5 py-0.5 bg-red-500 text-white rounded-full text-[9px] font-bold animate-ping">
                 !
               </span>
             )}
