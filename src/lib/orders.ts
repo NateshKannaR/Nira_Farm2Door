@@ -1,3 +1,4 @@
+import { deliveryFeePaise as getDeliveryFeePaise } from './orderPricing';
 import { getDb } from './db';
 import { connectToDatabase, MongoOrder, MongoDelivery, MongoUser } from './mongodb';
 
@@ -156,8 +157,8 @@ export async function createOrder(input: CreateOrderInput) {
   } catch (e) {}
 
   // Calculate totals
-  const subtotalPaise = items.reduce((sum, item) => sum + (item.quantity * item.unitPricePaise), 0);
-  const deliveryFeePaise = deliveryType === 'EXPRESS' ? 3500 : 2000; // ₹35 or ₹20
+  const subtotalPaise = items.reduce((sum, item) => sum + Math.round(item.quantity * item.unitPricePaise), 0);
+  const deliveryFeePaise = getDeliveryFeePaise(deliveryType);
   const totalAmountPaise = subtotalPaise + deliveryFeePaise;
 
   const orderId = `ord_${Date.now()}`;

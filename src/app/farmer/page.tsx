@@ -745,20 +745,20 @@ export default function FarmerDashboardPage() {
         {/* ===================================================
             3 MAIN SECTIONS SWITCHER: "MY PRODUCTS", "ORDERS" & "MANDI ARBITRAGE"
             =================================================== */}
-        <div className="flex items-center justify-center p-1.5 bg-slate-100 dark:bg-slate-900 rounded-xl max-w-xl mx-auto border border-slate-200 dark:border-slate-800 shadow-xs">
+        <div className="grid grid-cols-3 gap-1 p-1.5 bg-slate-100 dark:bg-slate-900 rounded-xl max-w-xl mx-auto border border-slate-200 dark:border-slate-800 shadow-xs">
           <button
             type="button"
             id="tab-my-products"
             onClick={() => setFarmerActiveSection('products')}
-            className={`flex-1 py-2.5 px-3 sm:px-4 rounded-lg font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all cursor-pointer ${
+            className={`min-h-11 min-w-0 px-1 py-2 sm:px-4 rounded-lg font-semibold text-xs sm:text-sm flex items-center justify-center gap-1 sm:gap-2 transition-all cursor-pointer ${
               farmerActiveSection === 'products'
                 ? 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-xs'
                 : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
-            <Sprout className="w-4 h-4 shrink-0 text-emerald-600 dark:text-emerald-400" />
+            <Sprout className="hidden w-4 h-4 shrink-0 sm:block text-emerald-600 dark:text-emerald-400" />
             <span>{language === 'hi' ? 'मेरे उत्पाद' : 'My Products'}</span>
-            <span className={`px-2 py-0.5 text-[10px] rounded-full font-mono font-bold ${
+            <span className={`px-1 py-0.5 sm:px-2 text-[10px] rounded-full font-mono font-bold ${
               farmerActiveSection === 'products' ? 'bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300' : 'bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
             }`}>
               {myListings.length}
@@ -769,15 +769,15 @@ export default function FarmerDashboardPage() {
             type="button"
             id="tab-received-orders"
             onClick={() => setFarmerActiveSection('orders')}
-            className={`flex-1 py-2.5 px-3 sm:px-4 rounded-lg font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all cursor-pointer ${
+            className={`min-h-11 min-w-0 px-1 py-2 sm:px-4 rounded-lg font-semibold text-xs sm:text-sm flex items-center justify-center gap-1 sm:gap-2 transition-all cursor-pointer ${
               farmerActiveSection === 'orders'
                 ? 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-xs'
                 : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
-            <ShoppingBag className="w-4 h-4 shrink-0 text-emerald-600 dark:text-emerald-400" />
+            <ShoppingBag className="hidden w-4 h-4 shrink-0 sm:block text-emerald-600 dark:text-emerald-400" />
             <span>{language === 'hi' ? 'आया Orders' : 'Orders'}</span>
-            <span className={`px-2 py-0.5 text-[10px] rounded-full font-mono font-bold ${
+            <span className={`px-1 py-0.5 sm:px-2 text-[10px] rounded-full font-mono font-bold ${
               farmerActiveSection === 'orders' ? 'bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300' : 'bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
             }`}>
               {farmerOrders.length}
@@ -788,13 +788,13 @@ export default function FarmerDashboardPage() {
             type="button"
             id="tab-mandi-arbitrage"
             onClick={() => setFarmerActiveSection('arbitrage')}
-            className={`flex-1 py-2.5 px-3 sm:px-4 rounded-lg font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all cursor-pointer ${
+            className={`min-h-11 min-w-0 px-1 py-2 sm:px-4 rounded-lg font-semibold text-xs sm:text-sm flex items-center justify-center gap-1 sm:gap-2 transition-all cursor-pointer ${
               farmerActiveSection === 'arbitrage'
                 ? 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-xs'
                 : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
-            <TrendingUp className="w-4 h-4 shrink-0 text-emerald-600 dark:text-emerald-400" />
+            <TrendingUp className="hidden w-4 h-4 shrink-0 sm:block text-emerald-600 dark:text-emerald-400" />
             <span>{language === 'hi' ? 'मंडी लाभ तुलना' : 'Mandi Arbitrage'}</span>
           </button>
         </div>

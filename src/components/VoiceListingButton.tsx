@@ -328,7 +328,7 @@ export default function VoiceListingButton({ onExtracted }: VoiceListingButtonPr
                       {p.label}
                     </p>
                     <p className="text-[10px] text-gray-500 dark:text-gray-400 truncate">
-                      "{p.text}"
+                      &quot;{p.text}&quot;
                     </p>
                   </button>
                 ))}

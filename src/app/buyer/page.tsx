@@ -6,6 +6,7 @@ import { useLanguage } from '@/context/LanguageContext';
 import { getLocalizedFarmer, getLocalizedLocation, getLocalizedCropName, stripIndicParens } from '@/lib/i18n';
 import { useRole } from '@/context/RoleContext';
 import { useAuth } from '@/context/AuthContext';
+import { useStoredList } from '@/hooks/useStoredList';
 import { useCart } from '@/context/CartContext';
 import PortalGuard from '@/components/PortalGuard';
 import BulmaProductCard from '@/components/BulmaProductCard';
@@ -32,6 +33,9 @@ import {
   Trash2
 } from 'lucide-react';
 
+const isSavedLot = (value: unknown): value is string => typeof value === 'string';
+type SortOrder = 'default' | 'price-asc' | 'price-desc' | 'stock';
+
 export default function BuyerDashboardPage() {
   const { t, language } = useLanguage();
   const { userName, userPhone } = useRole();
@@ -52,12 +56,28 @@ export default function BuyerDashboardPage() {
   }, [userName, userPhone]);
 
   // Produce board search state - ONLY farmer inserted crops
+  const [sortOrder, setSortOrder] = useState<SortOrder>('default');
+  const [inStockOnly, setInStockOnly] = useState(false);
+  const [savedOnly, setSavedOnly] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [farmerProduce, setFarmerProduce] = useState<any[]>([]);
   const [loadingProduce, setLoadingProduce] = useState(true);
 
   const { user } = useAuth();
+  const [savedLots, updateSavedLots] = useStoredList(user ? `nira_saved_lots_${user.id}` : null, isSavedLot);
+  const savedIds = useMemo(() => new Set(savedLots), [savedLots]);
+  const toggleSaved = (id: string) => updateSavedLots((lots) =>
+    lots.includes(id) ? lots.filter((lot) => lot !== id) : [...lots, id]
+  );
+  const filterActive = selectedCategory !== 'All' || Boolean(searchQuery.trim()) || inStockOnly || savedOnly;
+  const resetFilters = () => {
+    setSelectedCategory('All');
+    setSearchQuery('');
+    setInStockOnly(false);
+    setSavedOnly(false);
+    setSortOrder('default');
+  };
   const [buyerOrders, setBuyerOrders] = useState<any[]>(() => {
     if (typeof window !== 'undefined') {
       try {
@@ -280,8 +300,8 @@ export default function BuyerDashboardPage() {
         const combined = [...localList, ...apiList];
         const seen = new Set();
         const unique = combined.filter((it) => {
-          if (seen.has(it.id)) return false;
-          seen.add(it.id);
+          if (seen.has(String(it.id))) return false;
+          seen.add(String(it.id));
           return true;
         });
 
@@ -294,25 +314,26 @@ export default function BuyerDashboardPage() {
     fetchFarmerProduce();
   }, []);
 
-  // Direct buyer board: ONLY crops inserted by farmers!
+  const categories = useMemo(() => Array.from(new Set([
+    'Vegetables', 'Fruits', 'Pulses', 'Grains', ...farmerProduce.map((lot) => lot.category),
+  ])), [farmerProduce]);
   const filteredProduce = useMemo(() => {
-    let result = farmerProduce;
-    if (selectedCategory !== 'All') {
-      result = result.filter(
-        (it) => it.category?.toLowerCase() === selectedCategory.toLowerCase()
-      );
-    }
-    if (searchQuery.trim()) {
-      const q = searchQuery.toLowerCase();
-      result = result.filter(
-        (it) =>
-          it.crop_name.toLowerCase().includes(q) ||
-          (it.variety && it.variety.toLowerCase().includes(q)) ||
-          (it.farmer_name && it.farmer_name.toLowerCase().includes(q))
-      );
-    }
-    return result;
-  }, [farmerProduce, selectedCategory, searchQuery]);
+    const query = searchQuery.trim().toLocaleLowerCase();
+    const results = farmerProduce.filter((lot) => {
+      if (selectedCategory !== 'All' && lot.category !== selectedCategory) return false;
+      if (savedOnly && !savedIds.has(String(lot.id))) return false;
+      if (inStockOnly && !(Number(lot.quantity_kg) > 0)) return false;
+      return !query || [
+        lot.crop_name, lot.crop_name_hi, getLocalizedCropName(lot.crop_name, language),
+        lot.variety, lot.farmer_name, getLocalizedFarmer(lot.farmer_name, language),
+        lot.location, getLocalizedLocation(lot.location, language),
+      ].some((field) => field?.toLocaleLowerCase().includes(query));
+    });
+    if (sortOrder === 'price-asc') return results.sort((a, b) => a.price_paise_per_kg - b.price_paise_per_kg);
+    if (sortOrder === 'price-desc') return results.sort((a, b) => b.price_paise_per_kg - a.price_paise_per_kg);
+    if (sortOrder === 'stock') return results.sort((a, b) => b.quantity_kg - a.quantity_kg);
+    return results;
+  }, [farmerProduce, selectedCategory, searchQuery, inStockOnly, savedOnly, savedIds, sortOrder, language]);
 
   const handlePostRequirement = (e: React.FormEvent) => {
     e.preventDefault();
@@ -327,12 +348,13 @@ export default function BuyerDashboardPage() {
     addToCart({
       listingId: item.listingId || item.id,
       cropName: item.cropName || item.crop_name,
-      pricePaisePerKg: item.pricePaisePerKg || item.price_paise_per_kg,
-      quantityKg: item.quantityKg || 100,
+      pricePaisePerKg: item.pricePaisePerKg ?? item.price_paise_per_kg,
+      quantityKg: item.quantityKg ?? 100,
       grade: item.grade || item.quality_grade,
       farmerName: item.farmerName || item.farmer_name,
       location: item.location,
-      imageUrl: item.imageUrl || (item.photos && item.photos[0]),
+      imageUrl: item.imageUrl || item.photos?.[0],
+      unit: item.unit,
     });
     setSuccessSignal(
       `${item.cropName || item.crop_name} added to procurement cart!`
@@ -386,10 +408,10 @@ export default function BuyerDashboardPage() {
         </div>
 
         {/* Metrics Row */}
-        <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
-          <div className="p-5 rounded-2xl bg-white dark:bg-[#0F1C16] border border-slate-200 dark:border-slate-800 shadow-xs space-y-1">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+          <div className="min-w-0 p-3 sm:p-5 rounded-2xl bg-white dark:bg-[#0F1C16] border border-slate-200 dark:border-slate-800 shadow-xs space-y-1">
             <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">{t.buyerStatTotalPurchase}</span>
-            <div className="text-2xl font-bold text-slate-900 dark:text-white font-mono">
+            <div className="break-words text-lg sm:text-2xl font-bold text-slate-900 dark:text-white font-mono">
               ₹{(totalPurchasedPaise / 100).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
             </div>
             <span className="text-[11px] text-emerald-600 dark:text-emerald-400 font-semibold">
@@ -399,21 +421,21 @@ export default function BuyerDashboardPage() {
             </span>
           </div>
 
-          <div className="p-5 rounded-2xl bg-white dark:bg-[#0F1C16] border border-slate-200 dark:border-slate-800 shadow-xs space-y-1">
+          <div className="min-w-0 p-3 sm:p-5 rounded-2xl bg-white dark:bg-[#0F1C16] border border-slate-200 dark:border-slate-800 shadow-xs space-y-1">
             <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">{t.buyerStatActiveOrders}</span>
-            <div className="text-2xl font-bold text-amber-600 dark:text-amber-400 font-mono">{buyerOrders.length} Orders</div>
+            <div className="break-words text-lg sm:text-2xl font-bold text-amber-600 dark:text-amber-400 font-mono">{buyerOrders.length} Orders</div>
             <span className="text-[11px] text-slate-500 dark:text-slate-400 font-medium">{t.buyerStatGPSLogistics}</span>
           </div>
 
-          <div className="p-5 rounded-2xl bg-white dark:bg-[#0F1C16] border border-slate-200 dark:border-slate-800 shadow-xs space-y-1">
+          <div className="min-w-0 p-3 sm:p-5 rounded-2xl bg-white dark:bg-[#0F1C16] border border-slate-200 dark:border-slate-800 shadow-xs space-y-1">
             <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">Direct Farmer Lots</span>
-            <div className="text-2xl font-bold text-emerald-600 dark:text-emerald-400 font-mono">{farmerProduce.length} Fresh Lots</div>
+            <div className="break-words text-lg sm:text-2xl font-bold text-emerald-600 dark:text-emerald-400 font-mono">{farmerProduce.length} Fresh Lots</div>
             <span className="text-[11px] text-slate-500 dark:text-slate-400 font-medium">Live from Farmer Desk</span>
           </div>
 
-          <div className="p-5 rounded-2xl bg-white dark:bg-[#0F1C16] border border-slate-200 dark:border-slate-800 shadow-xs space-y-1">
+          <div className="min-w-0 p-3 sm:p-5 rounded-2xl bg-white dark:bg-[#0F1C16] border border-slate-200 dark:border-slate-800 shadow-xs space-y-1">
             <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">{t.buyerStatRecurringContracts}</span>
-            <div className="text-2xl font-bold text-blue-600 dark:text-blue-400 font-mono">
+            <div className="break-words text-lg sm:text-2xl font-bold text-blue-600 dark:text-blue-400 font-mono">
               {activeContractsCount} {activeContractsCount === 1 ? 'Contract' : 'Contracts'}
             </div>
             <span className="text-[11px] text-slate-500 dark:text-slate-400 font-medium">{t.buyerStatFPOGuarantee}</span>
@@ -439,53 +461,54 @@ export default function BuyerDashboardPage() {
                 Live Produce Procurement Board
               </h2>
               <p className="text-xs text-emerald-800/70 dark:text-emerald-300/80">
-                Your crop has been added successfully to your crop list and is now available on the platform.
+                {language === 'hi' ? 'अपनी खरीद के लिए किसानों की उपज खोजें और सहेजें।' : 'Find and save farmer listings for your next purchase.'}
               </p>
             </div>
 
-            {/* Total Results Count & Controls */}
-            <div className="flex items-center gap-2.5 flex-wrap">
-              {/* Category Dropdown List: Vegetables, Fruits, Pulses, Grains */}
-              <div className="relative">
-                <select
-                  value={selectedCategory}
-                  onChange={(e) => setSelectedCategory(e.target.value)}
-                  className="px-3.5 py-2 bg-white dark:bg-[#07170f] border border-emerald-900/20 dark:border-emerald-500/30 rounded-xl text-xs text-emerald-950 dark:text-emerald-100 font-bold focus:outline-none focus:ring-2 focus:ring-amber-500 shadow-sm cursor-pointer hover:border-emerald-800 transition"
-                >
-                  <option value="All">🌐 All Categories</option>
-                  <option value="Vegetables">🥦 Vegetables</option>
-                  <option value="Fruits">🍎 Fruits</option>
-                  <option value="Pulses">🫘 Pulses</option>
-                  <option value="Grains">🌾 Grains</option>
-                </select>
-              </div>
+          </div>
 
-              <span className="text-xs font-bold text-emerald-900 dark:text-emerald-200 bg-white dark:bg-[#07170f] px-3 py-2 rounded-xl border border-emerald-900/15 dark:border-emerald-500/30 shadow-sm flex items-center gap-1.5 whitespace-nowrap">
-                <Tractor className="w-4 h-4 text-amber-600 dark:text-amber-400" />
-                <span>
-                  {filteredProduce.length} Farmer Crop(s)
-                </span>
-              </span>
-
-              {/* Real-time Search Box */}
-              <div className="relative min-w-[180px] sm:w-64">
-                <Search className="w-4 h-4 absolute left-3.5 top-2.5 text-emerald-800/50 dark:text-emerald-400/60" />
-                <input
-                  type="text"
-                  placeholder="Search farmer produce..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-9 pr-4 py-2 bg-white dark:bg-[#07170f] border border-emerald-900/20 dark:border-emerald-500/30 rounded-xl text-xs text-emerald-950 dark:text-white placeholder-emerald-800/40 dark:placeholder-emerald-300/40 focus:outline-none focus:ring-2 focus:ring-amber-500 shadow-sm font-medium"
-                />
-                {searchQuery && (
-                  <button
-                    onClick={() => setSearchQuery('')}
-                    className="absolute right-3 top-2 text-xs text-emerald-800 dark:text-emerald-300 hover:text-emerald-950 dark:hover:text-white"
-                  >
-                    ✕
-                  </button>
-                )}
-              </div>
+          <div className="grid min-w-0 grid-cols-2 gap-3 rounded-2xl border border-emerald-900/10 bg-white/80 p-3 dark:border-emerald-500/20 dark:bg-emerald-950/50 sm:p-4 lg:grid-cols-4">
+            <label className="col-span-2 grid min-w-0 gap-1 text-sm font-semibold">
+              {language === 'hi' ? 'उपज खोजें' : 'Search produce'}
+              <input
+                type="search"
+                value={searchQuery}
+                onChange={(event) => setSearchQuery(event.target.value)}
+                placeholder={language === 'hi' ? 'फसल, किसान या स्थान' : 'Crop, farmer or location'}
+                className="min-h-11 w-full min-w-0 rounded-xl border border-slate-300 bg-white px-3 text-base font-normal dark:border-emerald-800 dark:bg-[#07170f]"
+              />
+            </label>
+            <label className="grid min-w-0 gap-1 text-sm font-semibold">
+              {language === 'hi' ? 'श्रेणी' : 'Category'}
+              <select value={selectedCategory} onChange={(event) => setSelectedCategory(event.target.value)} className="min-h-11 w-full min-w-0 rounded-xl border border-slate-300 bg-white px-2 text-sm font-normal dark:border-emerald-800 dark:bg-[#07170f]">
+                <option value="All">{language === 'hi' ? 'सभी श्रेणियाँ' : 'All categories'}</option>
+                {categories.map((category) => <option key={category}>{category}</option>)}
+              </select>
+            </label>
+            <label className="grid min-w-0 gap-1 text-sm font-semibold">
+              {language === 'hi' ? 'क्रम' : 'Sort by'}
+              <select value={sortOrder} onChange={(event) => setSortOrder(event.target.value as SortOrder)} className="min-h-11 w-full min-w-0 rounded-xl border border-slate-300 bg-white px-2 text-sm font-normal dark:border-emerald-800 dark:bg-[#07170f]">
+                <option value="default">{language === 'hi' ? 'प्रदर्शित क्रम' : 'Listing order'}</option>
+                <option value="price-asc">{language === 'hi' ? 'कम कीमत पहले' : 'Lowest unit price'}</option>
+                <option value="price-desc">{language === 'hi' ? 'अधिक कीमत पहले' : 'Highest unit price'}</option>
+                <option value="stock">{language === 'hi' ? 'अधिक स्टॉक पहले' : 'Most stock'}</option>
+              </select>
+            </label>
+            <div className="col-span-full flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
+              <label className="flex min-h-11 cursor-pointer items-center gap-2">
+                <input type="checkbox" checked={inStockOnly} onChange={(event) => setInStockOnly(event.target.checked)} className="size-4 accent-emerald-700" />
+                {language === 'hi' ? 'स्टॉक में' : 'In stock'}
+              </label>
+              <label className="flex min-h-11 cursor-pointer items-center gap-2">
+                <input type="checkbox" checked={savedOnly} onChange={(event) => setSavedOnly(event.target.checked)} className="size-4 accent-emerald-700" />
+                {language === 'hi' ? 'सहेजी गई उपज' : 'Saved lots'}
+              </label>
+              {!loadingProduce && <span role="status">{filteredProduce.length} {language === 'hi' ? 'लॉट' : filteredProduce.length === 1 ? 'lot' : 'lots'}</span>}
+              {(filterActive || sortOrder !== 'default') && (
+                <button type="button" onClick={resetFilters} className="min-h-11 font-semibold text-emerald-800 underline-offset-4 hover:underline dark:text-emerald-300">
+                  {language === 'hi' ? 'फ़िल्टर हटाएँ' : 'Reset filters'}
+                </button>
+              )}
             </div>
           </div>
 
@@ -499,6 +522,10 @@ export default function BuyerDashboardPage() {
                 />
               ))}
             </div>
+          ) : filteredProduce.length === 0 && filterActive ? (
+            <p className="rounded-2xl border border-dashed border-emerald-900/20 p-8 text-center dark:border-emerald-500/30">
+              {language === 'hi' ? 'इन फ़िल्टर से कोई उपज नहीं मिली।' : 'No lots match these filters.'}
+            </p>
           ) : filteredProduce.length === 0 ? (
             <div className="py-16 px-4 text-center bg-white/80 rounded-3xl border-2 border-dashed border-emerald-900/15 space-y-4">
               <div className="w-16 h-16 mx-auto bg-amber-500/10 text-amber-700 rounded-2xl flex items-center justify-center">
@@ -542,6 +569,8 @@ export default function BuyerDashboardPage() {
                   unit={crop.unit}
                   description={crop.description}
                   badge={crop.isDirectFromFarmer ? 'Farmer Direct' : undefined}
+                  saved={savedIds.has(String(crop.id))}
+                  onToggleSaved={() => toggleSaved(String(crop.id))}
                   onAddToCart={handleAddToCart}
                 />
               ))}

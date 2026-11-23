@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import {
   Award,
+  Heart,
   MapPin,
   CheckCircle2,
   ShoppingBag,
@@ -54,6 +55,8 @@ export interface BulmaProductCardProps {
   onAddToCart?: (item: any) => void;
   onDirectBuy?: (item: any) => void;
   badge?: string;
+  saved?: boolean;
+  onToggleSaved?: () => void;
 }
 
 export default function BulmaProductCard({
@@ -79,7 +82,9 @@ export default function BulmaProductCard({
   description,
   onAddToCart,
   onDirectBuy,
-  badge
+  badge,
+  saved,
+  onToggleSaved
 }: BulmaProductCardProps) {
   const { language, t } = useLanguage();
 
@@ -120,7 +125,7 @@ export default function BulmaProductCard({
   const [showDetailsModal, setShowDetailsModal] = useState(false);
   const [showCalculatorModal, setShowCalculatorModal] = useState(false);
   const [showTraceModal, setShowTraceModal] = useState(false);
-  const [orderQty, setOrderQty] = useState(Math.min(100, quantity_kg || 100));
+  const [orderQty, setOrderQty] = useState(Math.min(100, Math.max(1, quantity_kg)));
 
   // Official Mandi & Lab Verification Registry sync
   const [verification, setVerification] = useState<ProduceVerificationRecord>(() =>
@@ -161,7 +166,7 @@ export default function BulmaProductCard({
         listingId: id,
         cropName: crop_name,
         pricePaisePerKg: price_paise_per_kg,
-        quantityKg: orderQty,
+        quantityKg: Math.min(orderQty, quantity_kg),
         grade: quality_grade,
         farmerName: farmer_name,
         location: location,
@@ -246,6 +251,17 @@ export default function BulmaProductCard({
 
             {/* Upper Right Badges */}
             <div className="bulma-media-right flex flex-col items-end gap-1">
+              {onToggleSaved && (
+                <button
+                  type="button"
+                  aria-label={language === 'hi' ? `सहेजें: ${displayCropName}` : `Save ${displayCropName}`}
+                  aria-pressed={saved}
+                  onClick={onToggleSaved}
+                  className="grid size-11 place-items-center rounded-xl border border-slate-200 text-emerald-700 hover:bg-emerald-50 dark:border-emerald-800 dark:text-emerald-300 dark:hover:bg-emerald-950"
+                >
+                  <Heart className={saved ? 'size-5 fill-current' : 'size-5'} aria-hidden="true" />
+                </button>
+              )}
               <span className="bulma-tag is-warning-dark shadow-xs">
                 <Award className="w-3 h-3 text-amber-300 shrink-0" />
                 <span>{getLocalizedGrade(effectiveGrade, language)}</span>
@@ -406,22 +422,27 @@ export default function BulmaProductCard({
             <div className="flex items-center gap-1">
               <button
                 type="button"
-                onClick={() => setOrderQty((q) => Math.max(10, q - 10))}
-                className="w-5 h-5 rounded bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-bold text-xs flex items-center justify-center transition cursor-pointer"
+                onClick={() => setOrderQty((q) => Math.max(1, q - 10))}
+                aria-label={language === 'hi' ? 'मात्रा घटाएँ' : 'Decrease quantity'}
+                className="size-9 sm:size-8 rounded bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-bold text-xs flex items-center justify-center transition cursor-pointer"
               >
                 -
               </button>
               <input
                 type="number"
+                aria-label={language === 'hi' ? 'ऑर्डर मात्रा' : 'Order quantity'}
+                min={1}
+                max={Math.max(1, quantity_kg)}
                 value={orderQty}
-                onChange={(e) => setOrderQty(Math.max(1, parseInt(e.target.value) || 1))}
+                onChange={(e) => setOrderQty(Math.max(1, Math.min(quantity_kg, parseInt(e.target.value) || 1)))}
                 className="w-12 text-center text-xs font-bold text-slate-900 dark:text-white bg-transparent focus:outline-none"
               />
               <span className="text-[10px] text-slate-500 font-medium">{unit}</span>
               <button
                 type="button"
-                onClick={() => setOrderQty((q) => Math.min(quantity_kg, q + 10))}
-                className="w-5 h-5 rounded bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-bold text-xs flex items-center justify-center transition cursor-pointer"
+                onClick={() => setOrderQty((q) => Math.max(1, Math.min(quantity_kg, q + 10)))}
+                aria-label={language === 'hi' ? 'मात्रा बढ़ाएँ' : 'Increase quantity'}
+                className="size-9 sm:size-8 rounded bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-bold text-xs flex items-center justify-center transition cursor-pointer"
               >
                 +
               </button>
@@ -432,10 +453,11 @@ export default function BulmaProductCard({
           <button
             type="button"
             onClick={handleAddToCart}
-            className="flex-1 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-xs transition flex items-center justify-center gap-2 text-xs active:scale-95 cursor-pointer"
+            disabled={quantity_kg <= 0}
+            className="min-h-11 flex-1 disabled:cursor-not-allowed disabled:opacity-50 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-xs transition flex items-center justify-center gap-2 text-xs active:scale-95 cursor-pointer"
           >
             <ShoppingBag className="w-3.5 h-3.5 text-white" />
-            <span>{language === 'hi' ? 'कार्ट में जोड़ें' : (t.addToCart || 'Add to Cart')}</span>
+            <span>{language === 'hi' ? (quantity_kg > 0 ? 'कार्ट में जोड़ें' : 'स्टॉक ख़त्म') : (quantity_kg > 0 ? (t.addToCart || 'Add to Cart') : 'Out of stock')}</span>
           </button>
         </div>
       </div>

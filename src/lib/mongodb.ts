@@ -1,5 +1,8 @@
 import mongoose from 'mongoose';
 
+const sqliteOnly = process.env.NIRA_SQLITE_ONLY === '1';
+if (sqliteOnly) mongoose.set('bufferCommands', false);
+
 const DEFAULT_MONGODB_URI = 'mongodb+srv://Natesh:Natesh@cluster0.wwp3oig.mongodb.net/kisanbandhan';
 const MONGODB_URI = process.env.MONGODB_URI || DEFAULT_MONGODB_URI;
 
@@ -10,6 +13,7 @@ if (!cached) {
 }
 
 export async function connectToDatabase() {
+  if (sqliteOnly) return null;
   const uri = process.env.MONGODB_URI || DEFAULT_MONGODB_URI;
   if (!uri) {
     console.warn('MongoDB URI not defined, skipping database connection.');

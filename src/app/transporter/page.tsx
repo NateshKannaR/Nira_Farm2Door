@@ -515,7 +515,7 @@ export default function TransporterDashboardPage() {
                     No Active Trips Right Now
                   </h3>
                   <p className="text-xs text-emerald-900/70 dark:text-emerald-300/70 max-w-sm mx-auto mt-1">
-                    Switch to the "Available Deliveries" tab to accept pending farmer orders.
+                    Switch to the &quot;Available Deliveries&quot; tab to accept pending farmer orders.
                   </p>
                 </div>
                 <button

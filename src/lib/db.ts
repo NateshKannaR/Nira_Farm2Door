@@ -12,7 +12,9 @@ export function getDb(): Database.Database {
   let dbPath: string;
   // On Vercel / AWS Lambda, process.cwd() is strictly read-only.
   // /tmp is the only writable filesystem directory.
-  if (process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME) {
+  if (process.env.NIRA_SQLITE_PATH) {
+    dbPath = process.env.NIRA_SQLITE_PATH;
+  } else if (process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME) {
     const tmpDbPath = path.join('/tmp', 'kisanbandhan.db');
     const localDbPath = path.join(process.cwd(), 'kisanbandhan.db');
     if (!fs.existsSync(tmpDbPath)) {

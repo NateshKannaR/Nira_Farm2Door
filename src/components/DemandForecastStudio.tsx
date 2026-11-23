@@ -237,40 +237,40 @@ export default function DemandForecastStudio() {
           </div>
 
           {/* Tab Navigation */}
-          <div className="flex items-center gap-2 border-b border-emerald-900/10 dark:border-emerald-500/20 pb-3">
+          <div className="grid gap-1.5 sm:flex sm:flex-wrap sm:items-center sm:gap-2 border-b border-emerald-900/10 dark:border-emerald-500/20 pb-3">
             <button
               onClick={() => setActiveTab('curve')}
-              className={`px-4 py-2 rounded-xl text-xs font-extrabold flex items-center gap-2 transition ${
+              className={`min-h-11 px-3 py-2 text-left sm:px-4 rounded-xl text-xs font-extrabold flex items-center gap-2 transition ${
                 activeTab === 'curve'
                   ? 'bg-[#0F3826] text-amber-200 shadow-md'
                   : 'text-emerald-950 dark:text-emerald-200 hover:bg-emerald-100/50'
               }`}
             >
-              <BarChart3 className="w-4 h-4 text-amber-400" />
+              <BarChart3 className="w-4 h-4 shrink-0 text-amber-400" />
               <span>7-Day Price & Arrival Trajectory Curve</span>
             </button>
 
             <button
               onClick={() => setActiveTab('mandiRadar')}
-              className={`px-4 py-2 rounded-xl text-xs font-extrabold flex items-center gap-2 transition ${
+              className={`min-h-11 px-3 py-2 text-left sm:px-4 rounded-xl text-xs font-extrabold flex items-center gap-2 transition ${
                 activeTab === 'mandiRadar'
                   ? 'bg-[#0F3826] text-amber-200 shadow-md'
                   : 'text-emerald-950 dark:text-emerald-200 hover:bg-emerald-100/50'
               }`}
             >
-              <Compass className="w-4 h-4 text-amber-400" />
+              <Compass className="w-4 h-4 shrink-0 text-amber-400" />
               <span>Inter-Mandi Arbitrage Radar</span>
             </button>
 
             <button
               onClick={() => setActiveTab('advisory')}
-              className={`px-4 py-2 rounded-xl text-xs font-extrabold flex items-center gap-2 transition ${
+              className={`min-h-11 px-3 py-2 text-left sm:px-4 rounded-xl text-xs font-extrabold flex items-center gap-2 transition ${
                 activeTab === 'advisory'
                   ? 'bg-[#0F3826] text-amber-200 shadow-md'
                   : 'text-emerald-950 dark:text-emerald-200 hover:bg-emerald-100/50'
               }`}
             >
-              <Sparkles className="w-4 h-4 text-amber-400" />
+              <Sparkles className="w-4 h-4 shrink-0 text-amber-400" />
               <span>AI Agronomic & Dispatch Advice</span>
             </button>
           </div>

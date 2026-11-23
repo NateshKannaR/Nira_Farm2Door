@@ -153,3 +153,16 @@ sih2026/
 
 ---
 *Maintained by CtrlAltSolve Team for SIH 2026 PS 26033*
+
+## Local smoke tests
+
+Run `npm ci`, `npm run lint`, `npm run build`, then `npm test`. The smoke
+suite starts the production build on a free loopback port and uses a
+temporary SQLite database. It covers crop CRUD, COD and pickup/delivery
+verification, navigation across the marketplace and role portals, and
+the mobile buyer filters, saved lots, and cart.
+
+The runner uses system Chromium or the path in `CHROMIUM_PATH`. To install
+a browser for Playwright instead, run `npx playwright-core install chromium`.
+The suite disables the MongoDB connection and AI credentials in its server
+process. It does not verify live cloud, messaging, or payment providers.

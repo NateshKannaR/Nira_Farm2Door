@@ -451,11 +451,11 @@ export default function HomePage() {
 
           <div className="flex flex-wrap items-center gap-2">
             {/* Dual Mode: Consumer vs Bulk B2B Selector */}
-            <div className="flex items-center bg-slate-100 dark:bg-slate-900 p-1 rounded-xl border border-slate-200 dark:border-slate-800 shadow-xs text-xs font-semibold">
+            <div className="grid w-full grid-cols-3 sm:w-auto bg-slate-100 dark:bg-slate-900 p-1 rounded-xl border border-slate-200 dark:border-slate-800 shadow-xs text-xs font-semibold">
               <button
                 type="button"
                 onClick={() => setBuyerMode('all')}
-                className={`px-3 py-1 rounded-lg transition ${
+                className={`min-h-11 px-1 sm:px-3 py-1 rounded-lg transition ${
                   buyerMode === 'all'
                     ? 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-xs'
                     : 'text-slate-600 dark:text-slate-400 hover:text-slate-900'
@@ -466,7 +466,7 @@ export default function HomePage() {
               <button
                 type="button"
                 onClick={() => setBuyerMode('retail')}
-                className={`px-3 py-1 rounded-lg transition flex items-center gap-1 ${
+                className={`min-h-11 px-1 sm:px-3 py-1 rounded-lg transition flex flex-col items-center justify-center gap-0.5 sm:flex-row sm:gap-1 ${
                   buyerMode === 'retail'
                     ? 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-xs'
                     : 'text-slate-600 dark:text-slate-400 hover:text-slate-900'
@@ -478,7 +478,7 @@ export default function HomePage() {
               <button
                 type="button"
                 onClick={() => setBuyerMode('bulk')}
-                className={`px-3 py-1 rounded-lg transition flex items-center gap-1 ${
+                className={`min-h-11 px-1 sm:px-3 py-1 rounded-lg transition flex flex-col items-center justify-center gap-0.5 sm:flex-row sm:gap-1 ${
                   buyerMode === 'bulk'
                     ? 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-xs'
                     : 'text-slate-600 dark:text-slate-400 hover:text-slate-900'

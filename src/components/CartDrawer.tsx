@@ -59,7 +59,7 @@ const INDIAN_STATES = [
 ];
 
 export default function CartDrawer() {
-  const { cart, removeFromCart, updateQuantity, clearCart, isCartOpen, setIsCartOpen } = useCart();
+  const { cart, removeFromCart, updateQuantity, clearCart, isCartOpen, setIsCartOpen, subtotalPaise, logisticsFeePaise, totalPaise } = useCart();
   const { language } = useLanguage();
   const { isAuthenticated, user, openAuthModal } = useAuth();
 
@@ -78,18 +78,6 @@ export default function CartDrawer() {
   const [userConfirmedIdentity, setUserConfirmedIdentity] = useState(true);
   const [upiQrUrl, setUpiQrUrl] = useState<string>('');
   const [isUpiSimulatedPaid, setIsUpiSimulatedPaid] = useState(false);
-
-  const subtotalPaise = cart.reduce((acc, item: any) => {
-    const pricePaise =
-      Number(item.pricePaisePerKg) ||
-      (Number(item.price) ? Number(item.price) * 100 : 0) ||
-      (Number(item.priceRupees) ? Number(item.priceRupees) * 100 : 0) ||
-      0;
-    const qty = Number(item.quantityKg) || Number(item.quantity) || 0;
-    return acc + Math.round(pricePaise * qty);
-  }, 0) || 0;
-  const logisticsFeePaise = Math.round(subtotalPaise * 0.04) || 0;
-  const totalPaise = subtotalPaise + logisticsFeePaise;
 
   useEffect(() => {
     if (isCheckoutModalOpen && paymentMethod === 'UPI') {
@@ -241,7 +229,7 @@ export default function CartDrawer() {
           cropName: it.cropName,
           quantity: it.quantityKg,
           unitPricePaise: it.pricePaisePerKg,
-          unit: 'kg',
+          unit: it.unit || 'kg',
         })),
       };
 
@@ -259,30 +247,31 @@ export default function CartDrawer() {
 
       setPlacedOrderId(data.orderId || data.order?.id || `ord_${Date.now()}`);
       setContractId(data.smartContractHash || data.order?.contract_id || `KB-ESCROW-${Math.random().toString(36).substring(2, 9).toUpperCase()}`);
-      setDeliveryOtpCode(data.deliveryOtp || data.order?.delivery_otp || '4829');
+      setDeliveryOtpCode(data.deliveryOtp || data.order?.delivery_otp || null);
 
       // Local storage active orders cache for 0ms refresh hydration
       try {
         const existingLocal = JSON.parse(localStorage.getItem('kb_buyer_active_orders') || '[]');
         const newOrderObj = {
           ...data.order,
+          id: data.orderId || data.order?.id,
           recipient_name: shippingForm.fullName,
           recipient_phone: shippingForm.mobileNumber,
           alt_phone: shippingForm.altPhone,
           shipping: shippingForm,
           delivery_address: canonicalAddress,
           status: 'Placed',
-          payment_status: 'ESCROW_LOCKED',
+          payment_status: data.paymentStatus || data.order?.payment_status,
           created_at: new Date().toISOString(),
           items: cart.map((it) => ({
             crop_name: it.cropName,
             quantity: it.quantityKg,
-            unit: 'kg',
+            unit: it.unit || 'kg',
             unit_price_paise: it.pricePaisePerKg,
           })),
           total_rupees: (totalPaise / 100).toFixed(2),
-          delivery_otp: data.order?.delivery_otp || '4829',
-          pickup_otp: data.order?.pickup_otp || '7137',
+          delivery_otp: data.deliveryOtp || data.order?.delivery_otp,
+          pickup_otp: data.pickupOtp || data.order?.pickup_otp,
         };
         localStorage.setItem(
           'kb_buyer_active_orders',
@@ -290,6 +279,7 @@ export default function CartDrawer() {
         );
       } catch (e) {}
 
+      clearCart();
       setCheckoutStep('SUCCESS');
     } catch (err: any) {
       setCheckoutError(err.message || 'Error: Failed to process order.');
@@ -300,7 +290,6 @@ export default function CartDrawer() {
 
   const handleFinishAndGoToDashboard = () => {
     setIsCheckoutModalOpen(false);
-    clearCart();
     setIsCartOpen(false);
 
     if (typeof window !== 'undefined') {
@@ -315,7 +304,7 @@ export default function CartDrawer() {
       {/* 1. SLIDE-OVER CART DRAWER */}
       {isCartOpen && (
         <div className="fixed inset-0 z-[9990] flex justify-end bg-black/60 backdrop-blur-sm transition-opacity animate-fadeIn">
-          <div className="w-full max-w-md bg-[#FAF5EB] dark:bg-[#081710] text-[#1A2E26] dark:text-[#E2E8F0] h-full shadow-2xl flex flex-col border-l border-emerald-900/10 dark:border-emerald-500/20 transition-colors duration-200">
+          <div className="w-full max-w-md bg-[#FAF5EB] dark:bg-[#081710] text-[#1A2E26] dark:text-[#E2E8F0] h-dvh shadow-2xl flex flex-col border-l border-emerald-900/10 dark:border-emerald-500/20 transition-colors duration-200">
             {/* Header */}
             <div className="p-5 bg-[#0F3826] text-amber-50 flex items-center justify-between shadow-md shrink-0">
               <div className="flex items-center gap-3">
@@ -333,6 +322,7 @@ export default function CartDrawer() {
               </div>
               <button
                 onClick={() => setIsCartOpen(false)}
+                aria-label="Close cart"
                 className="p-2 hover:bg-emerald-800 rounded-full transition"
               >
                 <X className="w-5 h-5 text-amber-100" />
@@ -340,7 +330,7 @@ export default function CartDrawer() {
             </div>
 
             {/* Scrollable Cart Items Body */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-3">
+            <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-4 space-y-3">
               {cart.length === 0 ? (
                 <div className="h-full flex flex-col items-center justify-center text-emerald-800/60 dark:text-emerald-400/60 text-center py-16">
                   <div className="w-16 h-16 bg-emerald-900/5 dark:bg-emerald-900/40 rounded-full flex items-center justify-center mb-3">
@@ -436,7 +426,7 @@ export default function CartDrawer() {
                   </div>
                   <div className="flex justify-between">
                     <span className="text-emerald-800/80 dark:text-emerald-300/80">
-                      Smart Logistics Fee (4%):
+                      Express delivery fee:
                     </span>
                     <span className="font-semibold">₹{(logisticsFeePaise / 100).toFixed(2)}</span>
                   </div>
@@ -480,7 +470,7 @@ export default function CartDrawer() {
       {/* 2. DEDICATED FULL CHECKOUT & ADDRESS MODAL (FLIPKART / AMAZON STYLE POPUP) */}
       {isCheckoutModalOpen && (
         <div className="fixed inset-0 z-[9999] flex items-center justify-center p-3 sm:p-5 bg-black/75 backdrop-blur-md animate-fadeIn">
-          <div className="bg-[#FAF5EB] dark:bg-[#0c1f15] rounded-3xl max-w-2xl w-full shadow-2xl border-2 border-emerald-800/20 dark:border-emerald-600/30 text-emerald-950 dark:text-emerald-50 flex flex-col max-h-[90vh] my-auto overflow-hidden transition-colors">
+          <div className="bg-[#FAF5EB] dark:bg-[#0c1f15] rounded-3xl max-w-2xl w-full shadow-2xl border-2 border-emerald-800/20 dark:border-emerald-600/30 text-emerald-950 dark:text-emerald-50 flex flex-col max-h-[calc(100dvh-1.5rem)] sm:max-h-[90dvh] my-auto overflow-hidden transition-colors">
             {/* Modal Header */}
             <div className="p-4 sm:p-5 bg-[#0F3826] dark:bg-[#07170f] text-amber-50 flex items-center justify-between shrink-0 shadow-md">
               <div className="flex items-center gap-3">
@@ -496,7 +486,7 @@ export default function CartDrawer() {
                   <p className="text-xs text-amber-200/80">
                     {checkoutStep === 'ADDRESS' && 'Step 1/2: Enter all shipping & contact information'}
                     {checkoutStep === 'CONFIRM' && 'Step 2/2: Verify details and lock escrow protection'}
-                    {checkoutStep === 'SUCCESS' && 'Zero-Risk Escrow Contract Active'}
+                    {checkoutStep === 'SUCCESS' && (paymentMethod === 'COD' ? 'Cash on delivery' : 'UPI order recorded')}
                   </p>
                 </div>
               </div>
@@ -875,7 +865,7 @@ export default function CartDrawer() {
                         </div>
                       ))}
                       <div className="flex justify-between text-xs text-emerald-800 dark:text-emerald-300">
-                        <span>Logistics & Express Freight (4%):</span>
+                        <span>Express delivery fee:</span>
                         <span className="font-bold">₹{(logisticsFeePaise / 100).toFixed(2)}</span>
                       </div>
                       <div className="pt-2 border-t border-amber-200 dark:border-amber-700/50 flex justify-between font-extrabold text-sm text-emerald-950 dark:text-emerald-100">
@@ -1001,7 +991,7 @@ export default function CartDrawer() {
                   </div>
                   <div>
                     <h3 className="text-xl font-extrabold text-emerald-950 dark:text-emerald-100 mb-1">
-                      Escrow Order Executed Successfully!
+                      Order confirmed
                     </h3>
                     <p className="text-xs text-emerald-800/80 dark:text-emerald-300/80">
                       Order ID:{' '}
@@ -1019,12 +1009,12 @@ export default function CartDrawer() {
                     </div>
                     <div className="bg-white dark:bg-[#132c1e] rounded-xl p-3 border border-amber-300 dark:border-amber-700/50 text-center mb-2 shadow-inner">
                       <span className="text-3xl font-mono font-black tracking-[0.3em] text-emerald-950 dark:text-emerald-100">
-                        {deliveryOtpCode || '4829'}
+                        {deliveryOtpCode || 'Available in order tracking'}
                       </span>
                     </div>
                     <p className="text-xs text-amber-950 dark:text-amber-200 leading-relaxed">
                       <strong className="text-amber-900 dark:text-amber-300">Security Directive:</strong>{' '}
-                      Share this 4-digit OTP with the delivery agent only after verifying produce quantity and quality. Escrow payment will be released to the farmer upon OTP confirmation.
+                      Share this 4-digit OTP with the delivery agent only after verifying produce quantity and quality.
                     </p>
                   </div>
 
@@ -1035,7 +1025,7 @@ export default function CartDrawer() {
                     <p className="text-emerald-800 dark:text-emerald-300">
                       Payment Status:{' '}
                       <span className="text-amber-700 dark:text-amber-300 font-bold">
-                        Locked in Escrow
+                        {paymentMethod === 'COD' ? 'Cash due on delivery' : 'UPI confirmation pending'}
                       </span>
                     </p>
                     <p className="text-emerald-800 dark:text-emerald-300">
@@ -1046,28 +1036,6 @@ export default function CartDrawer() {
                     </p>
                   </div>
 
-                  {/* Escrow Progress Bar */}
-                  <div className="p-3.5 bg-white dark:bg-[#132c1e] rounded-xl border border-emerald-900/10 dark:border-emerald-500/20 text-left space-y-2">
-                    <span className="text-[10px] font-extrabold uppercase tracking-wider text-emerald-900 dark:text-emerald-300 block">
-                      Escrow Milestone Progress
-                    </span>
-                    <div className="grid grid-cols-3 gap-2 text-center text-[10px]">
-                      <div className="p-2 bg-emerald-700 text-white rounded-lg shadow-sm font-bold">
-                        <span className="flex items-center justify-center gap-1">
-                          <Check className="w-3 h-3" /> 100% Locked
-                        </span>
-                        <p className="text-[8px] text-emerald-200">Buyer Payment</p>
-                      </div>
-                      <div className="p-2 bg-amber-100 dark:bg-amber-950/40 text-amber-950 dark:text-amber-200 border border-amber-400 rounded-lg font-bold animate-pulse">
-                        <span>70% Advance</span>
-                        <p className="text-[8px] text-amber-800 dark:text-amber-300">On Farm Pickup</p>
-                      </div>
-                      <div className="p-2 bg-gray-100 dark:bg-white/5 text-gray-500 rounded-lg font-bold">
-                        <span>30% Settlement</span>
-                        <p className="text-[8px]">On Handover</p>
-                      </div>
-                    </div>
-                  </div>
                 </div>
               )}
             </div>

@@ -5,12 +5,13 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useLanguage } from '@/context/LanguageContext';
 import { useRole } from '@/context/RoleContext';
-import { useAuth } from '@/context/AuthContext';
+import { useAuth, type UserRole } from '@/context/AuthContext';
 import { useCart } from '@/context/CartContext';
 import { useTheme } from '@/context/ThemeContext';
 import UserAvatar from './UserAvatar';
 import {
   Leaf,
+  Menu,
   ShoppingBag,
   Globe,
   LogIn,
@@ -102,6 +103,17 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
     supportedLanguages.find((l) => l.code === 'en') ||
     supportedLanguages[0];
 
+  const mobilePortals: { href: string; label: string; portalRole?: UserRole }[] = [
+    { href: '/', label: t.navHome },
+    { href: '/farmer', label: t.navFarmer, portalRole: 'FARMER' },
+    { href: '/fpo', label: t.navFPO, portalRole: 'FPO' },
+    { href: '/buyer', label: t.navBuyer, portalRole: 'BUYER' },
+    { href: '/hub', label: t.navHub, portalRole: 'HUB_OPERATOR' },
+    { href: '/transporter', label: t.navTransporter, portalRole: 'TRANSPORTER' },
+    { href: '/admin', label: t.navAdmin, portalRole: 'ADMIN' },
+    { href: '/forecast', label: 'AI Forecast' },
+  ];
+
   return (
     <header className="sticky top-0 z-[100] w-full backdrop-blur-xl bg-white/90 dark:bg-[#09110D]/90 border-b border-slate-200/80 dark:border-emerald-500/15 shadow-xs transition-all duration-200">
       {/* Top Banner with Clean Enterprise Style */}
@@ -129,12 +141,12 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
       {/* Main Navbar Row */}
       <div className="relative z-20 w-full px-3 sm:px-8 lg:px-12 py-2.5 flex items-center justify-between gap-2 sm:gap-4 max-w-full">
         {/* Brand */}
-        <Link href="/" className="flex items-center gap-2.5 shrink-0 group">
-          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-emerald-600 to-emerald-700 flex items-center justify-center text-white shadow-sm group-hover:scale-105 transition shrink-0">
+        <Link href="/" className="flex min-w-0 items-center gap-1.5 sm:gap-2.5 group">
+          <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-emerald-600 to-emerald-700 flex items-center justify-center text-white shadow-sm group-hover:scale-105 transition shrink-0">
             <Leaf className="w-4 h-4 sm:w-5 sm:h-5 fill-white/90" />
           </div>
           <div>
-            <h1 className="font-extrabold text-lg sm:text-xl text-slate-900 dark:text-white leading-none tracking-tight">
+            <h1 className="font-extrabold text-base sm:text-xl text-slate-900 dark:text-white leading-none tracking-tight">
               {t.appName}
             </h1>
             <span className="text-[10px] text-emerald-700 dark:text-emerald-400 font-semibold leading-none hidden xs:block mt-0.5">
@@ -144,7 +156,7 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
         </Link>
 
         {/* Desktop Role Navigation Tabs */}
-        <nav className="hidden lg:flex items-center gap-1 bg-slate-100/90 dark:bg-slate-900/90 p-1 rounded-xl border border-slate-200/80 dark:border-slate-800 text-xs font-semibold backdrop-blur-md">
+        <nav className="hidden xl:flex items-center gap-1 bg-slate-100/90 dark:bg-slate-900/90 p-1 rounded-xl border border-slate-200/80 dark:border-slate-800 text-xs font-semibold backdrop-blur-md">
           <Link
             href="/"
             className={`px-3 py-1.5 rounded-lg transition ${
@@ -585,123 +597,35 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
         </div>
       </div>
 
-      {/* Mobile / Tablet Horizontal Role Navigation Strip */}
-      <div className="lg:hidden border-t border-slate-200/80 dark:border-emerald-500/20 bg-slate-50 dark:bg-[#07130d] px-3 sm:px-4 py-2 overflow-x-auto no-scrollbar w-full max-w-full">
-        <nav className="flex items-center gap-1.5 w-max max-w-none text-xs font-semibold">
-          <Link
-            href="/"
-            className={`px-3 py-1.5 rounded-lg transition ${
-              pathname === '/'
-                ? 'bg-emerald-700 text-white shadow-xs'
-                : 'bg-white dark:bg-[#0F1C16] text-slate-700 dark:text-slate-200 hover:bg-slate-50 border border-slate-200/80 dark:border-emerald-500/20'
-            }`}
-          >
-            {t.navHome}
-          </Link>
-
-          <Link
-            href="/farmer"
-            onClick={() => {
-              setRole('FARMER');
-              loginAsDemoRole('FARMER');
-            }}
-            className={`px-3 py-1.5 rounded-lg transition ${
-              pathname === '/farmer'
-                ? 'bg-emerald-700 text-white shadow-xs'
-                : 'bg-white dark:bg-[#0F1C16] text-slate-700 dark:text-slate-200 hover:bg-slate-50 border border-slate-200/80 dark:border-emerald-500/20'
-            }`}
-          >
-            {t.navFarmer}
-          </Link>
-
-          <Link
-            href="/fpo"
-            onClick={() => {
-              setRole('FPO');
-              loginAsDemoRole('FPO');
-            }}
-            className={`px-3 py-1.5 rounded-lg transition ${
-              pathname === '/fpo'
-                ? 'bg-emerald-700 text-white shadow-xs'
-                : 'bg-white dark:bg-[#0F1C16] text-slate-700 dark:text-slate-200 hover:bg-slate-50 border border-slate-200/80 dark:border-emerald-500/20'
-            }`}
-          >
-            {t.navFPO}
-          </Link>
-
-          <Link
-            href="/buyer"
-            onClick={() => {
-              setRole('BUYER');
-              loginAsDemoRole('BUYER');
-            }}
-            className={`px-3 py-1.5 rounded-lg transition ${
-              pathname === '/buyer'
-                ? 'bg-emerald-700 text-white shadow-xs'
-                : 'bg-white dark:bg-[#0F1C16] text-slate-700 dark:text-slate-200 hover:bg-slate-50 border border-slate-200/80 dark:border-emerald-500/20'
-            }`}
-          >
-            {t.navBuyer}
-          </Link>
-
-          <Link
-            href="/hub"
-            onClick={() => {
-              setRole('HUB_OPERATOR');
-              loginAsDemoRole('HUB_OPERATOR');
-            }}
-            className={`px-3 py-1.5 rounded-lg transition ${
-              pathname === '/hub'
-                ? 'bg-emerald-700 text-white shadow-xs'
-                : 'bg-white dark:bg-[#0F1C16] text-slate-700 dark:text-slate-200 hover:bg-slate-50 border border-slate-200/80 dark:border-emerald-500/20'
-            }`}
-          >
-            {t.navHub}
-          </Link>
-
-          <Link
-            href="/transporter"
-            onClick={() => {
-              setRole('TRANSPORTER');
-              loginAsDemoRole('TRANSPORTER');
-            }}
-            className={`px-3 py-1.5 rounded-lg transition ${
-              pathname === '/transporter'
-                ? 'bg-emerald-700 text-white shadow-xs'
-                : 'bg-white dark:bg-[#0F1C16] text-slate-700 dark:text-slate-200 hover:bg-slate-50 border border-slate-200/80 dark:border-emerald-500/20'
-            }`}
-          >
-            {t.navTransporter}
-          </Link>
-
-          <Link
-            href="/admin"
-            onClick={() => {
-              setRole('ADMIN');
-              loginAsDemoRole('ADMIN');
-            }}
-            className={`px-3 py-1.5 rounded-lg transition ${
-              pathname === '/admin'
-                ? 'bg-emerald-700 text-white shadow-xs'
-                : 'bg-white dark:bg-[#0F1C16] text-slate-700 dark:text-slate-200 hover:bg-slate-50 border border-slate-200/80 dark:border-emerald-500/20'
-            }`}
-          >
-            {t.navAdmin}
-          </Link>
-
-          <Link
-            href="/forecast"
-            className={`px-3 py-1.5 rounded-lg transition flex items-center gap-1.5 ${
-              pathname === '/forecast'
-                ? 'bg-amber-500 text-slate-950 font-bold shadow-xs'
-                : 'bg-amber-50 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300 border border-amber-500/30'
-            }`}
-          >
-            <Sparkles className="w-3 h-3 text-amber-500 shrink-0" />
-            <span>AI Forecast</span>
-          </Link>
+      <details className="group xl:hidden border-t border-slate-200 bg-white px-3 dark:border-emerald-500/20 dark:bg-[#07130d]">
+        <summary className="flex min-h-11 cursor-pointer list-none items-center gap-2 text-sm font-semibold [&::-webkit-details-marker]:hidden">
+          <Menu className="size-4" aria-hidden="true" />
+          {language === 'hi' ? 'पोर्टल मेनू' : 'Portal menu'}
+          <ChevronDown className="ml-auto size-4 transition-transform group-open:rotate-180" aria-hidden="true" />
+        </summary>
+        <nav aria-label={language === 'hi' ? 'पोर्टल' : 'Mobile portals'} className="grid grid-cols-2 gap-2 pb-3 sm:grid-cols-4">
+          {mobilePortals.map(({ href, label, portalRole }) => (
+            <Link
+              key={href}
+              href={href}
+              aria-current={pathname === href ? 'page' : undefined}
+              onClick={(event) => {
+                if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+                if (portalRole) {
+                  setRole(portalRole);
+                  loginAsDemoRole(portalRole);
+                }
+                event.currentTarget.closest('details')?.removeAttribute('open');
+              }}
+              className={`flex min-h-11 min-w-0 items-center rounded-lg border px-2.5 py-1.5 text-sm font-semibold ${pathname === href
+                ? 'border-emerald-700 bg-emerald-700 text-white'
+                : 'border-slate-200 bg-slate-50 text-slate-700 dark:border-emerald-500/25 dark:bg-[#0F1C16] dark:text-slate-200'}`}
+            >
+              {label}
+            </Link>
+          ))}
         </nav>
-      </div>
+      </details>
     </header>
   );
 }
